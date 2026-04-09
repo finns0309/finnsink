@@ -1,0 +1,624 @@
+@import "tailwindcss";
+
+:root {
+  --color-bg: #faf7f0;
+  --color-bg-soft: #f4efe3;
+  --color-text: #2a2622;
+  --color-text-soft: #4a443c;
+  --color-muted: #8a8278;
+  --color-faint: #b8ad9c;
+  --color-rule: #e6dfce;
+  --color-rule-soft: #efe9d9;
+  --color-link: #2a2622;
+  --color-link-hover: #8a4a2b;
+  --color-mark: #f0e6c8;
+
+  --font-serif:
+    var(--font-source-serif), "Source Serif 4", "Iowan Old Style",
+    "Apple Garamond", Charter, Baskerville, "Times New Roman",
+    var(--font-noto-serif-sc), "Noto Serif SC", "Source Han Serif SC",
+    "Songti SC", STSong, SimSun, serif;
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
+    "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+
+  --measure: 36rem;
+  --measure-wide: 44rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  /* Block browsers from synthesizing fake italics on CJK fonts */
+  font-synthesis: none;
+  /* Pull punctuation off the visual edge in Safari */
+  hanging-punctuation: allow-end last;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1.8;
+  font-feature-settings: "kern", "liga", "calt", "halt", "palt";
+  /* Use proportional half-widths for CJK punctuation where the font supports it */
+  font-variant-east-asian: proportional-width;
+  /* Better long-paragraph wrapping in Chrome */
+  text-wrap: pretty;
+  /* Don't break inside CJK; keep long Latin URLs from overflowing */
+  word-break: normal;
+  line-break: strict;
+  overflow-wrap: anywhere;
+}
+
+::selection {
+  background: var(--color-mark);
+}
+
+a {
+  color: var(--color-link);
+  text-decoration: underline;
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 0.22em;
+  text-decoration-color: var(--color-faint);
+  transition:
+    color 160ms ease,
+    text-decoration-color 160ms ease;
+}
+
+a:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: currentColor;
+}
+
+/* ───────── layout ───────── */
+
+.page {
+  width: 100%;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.page--wide {
+  max-width: var(--measure-wide);
+}
+
+.site-header {
+  padding: 3.5rem 0 2rem;
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.site-header__brand {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.site-header__brand:hover {
+  color: var(--color-link-hover);
+}
+
+.site-nav {
+  display: flex;
+  gap: 1.6rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.site-nav a {
+  text-decoration: none;
+  color: var(--color-muted);
+}
+
+.site-nav a:hover {
+  color: var(--color-link-hover);
+}
+
+.site-main {
+  padding: 2.5rem 0 6rem;
+}
+
+.site-footer {
+  padding: 3rem 0 4rem;
+  border-top: 1px solid var(--color-rule);
+  margin-top: 4rem;
+}
+
+.site-footer__inner {
+  font-size: 0.85rem;
+  font-style: italic;
+  color: var(--color-muted);
+  text-align: center;
+}
+
+/* ───────── index / list pages ───────── */
+
+.lede {
+  margin: 0 0 4rem;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--color-text-soft);
+  font-style: italic;
+}
+
+.section-label {
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-style: normal;
+  font-family: var(--font-sans);
+  margin: 0 0 1.75rem;
+}
+
+.entry-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.entry-list > li + li {
+  margin-top: 2.75rem;
+  padding-top: 2.75rem;
+  border-top: 1px solid var(--color-rule);
+}
+
+.entry {
+  display: block;
+}
+
+.entry__date {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 0.6rem;
+}
+
+.entry__title {
+  margin: 0 0 0.55rem;
+  font-size: 1.5rem;
+  line-height: 1.35;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.entry__title a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.entry__title a:hover {
+  color: var(--color-link-hover);
+}
+
+.entry__summary {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--color-text-soft);
+  letter-spacing: 0.01em;
+}
+
+/* ───────── article ───────── */
+
+.article-header {
+  margin: 1rem 0 3rem;
+  text-align: left;
+}
+
+.article-eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin: 0 0 1.25rem;
+}
+
+.article-title {
+  margin: 0 0 1.15rem;
+  font-size: clamp(1.85rem, 4vw, 2.35rem);
+  line-height: 1.25;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--color-text);
+  text-wrap: balance;
+}
+
+.article-subtitle {
+  margin: 0 0 1.5rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--color-rule);
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--color-text-soft);
+  letter-spacing: 0.01em;
+}
+
+.article-meta {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+}
+
+.article-meta > * + *::before {
+  content: "·";
+  margin: 0 0.55rem;
+  color: var(--color-faint);
+}
+
+.article-rule {
+  border: 0;
+  border-top: 1px solid var(--color-rule);
+  margin: 2rem 0 2.5rem;
+  width: 100%;
+}
+
+.article-body {
+  font-size: 1.075rem;
+  line-height: 2;
+  letter-spacing: 0.012em;
+  color: var(--color-text);
+  /* Prevent orphan punctuation when wrapping CJK */
+  text-wrap: pretty;
+}
+
+.article-body > * + * {
+  margin-top: 1.5rem;
+}
+
+.article-body p {
+  margin: 0;
+}
+
+.article-body h1,
+.article-body h2,
+.article-body h3,
+.article-body h4 {
+  font-weight: 500;
+  letter-spacing: 0;
+  color: var(--color-text);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.article-body h1 {
+  font-size: 1.55rem;
+  margin-top: 3.6rem;
+}
+
+.article-body h2 {
+  font-size: 1.25rem;
+  margin-top: 3.4rem;
+  padding-top: 0;
+}
+
+/* Subtle hairline above h2 to make section breaks felt, not seen */
+.article-body > h2::before {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 1px;
+  background: var(--color-rule);
+  margin-bottom: 1.4rem;
+}
+
+.article-body h3 {
+  font-size: 1.1rem;
+  margin-top: 2.6rem;
+  color: var(--color-text-soft);
+}
+
+.article-body h2 + p,
+.article-body h3 + p,
+.article-body h1 + p {
+  margin-top: 1rem;
+}
+
+.article-body strong {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.article-body em {
+  font-style: italic;
+  /* For CJK, italic synthesis is blocked globally; em on Chinese will simply
+     not visually differ — that's intentional, the user uses **bold** for emphasis */
+}
+
+.article-body a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-color: var(--color-faint);
+  text-decoration-thickness: 0.5px;
+  text-underline-offset: 0.25em;
+}
+
+.article-body a:hover {
+  color: var(--color-link-hover);
+  text-decoration-color: currentColor;
+}
+
+.article-body blockquote {
+  margin: 2.2rem 0;
+  padding: 0.2rem 0 0.2rem 1.4rem;
+  border-left: 2px solid var(--color-rule);
+  color: var(--color-text-soft);
+  letter-spacing: 0.012em;
+}
+
+.article-body blockquote p + p {
+  margin-top: 1rem;
+}
+
+.article-body ul,
+.article-body ol {
+  padding-left: 1.6rem;
+  color: var(--color-text);
+}
+
+.article-body ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.article-body ul > li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+
+.article-body ul > li::before {
+  content: "·";
+  position: absolute;
+  left: 0.4rem;
+  top: -0.05em;
+  color: var(--color-muted);
+  font-size: 1.4em;
+  line-height: 1;
+}
+
+.article-body ol {
+  padding-left: 1.8rem;
+}
+
+.article-body li + li {
+  margin-top: 0.55rem;
+}
+
+.article-body hr {
+  border: 0;
+  text-align: center;
+  margin: 3rem 0;
+  height: 1rem;
+  position: relative;
+}
+
+.article-body hr::before {
+  content: "✦";
+  color: var(--color-faint);
+  font-size: 0.75rem;
+  letter-spacing: 0.5em;
+}
+
+.article-body code {
+  font-family:
+    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.86em;
+  background: transparent;
+  padding: 0 0.2em;
+  border-radius: 0;
+  color: var(--color-text-soft);
+  /* Subtle box-shadow underline so inline code reads as different
+     without breaking the Chinese text rhythm */
+  box-shadow: inset 0 -1px 0 var(--color-rule);
+  letter-spacing: 0;
+}
+
+.article-body pre {
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-rule);
+  border-radius: 0.4rem;
+  padding: 1rem 1.15rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.75;
+  letter-spacing: 0;
+}
+
+.article-body pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--color-text);
+}
+
+/* ───────── article footer ───────── */
+
+.article-footer {
+  margin-top: 4.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--color-rule);
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--color-muted);
+}
+
+.article-footer a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.article-footer a:hover {
+  color: var(--color-link-hover);
+}
+
+/* ───────── prose pages (about, now, topic, project) ───────── */
+
+.prose-page__title {
+  margin: 0 0 0.6rem;
+  font-size: clamp(1.85rem, 4vw, 2.3rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  color: var(--color-text);
+}
+
+.prose-page__subtitle {
+  margin: 0 0 2.5rem;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--color-text-soft);
+  letter-spacing: 0.01em;
+}
+
+.prose-page__section + .prose-page__section {
+  margin-top: 3rem;
+}
+
+.prose-page__section h2 {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  font-weight: 500;
+  margin: 0 0 1.25rem;
+}
+
+.prose-page__section p,
+.prose-page__section li {
+  font-size: 1.02rem;
+  line-height: 1.95;
+  letter-spacing: 0.012em;
+  color: var(--color-text);
+}
+
+.prose-page__section ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.prose-page__section li + li {
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--color-rule-soft);
+}
+
+.prose-page__section li::before {
+  content: "—";
+  color: var(--color-faint);
+  margin-right: 0.7rem;
+  font-style: normal;
+}
+
+.api-list {
+  margin: 1.25rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.9rem;
+}
+
+.api-list__row {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0;
+  border-top: 1px dashed var(--color-rule-soft);
+}
+
+.api-list__row:last-child {
+  border-bottom: 1px dashed var(--color-rule-soft);
+}
+
+.api-list dt {
+  margin: 0;
+}
+
+.api-list dt code {
+  font-family:
+    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  font-size: 0.86rem;
+  background: transparent;
+  padding: 0;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.api-list dd {
+  margin: 0;
+  font-size: 0.95rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--color-muted);
+}
+
+.prose-page__meta {
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+  margin-bottom: 2.5rem;
+}
+
+/* ───────── responsive ───────── */
+
+@media (max-width: 640px) {
+  body {
+    font-size: 17px;
+  }
+
+  .page {
+    padding: 0 1.25rem;
+  }
+
+  .site-header {
+    padding: 2.5rem 0 1.5rem;
+  }
+
+  .site-header__inner {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+
+  .site-nav {
+    gap: 1.25rem;
+    font-size: 0.92rem;
+  }
+
+  .article-body {
+    font-size: 1.02rem;
+    line-height: 1.9;
+  }
+
+  .entry__title {
+    font-size: 1.35rem;
+  }
+}

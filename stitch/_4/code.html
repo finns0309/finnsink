@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#c8c6c5",
+              "on-tertiary-fixed": "#251a00",
+              "error-container": "#ffdad6",
+              "on-error": "#ffffff",
+              "surface-bright": "#fbf9f4",
+              "surface-tint": "#5f5e5e",
+              "on-surface-variant": "#444748",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#1b1c1c",
+              "secondary-fixed-dim": "#b1cdbd",
+              "on-secondary-fixed": "#062016",
+              "on-secondary-fixed-variant": "#334c40",
+              "on-error-container": "#93000a",
+              "on-tertiary-container": "#ad9048",
+              "secondary-fixed": "#cce9d9",
+              "on-primary-container": "#949393",
+              "surface-container-low": "#f5f3ee",
+              "secondary-container": "#cae6d6",
+              "tertiary-fixed-dim": "#e4c375",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "primary-container": "#2c2c2c",
+              "surface": "#fbf9f4",
+              "primary-fixed": "#e4e2e1",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "outline": "#747878",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c4c7c7",
+              "secondary": "#4a6457",
+              "on-secondary-container": "#4e685b",
+              "inverse-surface": "#30312e",
+              "on-primary-fixed-variant": "#474747",
+              "on-background": "#1b1c19",
+              "surface-dim": "#dbdad5",
+              "surface-variant": "#e4e2dd",
+              "background": "#fbf9f4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#171818",
+              "tertiary-fixed": "#ffdf97",
+              "tertiary": "#201600",
+              "tertiary-container": "#392a00",
+              "inverse-primary": "#c8c6c5",
+              "surface-container": "#f0eee9",
+              "on-surface": "#1b1c19",
+              "surface-container-highest": "#e4e2dd"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Noto Serif"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .drop-cap::first-letter {
+            font-family: 'Newsreader';
+            font-size: 5rem;
+            float: left;
+            line-height: 1;
+            padding-right: 0.75rem;
+            padding-top: 0.25rem;
+            font-weight: 700;
+            color: #171818;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky bg-[#fbf9f4] dark:bg-stone-950 z-50 shadow-[0_40px_40px_-15px_rgba(27,28,25,0.04)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
+<a class="text-2xl font-serif font-bold text-[#171818] dark:text-stone-100" href="#">The Editorial Archive</a>
+<nav class="hidden md:flex items-center gap-12">
+<a class="font-serif text-lg tracking-tight italic text-[#171818] dark:text-white border-b-2 border-[#201600] dark:border-stone-400 pb-1" href="#">Archive</a>
+<a class="font-serif text-lg tracking-tight italic text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Journal</a>
+<a class="font-serif text-lg tracking-tight italic text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">About</a>
+<a class="font-serif text-lg tracking-tight italic text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Collection</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#171818] dark:text-stone-100 hover:opacity-70 transition-opacity duration-300">menu</button>
+</div>
+</div>
+<div class="bg-gradient-to-b from-stone-200/20 to-transparent h-px"></div>
+</header>
+<main class="max-w-7xl mx-auto px-8 py-16">
+<!-- Hero Section: Asymmetrical Layout -->
+<section class="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start mb-32">
+<div class="lg:col-span-7 order-2 lg:order-1">
+<span class="font-label text-xs uppercase tracking-widest text-secondary mb-6 block">Featured Essay / Volume I</span>
+<h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tight text-primary leading-[1.1] mb-8">
+                    The Silent Language of <span class="italic font-light">Stone &amp; Light.</span>
+</h1>
+<p class="drop-cap text-xl text-on-surface-variant leading-relaxed max-w-2xl">
+                    Architecture is a conversation between the static and the transient. In this volume, we explore how ancient limestone structures in the Mediterranean capture the morning light, creating a tactile rhythm that transcends temporal boundaries.
+                </p>
+<div class="mt-12 flex items-center gap-6">
+<button class="px-8 py-4 bg-primary text-on-primary font-label text-sm tracking-widest uppercase hover:opacity-90 transition-opacity">Read the Manuscript</button>
+<a class="text-tertiary font-label text-sm uppercase tracking-widest border-b-2 border-tertiary pb-1 hover:opacity-70 transition-opacity" href="#">View Gallery</a>
+</div>
+</div>
+<div class="lg:col-span-5 order-1 lg:order-2 relative">
+<div class="aspect-[4/5] bg-surface-container-high overflow-hidden shadow-2xl rotate-2 hover:rotate-0 transition-transform duration-700">
+<img alt="Architectural light" class="w-full h-full object-cover grayscale-[0.2]" data-alt="Moody minimalist architecture with dramatic shadows and warm sunlight hitting a textured stone wall in an Italian courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCxk0AcFTDt8MlqCO48BjtXJbWSrYL77Pw_nY6MhpnoDGZKFqWAfpVQ30M8c2cKHzCRYfQRlNLmoRrEWXRQbAxMSqBbUwMsL_bcbxmJqrHnoy_tcl5aUpZ4wPcpCG9zKCX_mhj3e8Pf5jJDaYRkAp6UNvrR26t8Uqf_zvrB4Bzl8eaVg82wDwJNSqGhRWEcOUhm1TP-ppXKtDPTTNUwFB7_g0eK1IM-yueeRiVQPz8BZGIPVL_idI8FGVbwPMrPLVj1zOUqtlSQKQg"/>
+</div>
+<!-- Marginalia -->
+<div class="hidden xl:block absolute -right-24 top-1/4 w-40 text-left">
+<p class="font-label text-[10px] uppercase tracking-tighter text-on-surface-variant/60 leading-tight">
+                        Note 042: Observed during the winter solstice, Athens.
+                    </p>
+</div>
+</div>
+</section>
+<!-- Divider -->
+<div class="w-full flex justify-center py-20">
+<div class="w-24 h-px bg-outline-variant/30"></div>
+</div>
+<!-- Article Feed: Bento-style Editorial Grid -->
+<section class="mb-32">
+<div class="flex justify-between items-end mb-16">
+<div>
+<h2 class="font-headline text-4xl font-semibold italic text-primary">The Recent Journal</h2>
+<p class="font-body text-on-surface-variant mt-2 italic">Curated thoughts and observations.</p>
+</div>
+<div class="font-label text-xs uppercase tracking-[0.2em] text-on-surface-variant/50">Filtered by Date</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+<!-- Article Card 1 -->
+<article class="group">
+<div class="bg-surface-container-low aspect-video mb-8 overflow-hidden hover:bg-surface-container-high transition-colors duration-500">
+<img alt="Journal Entry" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="Close-up of old leather bound books and a fountain pen resting on a wooden desk with warm lamp lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkD3qBbC0khcePZnJ25m7_L_Q-YRBhhPo5h-31-3L5aCGvO4RKvGKvMW8S8SrHiJuO3GpNV9_yNIwqVKl-X_t2SHNtxEJmoNLYsAcmn4lKBJJlRgK3hnHpsAhoTaUhpHBx8U8b9vSx3h36RWc9Uq7UiuFWlTOfS2CMF4WTFVSO33C4idVTP1HKu-B06poLk7c5rS85p6b8oG8evbNT9zrxBxP1_weNDF24BJzQ5q8SGiqc3TMWdjxwQonWCVeP3gkV1eCX4g9RLIk"/>
+</div>
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container font-label text-[10px] uppercase tracking-widest">Philosophy</span>
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-widest">Oct 24, 2024</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4 group-hover:text-secondary transition-colors">The Weight of Unread Books</h3>
+<p class="text-on-surface-variant leading-relaxed text-sm line-clamp-3">
+                        Exploring the concept of the 'Antilibrary' and why the books we haven't read are more important than those we have.
+                    </p>
+<a class="inline-block mt-6 text-tertiary font-label text-[10px] uppercase tracking-widest border-b border-tertiary/30 pb-1 group-hover:border-tertiary transition-all" href="#">Continue Reading</a>
+</article>
+<!-- Article Card 2 (Recessed/Asymmetrical Offset) -->
+<article class="group md:mt-12">
+<div class="bg-surface-container-low aspect-square mb-8 overflow-hidden hover:bg-surface-container-high transition-colors duration-500">
+<img alt="Landscape" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="Mist-covered mountain peaks at dawn with a palette of deep blues and soft greys, ethereal and quiet atmosphere" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAurdb5B4RRRW87jO4gTdJXfNCv_SAWC_S1u926Eamx75-AIBP-OUSZixMtOqOeKjMCkezzSf1E9CUGfpBxIrpVGCDzWh9g97tooxP04zpfpMs2o65EAND3SS5jwcbOzlXkRXQnJACqNrSQnPeJ8NMRDLx9CqKREkVmPoz_opIeAwGLNunHA27aJuBc5muTChv5_E92l3QgmDZDz-WRS0Mp_Z4pqh9mIlJQX7h_m3E2skDnMnShewn92n_NJRMY2vpUaOLFWflgIqI"/>
+</div>
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container font-label text-[10px] uppercase tracking-widest">Travel</span>
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-widest">Sep 12, 2024</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4 group-hover:text-secondary transition-colors">Finding Solitude in the Alps</h3>
+<p class="text-on-surface-variant leading-relaxed text-sm line-clamp-3">
+                        A fourteen-day pilgrimage through the highest peaks of Europe, seeking silence in a world that never stops talking.
+                    </p>
+<a class="inline-block mt-6 text-tertiary font-label text-[10px] uppercase tracking-widest border-b border-tertiary/30 pb-1 group-hover:border-tertiary transition-all" href="#">Continue Reading</a>
+</article>
+<!-- Article Card 3 -->
+<article class="group">
+<div class="bg-surface-container-low aspect-video mb-8 overflow-hidden hover:bg-surface-container-high transition-colors duration-500">
+<img alt="Interior" class="w-full h-full object-cover opacity-80 group-hover:scale-105 transition-transform duration-700" data-alt="Minimalist artisan ceramic bowl on a rustic wooden table with natural morning light creating soft textures" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCanAGtff5iWUDcAuzcGW-kzXXzQniSiLj_kwa17EqdVQ_MLMWkZFxdti-FoEJ-58gnowKqVtu2xtoPF2yI3xBVAKXhv8QFi6xCdYDGaAqz5QSYX4JxFwTl4LmDWnaWG0TOoVIDtL6YZ4EALGn-kIYboD-gFYBts0hY3WRbVDq73EY522Wq9aHId26u5j8CtFil2ohTiUnGL-13tLQsyJ-aLNpcGCroeB5OhDkozbNhMZ69J1ZjleoLzqjIYHeiuSmoAAnF-EnTE0Y"/>
+</div>
+<div class="flex items-center gap-3 mb-4">
+<span class="px-2 py-1 bg-secondary-container text-on-secondary-container font-label text-[10px] uppercase tracking-widest">Craft</span>
+<span class="font-label text-[10px] text-on-surface-variant uppercase tracking-widest">Aug 05, 2024</span>
+</div>
+<h3 class="font-headline text-2xl font-bold mb-4 group-hover:text-secondary transition-colors">The Art of Slow Living</h3>
+<p class="text-on-surface-variant leading-relaxed text-sm line-clamp-3">
+                        Refining our relationship with physical objects and the artisanal processes that bring them into being.
+                    </p>
+<a class="inline-block mt-6 text-tertiary font-label text-[10px] uppercase tracking-widest border-b border-tertiary/30 pb-1 group-hover:border-tertiary transition-all" href="#">Continue Reading</a>
+</article>
+</div>
+</section>
+<!-- Newsletter Section: Tonal Transition -->
+<section class="bg-surface-container-low p-16 md:p-24 relative overflow-hidden text-center max-w-5xl mx-auto mb-32">
+<div class="relative z-10">
+<h2 class="font-headline text-5xl italic font-light mb-6">Join the Registry.</h2>
+<p class="font-body text-on-surface-variant max-w-lg mx-auto mb-10">Receive a monthly letter containing exclusive essays, curated reading lists, and archival discoveries.</p>
+<form class="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+<input class="flex-grow bg-transparent border-b border-outline-variant/40 focus:border-secondary transition-colors py-3 px-1 font-label text-sm outline-none" placeholder="Email Address" type="email"/>
+<button class="bg-primary text-on-primary px-8 py-3 font-label text-xs uppercase tracking-widest hover:opacity-90" type="submit">Subscribe</button>
+</form>
+</div>
+<!-- Decorative Accent -->
+<div class="absolute -bottom-20 -right-20 w-64 h-64 border border-tertiary-fixed-dim/20 rounded-full"></div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-stone-200/30 dark:border-stone-800 bg-[#f5f3ee] dark:bg-stone-900">
+<div class="flex flex-col md:flex-row justify-between items-center py-16 px-12 max-w-7xl mx-auto gap-8">
+<div class="flex flex-col gap-4">
+<span class="font-serif italic text-xl text-[#1b1c19] dark:text-stone-300 tracking-tight">The Editorial Archive</span>
+<p class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400">© 2024 The Editorial Archive. All rights reserved. Curated with intentionality.</p>
+</div>
+<nav class="flex gap-10">
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Contact</a>
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Newsletter</a>
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Privacy</a>
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Terms</a>
+</nav>
+<div class="flex gap-6">
+<a class="material-symbols-outlined text-stone-400 hover:text-[#171818] transition-colors" href="#">share</a>
+<a class="material-symbols-outlined text-stone-400 hover:text-[#171818] transition-colors" href="#">mail</a>
+</div>
+</div>
+</footer>
+</body></html>

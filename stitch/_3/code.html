@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Editorial Archive | Article</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#c8c6c5",
+              "on-tertiary-fixed": "#251a00",
+              "error-container": "#ffdad6",
+              "on-error": "#ffffff",
+              "surface-bright": "#fbf9f4",
+              "surface-tint": "#5f5e5e",
+              "on-surface-variant": "#444748",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#1b1c1c",
+              "secondary-fixed-dim": "#b1cdbd",
+              "on-secondary-fixed": "#062016",
+              "on-secondary-fixed-variant": "#334c40",
+              "on-error-container": "#93000a",
+              "on-tertiary-container": "#ad9048",
+              "secondary-fixed": "#cce9d9",
+              "on-primary-container": "#949393",
+              "surface-container-low": "#f5f3ee",
+              "secondary-container": "#cae6d6",
+              "tertiary-fixed-dim": "#e4c375",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "primary-container": "#2c2c2c",
+              "surface": "#fbf9f4",
+              "primary-fixed": "#e4e2e1",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "outline": "#747878",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c4c7c7",
+              "secondary": "#4a6457",
+              "on-secondary-container": "#4e685b",
+              "inverse-surface": "#30312e",
+              "on-primary-fixed-variant": "#474747",
+              "on-background": "#1b1c19",
+              "surface-dim": "#dbdad5",
+              "surface-variant": "#e4e2dd",
+              "background": "#fbf9f4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#171818",
+              "tertiary-fixed": "#ffdf97",
+              "tertiary": "#201600",
+              "tertiary-container": "#392a00",
+              "inverse-primary": "#c8c6c5",
+              "surface-container": "#f0eee9",
+              "on-surface": "#1b1c19",
+              "surface-container-highest": "#e4e2dd"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Noto Serif"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 100 100'%3E%3Cfilter id='noise' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100' height='100' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+        }
+        .drop-cap::first-letter {
+            float: left;
+            font-family: 'Newsreader', serif;
+            font-size: 5.5rem;
+            line-height: 0.8;
+            padding-top: 4px;
+            padding-right: 12px;
+            padding-left: 3px;
+            color: #171818;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-fixed selection:text-on-secondary-fixed">
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-50 bg-[#fbf9f4] dark:bg-stone-950 shadow-[0_40px_40px_-15px_rgba(27,28,25,0.04)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
+<div class="text-2xl font-serif font-bold text-[#171818] dark:text-stone-100">
+                The Editorial Archive
+            </div>
+<nav class="hidden md:flex items-center gap-10 font-serif text-lg tracking-tight italic">
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Archive</a>
+<a class="text-[#171818] dark:text-white border-b-2 border-[#201600] dark:border-stone-400 pb-1" href="#">Journal</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">About</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Collection</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="hover:opacity-70 transition-opacity duration-300">
+<span class="material-symbols-outlined text-[#171818] dark:text-stone-100" data-icon="menu">menu</span>
+</button>
+</div>
+</div>
+<div class="bg-gradient-to-b from-stone-200/20 to-transparent h-px"></div>
+</header>
+<main class="max-w-7xl mx-auto px-8 py-16 md:py-24 grid grid-cols-1 lg:grid-cols-[1fr_minmax(auto,720px)_1fr] gap-x-16">
+<!-- Left Margin: Meta & Navigation -->
+<aside class="hidden lg:flex flex-col gap-12 sticky top-32 h-fit">
+<div class="flex flex-col gap-4">
+<span class="font-label text-xs uppercase tracking-[0.2em] text-secondary font-semibold">Volume IV</span>
+<span class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Issue No. 82</span>
+</div>
+<nav class="flex flex-col gap-6">
+<span class="font-label text-[10px] uppercase tracking-widest text-outline">Contents</span>
+<ul class="flex flex-col gap-4 text-sm font-serif italic border-l border-outline-variant/30 pl-4">
+<li><a class="hover:text-secondary transition-colors" href="#">I. The Genesis of Form</a></li>
+<li><a class="text-primary font-bold" href="#">II. Tactile Resonance</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">III. The Future of Print</a></li>
+<li><a class="hover:text-secondary transition-colors" href="#">IV. Archivist's Note</a></li>
+</ul>
+</nav>
+<div class="flex flex-col gap-4 pt-8">
+<span class="font-label text-[10px] uppercase tracking-widest text-outline">Engagement</span>
+<div class="flex gap-4">
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="share">share</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded-full bg-surface-container-low text-on-surface-variant hover:bg-secondary-container hover:text-on-secondary-container transition-all">
+<span class="material-symbols-outlined text-sm" data-icon="bookmark">bookmark</span>
+</button>
+</div>
+</div>
+</aside>
+<!-- Central Column: Immersive Content -->
+<article class="col-start-1 lg:col-start-2">
+<!-- Breadcrumbs -->
+<nav class="mb-12 flex items-center gap-2 font-label text-[10px] uppercase tracking-widest text-on-surface-variant">
+<a class="hover:text-primary transition-colors" href="#">Journal</a>
+<span class="material-symbols-outlined text-[10px]" data-icon="chevron_right">chevron_right</span>
+<a class="hover:text-primary transition-colors" href="#">Design Philosophies</a>
+<span class="material-symbols-outlined text-[10px]" data-icon="chevron_right">chevron_right</span>
+<span class="text-outline">Tactile Resonance</span>
+</nav>
+<!-- Headline -->
+<header class="mb-16">
+<h1 class="font-headline text-5xl md:text-7xl font-bold tracking-tight text-primary leading-[1.1] mb-8">
+                    The Silent Resonance of Hand-Pressed Paper.
+                </h1>
+<p class="font-serif italic text-xl md:text-2xl text-on-surface-variant leading-relaxed">
+                    Exploring why the digital age craves the imperfection of the physical medium.
+                </p>
+<div class="mt-10 flex items-center gap-4 font-label text-xs tracking-widest text-on-surface-variant border-y border-outline-variant/20 py-6">
+<span>Written by ELARA VANCE</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>OCTOBER 14, 2024</span>
+<span class="w-1 h-1 rounded-full bg-outline-variant"></span>
+<span>12 MIN READ</span>
+</div>
+</header>
+<!-- Main Image -->
+<figure class="mb-16 -mx-8 md:-mx-20 lg:-mx-32 group">
+<div class="aspect-[21/9] overflow-hidden bg-surface-container-high relative">
+<img alt="Antique printing press in a sunlit studio" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" data-alt="Close-up of a vintage black iron printing press with golden details in a sun-drenched artisan studio with dust motes in the air." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaB0R_wAQxvDbottn849WcQN9zzf3CfDQhiplCO59nhJqBtxxWdaMbSAru0GwrMRVoOHRVVSBC8vShDFq0Aej-f-owULY4biO5N8Sd6hMbgm_kPa8nQ6IssTbcK8jG78S4R3fyuqz9z2erumg0DW_TXJxCTE2qFsigXAX9PCZosoncXyWyNZo4-XSrnQpzZZg1Qji3m1-x7Ev40_IGSOScTjs4mfQ5aJvIs1tQxQJVCBBeydywOYK_qiiR5oiTvlFMGhkpyqBWmo8"/>
+<div class="absolute inset-0 bg-primary/5 pointer-events-none"></div>
+</div>
+<figcaption class="mt-4 px-8 md:px-20 lg:px-32 font-serif italic text-sm text-on-surface-variant text-center opacity-80">
+                    Figure 1.1: The 1924 Heidelberg Windmill Press, still in operation at the Archive.
+                </figcaption>
+</figure>
+<!-- Article Body -->
+<div class="prose prose-stone prose-lg max-w-none text-on-surface font-body leading-[1.8]">
+<p class="drop-cap mb-10 text-xl text-on-surface/90">
+                    In an era where every pixel is perfectly aligned and every color is mathematically balanced, there is a growing, quiet rebellion occurring in the corners of creative studios. We find ourselves reaching not for the stylus, but for the charcoal; not for the keyboard, but for the heavy weight of a physical leaf. The digital landscape has provided us with infinite convenience, yet it has left us hungry for the tactile "friction" that only the physical world can provide.
+                </p>
+<p class="mb-8">
+                    When we speak of tactile resonance, we refer to the emotional bridge built between an object and its observer through physical interaction. It is the weight of the paper as you turn the page, the subtle scent of carbon ink, and the slight indentation left by the letterpress—a physical scar that marks the existence of a thought in the material world.
+                </p>
+<!-- Pull Quote -->
+<div class="my-16 py-12 border-y-2 border-primary/5 flex flex-col items-center text-center px-8 relative overflow-hidden bg-surface-container-low/50">
+<span class="material-symbols-outlined text-6xl text-secondary/10 absolute -top-2 left-4 select-none" data-icon="format_quote">format_quote</span>
+<blockquote class="font-headline italic text-3xl md:text-4xl text-primary leading-tight max-w-xl relative z-10">
+                        "The archive is not a graveyard of paper, but a cathedral of intention. Each stroke of ink is a heartbeat preserved."
+                    </blockquote>
+<cite class="mt-6 font-label text-xs uppercase tracking-widest font-semibold text-secondary">— JULIAN MARX, HEAD CURATOR</cite>
+</div>
+<h2 class="font-headline text-3xl font-bold text-primary mt-16 mb-6">The Architecture of the Page</h2>
+<p class="mb-8">
+                    Classic book design is not about decoration; it is about the management of silence. The margins of a well-designed page are not "wasted space"—they are the lungs of the text. They provide a place for the eye to rest and the mind to expand. In the Editorial Archive, we treat our digital canvases with the same reverence for the gutter and the bleed.
+                </p>
+<!-- Marginalia Image Layout -->
+<div class="my-16 grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+<div class="aspect-square bg-surface-container-high overflow-hidden">
+<img alt="Handmade paper stack" class="w-full h-full object-cover" data-alt="Detailed texture shot of handmade recycled paper with deckled edges and visible organic fibers in soft neutral beige tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsmqrt1LPH1TqQtQ_85KkSgw6wg5CL-l3q706jYzuuuVbYJBK76EkTcI0Jyan1UOkpuicEwvkpdk_ADwbHIhftjY848cnBSMU1ArDFp-7QM-2spTFOhNdwTixhEQ6aAQP_h9M0lLV0qdJtVdsoquO-MidccFfy9trM-t-B04t2GI8U186oAmkriXOhmAjZWXF28oOHUll8H0P5vrPiE56oeK1Ph8tEpUr9-r2FWGyiCSAvMeav58ROC8mfg70GX_B7GttGBqxpCcM"/>
+</div>
+<div class="flex flex-col gap-4">
+<h3 class="font-headline text-2xl italic">Organic Imperfection</h3>
+<p class="text-base text-on-surface-variant italic">
+                            The deckled edge of handmade paper is a reminder of the human hand. In our digital interface, we mimic this through subtle noise textures and tonal shifts rather than sharp-edged borders.
+                        </p>
+<hr class="w-12 border-secondary/30"/>
+</div>
+</div>
+<p class="mb-8">
+                    As we look toward the future of digital curation, the challenge is not how to make websites more efficient, but how to make them more human. How do we translate the "soul" of the physical object into a medium composed of light? The answer lies in the rhythm of the layout, the authority of the serif, and the courage to leave space unfilled.
+                </p>
+</div>
+<!-- Footer of Article -->
+<footer class="mt-24 pt-12 border-t border-outline-variant/30 flex flex-col md:flex-row justify-between items-center gap-8">
+<div class="flex items-center gap-4">
+<div class="w-16 h-16 rounded-full bg-surface-container-high overflow-hidden">
+<img alt="Elara Vance author portrait" class="w-full h-full object-cover grayscale" data-alt="Sophisticated portrait of a woman in her late 30s wearing a dark turtleneck against a neutral studio background in black and white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBd6WfdM7lEAVmsp8MJ1BRpe6aaIowEAhV4JJDmpS2sQZKX-CDCKLDy_Ja_rzAnzDLmxEp-txXHly_uEAeoBWzuj9pCnBKTIiOEwipBlDnUG29a0XUmbJUJH1SRGI9F5jHiJbUJ96WbIhJufST3xw3664UWY4CpIZ6PA_st9-8Rncn3h82HK_NfLggEFJeO2YqfLbz0ZsFZXG-I8Ggdx4EU1Sx2z7clvzlSaFXkNrVXarSgusnNHPFTpLdhg3_nTI8BA-ocpAvmGsg"/>
+</div>
+<div>
+<span class="block font-label text-[10px] uppercase tracking-widest text-outline mb-1">Author</span>
+<span class="font-headline text-xl font-bold">Elara Vance</span>
+</div>
+</div>
+<div class="flex gap-4">
+<button class="px-6 py-3 bg-primary text-on-primary font-label text-xs uppercase tracking-widest hover:bg-primary/90 transition-all flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" data-icon="mail">mail</span>
+                        Subscribe to Letters
+                    </button>
+<button class="px-6 py-3 border border-outline-variant text-primary font-label text-xs uppercase tracking-widest hover:bg-surface-container-low transition-all">
+                        Archive Access
+                    </button>
+</div>
+</footer>
+</article>
+<!-- Right Margin: Marginalia & Secondary Insights -->
+<aside class="hidden lg:flex flex-col gap-16 sticky top-32 h-fit">
+<div class="p-6 bg-surface-container-low/50 border-l-2 border-tertiary-fixed-dim">
+<span class="font-label text-[10px] uppercase tracking-widest text-tertiary font-bold mb-4 block">Archive Note 04</span>
+<p class="font-body text-xs leading-relaxed text-on-surface-variant italic">
+                    "The Heidelberg Windmill was the last of its kind. It uses a unique suction and air-blast mechanism to feed paper. In 1924, it was the peak of efficiency; today, it is the peak of meditation."
+                </p>
+</div>
+<div class="flex flex-col gap-6">
+<span class="font-label text-[10px] uppercase tracking-widest text-outline">Reference Material</span>
+<ul class="flex flex-col gap-6">
+<li class="group cursor-pointer">
+<span class="block font-headline text-sm font-bold group-hover:text-secondary transition-colors">The Gutenberg Legacy</span>
+<span class="font-label text-[9px] uppercase text-outline-variant">Published 2022</span>
+</li>
+<li class="group cursor-pointer">
+<span class="block font-headline text-sm font-bold group-hover:text-secondary transition-colors">Modern Serif Revival</span>
+<span class="font-label text-[9px] uppercase text-outline-variant">Published 2023</span>
+</li>
+</ul>
+</div>
+<!-- Page Number Indicator -->
+<div class="mt-20 flex items-center gap-4 text-outline-variant">
+<span class="font-serif italic text-4xl opacity-20">02</span>
+<div class="h-px bg-outline-variant/30 flex-grow"></div>
+<span class="font-serif italic text-sm">Finis.</span>
+</div>
+</aside>
+</main>
+<!-- Bottom Navigation Shell (Mobile Only) -->
+<div class="md:hidden fixed bottom-0 left-0 right-0 z-50 bg-surface/80 backdrop-blur-xl border-t border-outline-variant/10 px-8 py-4 flex justify-between items-center shadow-xl">
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="text-[10px] uppercase font-label">Home</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" data-icon="article" data-weight="fill">article</span>
+<span class="text-[10px] uppercase font-label font-bold">Journal</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="search">search</span>
+<span class="text-[10px] uppercase font-label">Search</span>
+</button>
+<button class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="text-[10px] uppercase font-label">Account</span>
+</button>
+</div>
+<!-- Footer -->
+<footer class="w-full border-t border-stone-200/30 dark:border-stone-800 bg-[#f5f3ee] dark:bg-stone-900 mt-24">
+<div class="flex flex-col md:flex-row justify-between items-center py-16 px-12 max-w-7xl mx-auto gap-8">
+<div class="font-serif italic text-xl text-[#1b1c19] dark:text-stone-300">
+                The Editorial Archive
+            </div>
+<div class="flex flex-wrap justify-center gap-8 font-sans text-xs uppercase tracking-widest font-medium">
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Contact</a>
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Newsletter</a>
+<a class="text-[#171818] underline underline-offset-4" href="#">Privacy</a>
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Terms</a>
+</div>
+<p class="text-[#171818] dark:text-stone-200 font-sans text-xs uppercase tracking-widest font-medium text-center md:text-right">
+                © 2024 The Editorial Archive. All rights reserved. Curated with intentionality.
+            </p>
+</div>
+</footer>
+</body></html>

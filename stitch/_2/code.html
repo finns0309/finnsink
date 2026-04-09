@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#c8c6c5",
+              "on-tertiary-fixed": "#251a00",
+              "error-container": "#ffdad6",
+              "on-error": "#ffffff",
+              "surface-bright": "#fbf9f4",
+              "surface-tint": "#5f5e5e",
+              "on-surface-variant": "#444748",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#1b1c1c",
+              "secondary-fixed-dim": "#b1cdbd",
+              "on-secondary-fixed": "#062016",
+              "on-secondary-fixed-variant": "#334c40",
+              "on-error-container": "#93000a",
+              "on-tertiary-container": "#ad9048",
+              "secondary-fixed": "#cce9d9",
+              "on-primary-container": "#949393",
+              "surface-container-low": "#f5f3ee",
+              "secondary-container": "#cae6d6",
+              "tertiary-fixed-dim": "#e4c375",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "primary-container": "#2c2c2c",
+              "surface": "#fbf9f4",
+              "primary-fixed": "#e4e2e1",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "outline": "#747878",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c4c7c7",
+              "secondary": "#4a6457",
+              "on-secondary-container": "#4e685b",
+              "inverse-surface": "#30312e",
+              "on-primary-fixed-variant": "#474747",
+              "on-background": "#1b1c19",
+              "surface-dim": "#dbdad5",
+              "surface-variant": "#e4e2dd",
+              "background": "#fbf9f4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#171818",
+              "tertiary-fixed": "#ffdf97",
+              "tertiary": "#201600",
+              "tertiary-container": "#392a00",
+              "inverse-primary": "#c8c6c5",
+              "surface-container": "#f0eee9",
+              "on-surface": "#1b1c19",
+              "surface-container-highest": "#e4e2dd"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Noto Serif"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            opacity: 0.98;
+        }
+        .grain-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        }
+        .drop-cap::first-letter {
+            font-family: 'Newsreader', serif;
+            font-size: 5rem;
+            float: left;
+            line-height: 1;
+            padding-right: 0.75rem;
+            padding-top: 0.25rem;
+            color: #171818;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body selection:bg-secondary-container">
+<div class="grain-overlay"></div>
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-40 bg-[#fbf9f4] dark:bg-stone-950 shadow-[0_40px_40px_-15px_rgba(27,28,25,0.04)]">
+<nav class="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
+<div class="flex items-center gap-4">
+<span class="text-2xl font-serif font-bold text-[#171818] dark:text-stone-100">The Editorial Archive</span>
+</div>
+<div class="hidden md:flex items-center gap-12 font-serif text-lg tracking-tight italic">
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Archive</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Journal</a>
+<a class="text-[#171818] dark:text-white border-b-2 border-[#201600] dark:border-stone-400 pb-1" href="#">About</a>
+<a class="text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Collection</a>
+</div>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-[#171818] dark:text-stone-100 hover:opacity-70 transition-opacity duration-300">menu</button>
+</div>
+</nav>
+<div class="bg-gradient-to-b from-stone-200/20 to-transparent h-px"></div>
+</header>
+<main class="max-w-7xl mx-auto px-8 py-16 md:py-24">
+<!-- Hero Section / Header -->
+<section class="mb-24">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
+<div class="md:col-span-8">
+<span class="font-label text-xs uppercase tracking-widest text-secondary mb-4 block">The Curator</span>
+<h1 class="font-headline text-6xl md:text-8xl font-bold tracking-tight text-primary leading-none">
+                        A Life Bound in <br/><span class="italic font-light">Chapters &amp; Ink.</span>
+</h1>
+</div>
+<div class="md:col-span-4 border-l border-outline-variant/20 pl-8 pb-2">
+<p class="font-body text-sm italic text-on-surface-variant leading-relaxed">
+                        "To curate is to find the soul in the mundane, the thread in the chaos, and the story in the silence."
+                    </p>
+</div>
+</div>
+</section>
+<!-- Profile Section with Asymmetric Layout -->
+<section class="mb-32">
+<div class="grid grid-cols-1 md:grid-cols-12 gap-16 items-start">
+<!-- Image Section -->
+<div class="md:col-span-5 relative group">
+<div class="aspect-[3/4] overflow-hidden bg-surface-container-high relative z-10">
+<img alt="Profile photo" class="w-full h-full object-cover filter sepia-[0.2] contrast-[1.1] grayscale hover:scale-105 transition-transform duration-700" data-alt="Black and white artistic portrait of a thoughtful person in a linen shirt, soft side lighting, vintage film grain texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZZ0E5Jn-6u2m40Rvi1-_qtSoPW7q8x_R2NPX3UyY5Yunx1UOaPTebze5GvMEIDUo_R7cTU1vAIwc_AAlsixwNEKibej4gyENr_171r85ht5KLn7Bl_kMNLo_Ok2wcUfLRP9ai5eIMwhiaOH8PiKExoRGlh8ToAlGt3b-q5hzPEullEhjk3TgSeb5y4L7RmZF4GiI1RSSSycOllIbBFZJfs9GdcmFWVIGzBvXMKJZeCn5XQi9A1KTIKhQ0H5prXda4yhB9DtoCYwU"/>
+</div>
+<!-- Decorative Element (Bookmark) -->
+<div class="absolute -top-4 -right-4 w-24 h-32 bg-secondary-container/30 -z-10 mix-blend-multiply"></div>
+<div class="mt-8">
+<h3 class="font-headline text-2xl italic mb-2">Julian Vane</h3>
+<p class="font-label text-xs uppercase tracking-widest text-on-surface-variant">Lead Archivist &amp; Essayist</p>
+</div>
+</div>
+<!-- Biography Section -->
+<div class="md:col-span-7">
+<div class="max-w-xl">
+<p class="font-body text-xl leading-relaxed text-on-surface drop-cap mb-8">
+                            For over a decade, my life has been a pursuit of the tangible in an increasingly digital world. What began as a childhood fascination with the smell of old paper evolved into a professional journey through the world's most storied libraries and quietest corners.
+                        </p>
+<p class="font-body text-lg leading-relaxed text-on-surface-variant mb-8">
+                            I believe that stories are not just told; they are curated. Whether through the lens of a 1960s Leica or the scratch of a fountain pen on heavy cardstock, my work seeks to document the intersections of history, craftsmanship, and the human spirit. 
+                        </p>
+<p class="font-body text-lg leading-relaxed text-on-surface-variant">
+                            This archive is my digital manuscript—a collection of reflections, visual essays, and found artifacts that resonate with the weight of intentionality. It is an invitation to slow down, to read between the lines, and to appreciate the grain of the life we are collectively weaving.
+                        </p>
+</div>
+<!-- Marginalia -->
+<div class="mt-16 md:mt-24 p-8 bg-surface-container-low relative border-l-2 border-tertiary-fixed-dim">
+<span class="font-label text-[10px] uppercase tracking-[0.2em] text-on-tertiary-fixed-variant block mb-4">Marginal Notes</span>
+<p class="font-body italic text-sm text-on-surface-variant max-w-sm">
+                            Currently reading: "The Architecture of Happiness" <br/>
+                            Current location: A small studio overlooking the Thames. <br/>
+                            Last found object: A pressed fern from a 1922 botanical guide.
+                        </p>
+</div>
+</div>
+</div>
+</section>
+<!-- Interests / Values Section (Bento Grid) -->
+<section class="mb-32">
+<div class="mb-12">
+<h2 class="font-headline text-4xl font-bold mb-2">Foundations of My Practice</h2>
+<div class="w-16 h-px bg-primary"></div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Card 1 -->
+<div class="p-10 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-500 flex flex-col justify-between min-h-[300px]">
+<div>
+<span class="material-symbols-outlined text-3xl text-secondary mb-6">menu_book</span>
+<h4 class="font-headline text-2xl font-semibold mb-4 text-primary">Tactile Heritage</h4>
+<p class="font-body text-on-surface-variant leading-relaxed">Prioritizing physical archives and analog tools to maintain a connection with historical craftsmanship.</p>
+</div>
+<div class="pt-6 border-t border-outline-variant/10">
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary">01 / Materiality</span>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="p-10 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-500 flex flex-col justify-between min-h-[300px]">
+<div>
+<span class="material-symbols-outlined text-3xl text-secondary mb-6">ink_pen</span>
+<h4 class="font-headline text-2xl font-semibold mb-4 text-primary">Intentional Rhythm</h4>
+<p class="font-body text-on-surface-variant leading-relaxed">Choosing depth over speed. I publish when the thought is ripe, not when the clock demands it.</p>
+</div>
+<div class="pt-6 border-t border-outline-variant/10">
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary">02 / Pace</span>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="p-10 bg-surface-container-low hover:bg-surface-container-high transition-colors duration-500 flex flex-col justify-between min-h-[300px]">
+<div>
+<span class="material-symbols-outlined text-3xl text-secondary mb-6">auto_awesome</span>
+<h4 class="font-headline text-2xl font-semibold mb-4 text-primary">Quiet Resonance</h4>
+<p class="font-body text-on-surface-variant leading-relaxed">Finding the extraordinary within the ordinary. Seeking the 'punctum' in every visual and written piece.</p>
+</div>
+<div class="pt-6 border-t border-outline-variant/10">
+<span class="font-label text-[10px] uppercase tracking-widest text-secondary">03 / Vision</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Newsletter / CTA Section -->
+<section class="py-24 bg-primary text-on-primary text-center px-4 relative overflow-hidden">
+<!-- Decorative Grain background for CTA -->
+<div class="absolute inset-0 opacity-10 mix-blend-overlay pointer-events-none bg-[url('data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noise\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noise)\'/%3E%3C/svg%3E')]"></div>
+<div class="relative z-10 max-w-2xl mx-auto">
+<h2 class="font-headline text-4xl md:text-5xl font-bold mb-6 italic italic tracking-tight">Letters from the Archive</h2>
+<p class="font-body text-lg text-primary-fixed-dim mb-10 leading-relaxed">
+                    A monthly journal of reflections on art, archives, and the quiet life. No clutter, only curated thought.
+                </p>
+<form class="flex flex-col md:flex-row gap-4 justify-center">
+<input class="bg-transparent border-b border-outline-variant/40 text-on-primary py-3 px-2 focus:border-secondary outline-none transition-colors font-body text-lg w-full md:w-80" placeholder="Your email address" type="email"/>
+<button class="bg-on-primary text-primary px-10 py-3 font-label text-xs uppercase tracking-widest font-bold hover:bg-secondary-container transition-all active:translate-y-px">Subscribe</button>
+</form>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-stone-200/30 dark:border-stone-800 bg-[#f5f3ee] dark:bg-stone-900">
+<div class="flex flex-col md:flex-row justify-between items-center py-16 px-12 max-w-7xl mx-auto gap-8">
+<div class="text-left">
+<span class="font-serif italic text-xl text-[#1b1c19] dark:text-stone-300 block mb-2">The Editorial Archive</span>
+<p class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400">© 2024 The Editorial Archive. All rights reserved. Curated with intentionality.</p>
+</div>
+<div class="flex gap-8 font-sans text-xs uppercase tracking-widest font-medium">
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Contact</a>
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Newsletter</a>
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Privacy</a>
+<a class="text-stone-400 hover:text-stone-600 transition-colors" href="#">Terms</a>
+</div>
+<div class="flex gap-6">
+<a class="text-stone-400 hover:text-[#171818] transition-all" href="#"><span class="material-symbols-outlined">share</span></a>
+<a class="text-stone-400 hover:text-[#171818] transition-all" href="#"><span class="material-symbols-outlined">mail</span></a>
+</div>
+</div>
+</footer>
+</body></html>

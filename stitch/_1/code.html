@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;family=Noto+Serif:ital,wght@0,100..900;1,100..900&amp;family=Public+Sans:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary-fixed-dim": "#c8c6c5",
+              "on-tertiary-fixed": "#251a00",
+              "error-container": "#ffdad6",
+              "on-error": "#ffffff",
+              "surface-bright": "#fbf9f4",
+              "surface-tint": "#5f5e5e",
+              "on-surface-variant": "#444748",
+              "on-tertiary": "#ffffff",
+              "on-primary-fixed": "#1b1c1c",
+              "secondary-fixed-dim": "#b1cdbd",
+              "on-secondary-fixed": "#062016",
+              "on-secondary-fixed-variant": "#334c40",
+              "on-error-container": "#93000a",
+              "on-tertiary-container": "#ad9048",
+              "secondary-fixed": "#cce9d9",
+              "on-primary-container": "#949393",
+              "surface-container-low": "#f5f3ee",
+              "secondary-container": "#cae6d6",
+              "tertiary-fixed-dim": "#e4c375",
+              "error": "#ba1a1a",
+              "on-primary": "#ffffff",
+              "primary-container": "#2c2c2c",
+              "surface": "#fbf9f4",
+              "primary-fixed": "#e4e2e1",
+              "inverse-on-surface": "#f2f1ec",
+              "surface-container-high": "#eae8e3",
+              "outline": "#747878",
+              "on-tertiary-fixed-variant": "#5a4300",
+              "on-secondary": "#ffffff",
+              "outline-variant": "#c4c7c7",
+              "secondary": "#4a6457",
+              "on-secondary-container": "#4e685b",
+              "inverse-surface": "#30312e",
+              "on-primary-fixed-variant": "#474747",
+              "on-background": "#1b1c19",
+              "surface-dim": "#dbdad5",
+              "surface-variant": "#e4e2dd",
+              "background": "#fbf9f4",
+              "surface-container-lowest": "#ffffff",
+              "primary": "#171818",
+              "tertiary-fixed": "#ffdf97",
+              "tertiary": "#201600",
+              "tertiary-container": "#392a00",
+              "inverse-primary": "#c8c6c5",
+              "surface-container": "#f0eee9",
+              "on-surface": "#1b1c19",
+              "surface-container-highest": "#e4e2dd"
+            },
+            fontFamily: {
+              "headline": ["Newsreader"],
+              "body": ["Noto Serif"],
+              "label": ["Public Sans"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+      .paper-grain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 50;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+      }
+    </style>
+</head>
+<body class="bg-background text-on-surface font-body selection:bg-secondary-container selection:text-on-secondary-container">
+<div class="paper-grain"></div>
+<!-- TopNavBar -->
+<header class="w-full top-0 sticky z-40 bg-[#fbf9f4] dark:bg-stone-950 shadow-[0_40px_40px_-15px_rgba(27,28,25,0.04)]">
+<div class="flex justify-between items-center max-w-7xl mx-auto px-8 py-6">
+<div class="text-2xl font-serif font-bold text-[#171818] dark:text-stone-100 italic">
+                The Editorial Archive
+            </div>
+<nav class="hidden md:flex items-center gap-12">
+<a class="font-serif text-lg tracking-tight italic text-[#171818] dark:text-white border-b-2 border-[#201600] dark:border-stone-400 pb-1" href="#">Archive</a>
+<a class="font-serif text-lg tracking-tight italic text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Journal</a>
+<a class="font-serif text-lg tracking-tight italic text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">About</a>
+<a class="font-serif text-lg tracking-tight italic text-stone-500 dark:text-stone-400 hover:text-[#171818] transition-colors" href="#">Collection</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-primary hover:opacity-70 transition-opacity" data-icon="menu">menu</button>
+</div>
+</div>
+<div class="bg-gradient-to-b from-stone-200/20 to-transparent h-px"></div>
+</header>
+<main class="max-w-7xl mx-auto px-8 py-24 min-h-screen">
+<!-- Hero / Intro -->
+<section class="mb-32 grid grid-cols-1 md:grid-cols-12 gap-12 items-end">
+<div class="md:col-span-7">
+<span class="font-label text-xs uppercase tracking-widest text-secondary font-semibold mb-6 block">Volume IV • Selected Works</span>
+<h1 class="font-headline text-7xl md:text-8xl text-primary leading-[0.9] tracking-tighter mb-8 italic">
+<span class="block">Curated</span>
+<span class="block ml-12">Perspectives.</span>
+</h1>
+<p class="text-xl md:text-2xl text-on-surface-variant max-w-xl leading-relaxed">
+                    A collection of digital manuscripts and visual explorations. Each entry represents a chapter in the ongoing pursuit of intentional design and literary depth.
+                </p>
+</div>
+<div class="md:col-span-5 hidden md:block">
+<div class="text-right italic font-serif text-on-surface-variant opacity-60 text-sm leading-loose">
+                    "Design is the silent ambassador of your brand."<br/>— Paul Rand, 1982
+                </div>
+</div>
+</section>
+<!-- Project Gallery (Asymmetric Grid) -->
+<section class="space-y-48">
+<!-- Project 01: The Leading Edge -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-7 relative group">
+<div class="absolute -inset-4 bg-surface-container-low -z-10 transition-colors group-hover:bg-surface-container-high"></div>
+<img alt="Old book on a wooden desk" class="w-full aspect-[4/3] object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Close-up of a vintage leather-bound book lying on a dark wooden library table with soft dust motes in sunbeams" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBDEn9KZaB-aw1wBETMFAuL53jBJAECkkMEVUV_h2sU18r3stxmc7bOdlBRaG6eaVfL-4FZ5Aebk_Q_SB9jDBaQBNdhec4m3rXsILgmy5RWKLaSyrqVQHn2ukgn6QXSLHG6KrSQf3lFd3JgZP2L2B2Ch6BtT6psFDr5S9_faryAmsUWgV7iI0IQS2ouY2biJDVPLjudwQ4pNvmxDgA0y6W8qoNV7ETTXtW8laBQF-9xv2QkrFb_njHVWNey5bV2WKMs5BsVRmslMeE"/>
+</div>
+<div class="md:col-span-4 md:col-start-9">
+<span class="font-label text-xs uppercase tracking-widest text-tertiary-fixed-dim font-bold">01 / Manuscript</span>
+<h2 class="font-headline text-4xl mt-4 mb-6 text-primary">The Architecture of Silence</h2>
+<p class="text-on-surface-variant mb-8 leading-relaxed">
+                        An exploration into minimalist editorial layouts where the whitespace is as communicative as the ink itself. This study focuses on the rhythm of breath in digital reading.
+                    </p>
+<a class="inline-block font-label text-xs uppercase tracking-widest text-primary border-b-2 border-tertiary pb-1 hover:text-secondary hover:border-secondary transition-all" href="#">View Full Case Study</a>
+</div>
+</div>
+<!-- Project 02: Bento Style Feature -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+<div class="md:col-span-4 bg-surface-container-low p-12 flex flex-col justify-between">
+<div>
+<span class="font-label text-xs uppercase tracking-widest text-secondary font-bold">02 / Typography</span>
+<h2 class="font-headline text-3xl mt-4 mb-6 text-primary italic">Serif Soul</h2>
+<p class="text-sm text-on-surface-variant leading-relaxed">
+                            A deep-dive into the history of transitional typefaces and their resonance in modern screen interfaces.
+                        </p>
+</div>
+<div class="mt-12">
+<span class="material-symbols-outlined text-4xl text-primary" data-icon="menu_book">menu_book</span>
+</div>
+</div>
+<div class="md:col-span-8 overflow-hidden">
+<img alt="Typewriter keys" class="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Macro photography of antique typewriter keys with shallow depth of field and warm nostalgic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1qvdRTu0rzp2MqOc-eP-iDkH1NRf_cdwfMNFij0dZ-Cbrm-337EpVTw7Brd2TNX4cmysEFLH-525JfMBKrucXqdIG4aFGar7b8sOOi7OAoUcSKuKBixfFlP5fzl1mCPxs66ioouR886hYTyUWssj1Id-Ag07CS6R2Jfhj8vQaMGM8bIae1tK48dJ13Z06tTCVTlmfRPXAcDn8xAyYHMYR5Oi09YtLJo2BIScPmI2OX-0NtiC5Vxziyr8yOhnKRhzugDWmJQULisQ"/>
+</div>
+</div>
+<!-- Project 03: Asymmetric Flip -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-12 items-center">
+<div class="md:col-span-4 order-2 md:order-1">
+<span class="font-label text-xs uppercase tracking-widest text-secondary font-bold">03 / Archivist</span>
+<h2 class="font-headline text-4xl mt-4 mb-6 text-primary">Foliage &amp; Form</h2>
+<p class="text-on-surface-variant mb-8 leading-relaxed">
+                        A botanical research project presented as a series of digital herbarium pages, utilizing soft parchment tones and margin notes.
+                    </p>
+<div class="flex gap-4">
+<button class="bg-primary text-on-primary px-6 py-3 font-label text-xs uppercase tracking-widest hover:opacity-80 transition-opacity">Explore Archive</button>
+</div>
+</div>
+<div class="md:col-span-7 md:col-start-6 order-1 md:order-2 relative group">
+<div class="absolute -inset-4 bg-surface-container-low -z-10 transition-colors group-hover:bg-surface-container-high"></div>
+<img alt="Dried botanical specimen" class="w-full aspect-[16/10] object-cover grayscale hover:grayscale-0 transition-all duration-700" data-alt="Delicate dried eucalyptus leaves arranged on a textured cream paper background with soft side lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYy8AVKJl37KpiL7XQYyOszgPSiyXutjCivV0DjGDWrIh1-JN-iXuhht7X-6-ZKbcz__HlRvMBwJGLasdnnOFe-5qcXk_6ov6Ae4pxGfS9k55jsz7wEXSONraKCQ28psojLCOtHSN6glGvENVe8u_csJ8jdn-QwH9VVAe2etA6jHJfjBnXCKLQio4Z255wD28PEQOeZL4YZ9y8mAnVFb0pMR_Zq4VBiAYD66wdtEzVIDl966JwW723C6Lrq6r6d8wLNWyO3dfsocQ"/>
+</div>
+</div>
+</section>
+<!-- The Marginalia (Sidenote Section) -->
+<section class="mt-48 pt-24 border-t border-outline-variant/20 grid grid-cols-1 md:grid-cols-12 gap-12">
+<div class="md:col-span-4">
+<h3 class="font-headline text-2xl italic mb-6">Archivist's Note</h3>
+<p class="text-sm font-body italic text-on-surface-variant leading-loose border-l-2 border-tertiary-fixed-dim pl-6">
+                    Every project selected for this archive has been chosen for its commitment to the tangible. In a world of fleeting pixels, we strive for the permanence of a well-turned phrase and a carefully balanced layout.
+                </p>
+</div>
+<div class="md:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-8">
+<div class="space-y-2">
+<span class="block font-label text-[10px] uppercase text-stone-400">Published</span>
+<span class="block font-body text-sm">October 2024</span>
+</div>
+<div class="space-y-2">
+<span class="block font-label text-[10px] uppercase text-stone-400">Curator</span>
+<span class="block font-body text-sm">E. Sterling</span>
+</div>
+<div class="space-y-2">
+<span class="block font-label text-[10px] uppercase text-stone-400">Status</span>
+<span class="block font-body text-sm text-secondary">Active Collection</span>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full border-t border-stone-200/30 dark:border-stone-800 bg-[#f5f3ee] dark:bg-stone-900">
+<div class="flex flex-col md:flex-row justify-between items-center py-16 px-12 max-w-7xl mx-auto gap-8">
+<div class="font-serif italic text-xl text-[#1b1c19] dark:text-stone-300">
+                The Editorial Archive
+            </div>
+<div class="flex gap-8">
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Contact</a>
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Newsletter</a>
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Privacy</a>
+<a class="font-sans text-xs uppercase tracking-widest font-medium text-stone-400 hover:text-stone-600 transition-colors" href="#">Terms</a>
+</div>
+<div class="font-sans text-xs uppercase tracking-widest font-medium text-[#171818] dark:text-stone-200 opacity-60">
+                © 2024 The Editorial Archive. All rights reserved. Curated with intentionality.
+            </div>
+</div>
+</footer>
+</body></html>

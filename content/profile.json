@@ -1,0 +1,12 @@
+{
+  "id": "finn",
+  "name": "Finn",
+  "summary": "写作是为了知道自己到底在想什么。",
+  "long_summary": "这里是 Finn 的写作。关于注意力、知识、工具，以及一个人在被加速的世界里如何继续慢下来思考。不定期更新，长一点，慢一点。",
+  "location": "北京",
+  "roles": [],
+  "themes": [],
+  "beliefs": [],
+  "start_here": ["/", "/now", "/about"],
+  "links": {}
+}
