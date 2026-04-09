@@ -305,6 +305,20 @@ export function getPostBySlug(slug: string) {
   return getContentStore().postsBySlug.get(slug);
 }
 
+export function getAdjacentPosts(slug: string): { newer: Post | null; older: Post | null } {
+  const posts = getPosts();
+  const index = posts.findIndex((post) => post.slug === slug);
+
+  if (index === -1) {
+    return { newer: null, older: null };
+  }
+
+  return {
+    newer: index > 0 ? posts[index - 1] : null,
+    older: index < posts.length - 1 ? posts[index + 1] : null,
+  };
+}
+
 export function getPostsByTopic(slug: string) {
   return getContentStore().postsByTopic.get(slug) ?? [];
 }

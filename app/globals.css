@@ -226,6 +226,31 @@ code {
   text-decoration-color: var(--color-rule);
 }
 
+/* ───────── reading progress ─────────
+   A 2px hairline at the top of the viewport that fills as you scroll
+   through an article. The only client-side JS on the entire site. */
+
+.reading-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  z-index: 100;
+  pointer-events: none;
+  background: transparent;
+}
+
+.reading-progress__bar {
+  height: 100%;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: 0 50%;
+  /* very small smoothing — rAF already throttles, this is just polish */
+  transition: transform 80ms linear;
+  opacity: 0.85;
+}
+
 /* ───────── home / index ───────── */
 
 .lede {
@@ -244,6 +269,24 @@ code {
   text-transform: uppercase;
   color: var(--color-muted);
   margin-bottom: 2.25rem;
+}
+
+/* ───────── essays page (year groups) ───────── */
+
+.essay-year + .essay-year {
+  margin-top: 4.5rem;
+}
+
+.essay-year__label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  font-weight: 500;
+  margin-bottom: 1.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--color-rule-soft);
 }
 
 /* ───────── entry list ─────────
@@ -417,6 +460,44 @@ code {
   margin-bottom: 1.9rem;
 }
 
+/* heading anchors — visible on hover, in the left margin */
+.article-body h1,
+.article-body h2,
+.article-body h3 {
+  position: relative;
+}
+
+.article-body .heading-anchor {
+  position: absolute;
+  left: -1.4rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 400;
+  color: var(--color-faint);
+  text-decoration: none;
+  opacity: 0;
+  transition: opacity 220ms var(--ease), color 220ms var(--ease);
+}
+
+.article-body h1:hover .heading-anchor,
+.article-body h2:hover .heading-anchor,
+.article-body h3:hover .heading-anchor,
+.article-body .heading-anchor:focus-visible {
+  opacity: 1;
+}
+
+.article-body .heading-anchor:hover {
+  color: var(--color-accent);
+}
+
+.article-body > h2::before {
+  /* keep the section hairline above the heading text, not the anchor */
+  position: relative;
+  z-index: 1;
+}
+
 .article-body h3 {
   font-size: 1.1rem;
   margin-top: 3.2rem;
@@ -551,10 +632,70 @@ code {
   color: var(--color-text);
 }
 
+/* ───────── essay prev / next ───────── */
+
+.essay-nav {
+  margin-top: 5rem;
+  padding-top: 2.25rem;
+  border-top: 1px solid var(--color-rule);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+.essay-nav__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  text-decoration: none;
+  color: var(--color-text);
+  padding: 0.4rem 0;
+  transition: color 220ms var(--ease);
+}
+
+.essay-nav__item--older {
+  text-align: right;
+}
+
+.essay-nav__label {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  transition: color 220ms var(--ease);
+}
+
+.essay-nav__title {
+  font-size: 1.05rem;
+  line-height: 1.45;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-wrap: balance;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 380ms var(--ease), color 220ms var(--ease);
+}
+
+.essay-nav__item--older .essay-nav__title {
+  background-position: 100% 100%;
+}
+
+.essay-nav__item:hover .essay-nav__title {
+  color: var(--color-accent);
+  background-size: 100% 1px;
+}
+
+.essay-nav__item:hover .essay-nav__label {
+  color: var(--color-accent);
+}
+
 /* ───────── article footer ───────── */
 
 .article-footer {
-  margin-top: 5rem;
+  margin-top: 3rem;
   padding-top: 2rem;
   border-top: 1px solid var(--color-rule);
   font-size: 0.95rem;
@@ -655,6 +796,58 @@ code {
   top: 0.85rem;
 }
 
+/* ───────── 404 ───────── */
+
+.not-found {
+  padding-top: 4rem;
+  padding-bottom: 6rem;
+}
+
+.not-found__eyebrow {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  margin-bottom: 1.75rem;
+}
+
+.not-found__title {
+  font-size: clamp(1.85rem, 4vw, 2.4rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+  color: var(--color-text);
+  margin-bottom: 1.25rem;
+  text-wrap: balance;
+}
+
+.not-found__body {
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: var(--color-text-soft);
+  font-style: italic;
+  margin-bottom: 2.5rem;
+  max-width: 28rem;
+}
+
+.not-found__actions {
+  display: flex;
+  gap: 1rem;
+  align-items: baseline;
+  font-size: 0.95rem;
+  color: var(--color-muted);
+}
+
+.not-found__actions a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.not-found__actions a:hover {
+  color: var(--color-accent);
+}
+
 /* ───────── api list (for-agents page) ───────── */
 
 .api-list {
@@ -731,6 +924,24 @@ code {
 
   .article-header {
     margin: 0.5rem 0 2.25rem;
+  }
+
+  .article-body .heading-anchor {
+    /* hide on mobile — no hover, no margin space, no value */
+    display: none;
+  }
+
+  .essay-nav {
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  .essay-nav__item--older {
+    text-align: left;
+  }
+
+  .essay-nav__item--older .essay-nav__title {
+    background-position: 0 100%;
   }
 }
 

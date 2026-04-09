@@ -31,9 +31,6 @@ export const metadata: Metadata = {
     template: `%s — ${siteConfig.name}`,
   },
   description: siteConfig.description,
-  alternates: {
-    canonical: "/",
-  },
   openGraph: {
     type: "website",
     locale: "zh_CN",
@@ -46,6 +43,12 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
+  },
+  alternates: {
+    canonical: "/",
+    types: {
+      "application/atom+xml": "/rss.xml",
+    },
   },
 };
 
