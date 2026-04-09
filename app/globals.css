@@ -1,17 +1,20 @@
-@import "tailwindcss";
+/* ─────────────────────────────────────────────────────────────
+   Finn — a quiet reading site
+   No framework. One file. Built for long Chinese essays.
+   ───────────────────────────────────────────────────────────── */
 
 :root {
-  --color-bg: #faf7f0;
-  --color-bg-soft: #f4efe3;
-  --color-text: #2a2622;
-  --color-text-soft: #4a443c;
-  --color-muted: #8a8278;
-  --color-faint: #b8ad9c;
-  --color-rule: #e6dfce;
-  --color-rule-soft: #efe9d9;
-  --color-link: #2a2622;
-  --color-link-hover: #8a4a2b;
-  --color-mark: #f0e6c8;
+  /* paper-warm palette, intentionally narrow */
+  --color-bg:         #faf7f0;
+  --color-bg-soft:    #f4efe3;
+  --color-text:       #2a2622;
+  --color-text-soft:  #4a443c;
+  --color-muted:      #8a8278;
+  --color-faint:      #b8ad9c;
+  --color-rule:       #e6dfce;
+  --color-rule-soft:  #efe9d9;
+  --color-accent:     #8a4a2b;
+  --color-mark:       #f0e6c8;
 
   --font-serif:
     var(--font-source-serif), "Source Serif 4", "Iowan Old Style",
@@ -22,27 +25,66 @@
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
 
-  --measure: 36rem;
+  --measure:      36rem;
   --measure-wide: 44rem;
+
+  /* a single shared timing function for every transition on the site */
+  --ease: cubic-bezier(0.2, 0, 0, 1);
 }
 
-* {
+/* ───────── reset (the only one we need) ───────── */
+
+*,
+*::before,
+*::after {
   box-sizing: border-box;
 }
+
+html,
+body,
+h1, h2, h3, h4, h5, h6,
+p, ul, ol, dl, dd, figure, blockquote, hr, pre {
+  margin: 0;
+  padding: 0;
+}
+
+ul, ol {
+  list-style: none;
+}
+
+img, svg, video {
+  display: block;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* ───────── root ───────── */
 
 html {
   background: var(--color-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* Block browsers from synthesizing fake italics on CJK fonts */
+  /* Block synthetic italics on CJK */
   font-synthesis: none;
   /* Pull punctuation off the visual edge in Safari */
   hanging-punctuation: allow-end last;
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
   background: var(--color-bg);
   color: var(--color-text);
@@ -50,11 +92,8 @@ body {
   font-size: 18px;
   line-height: 1.8;
   font-feature-settings: "kern", "liga", "calt", "halt", "palt";
-  /* Use proportional half-widths for CJK punctuation where the font supports it */
   font-variant-east-asian: proportional-width;
-  /* Better long-paragraph wrapping in Chrome */
   text-wrap: pretty;
-  /* Don't break inside CJK; keep long Latin URLs from overflowing */
   word-break: normal;
   line-break: strict;
   overflow-wrap: anywhere;
@@ -65,19 +104,25 @@ body {
 }
 
 a {
-  color: var(--color-link);
+  color: var(--color-text);
   text-decoration: underline;
   text-decoration-thickness: 0.5px;
   text-underline-offset: 0.22em;
   text-decoration-color: var(--color-faint);
+  text-decoration-skip-ink: auto;
   transition:
-    color 160ms ease,
-    text-decoration-color 160ms ease;
+    color 200ms var(--ease),
+    text-decoration-color 200ms var(--ease);
 }
 
 a:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
   text-decoration-color: currentColor;
+}
+
+code {
+  font-family:
+    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 }
 
 /* ───────── layout ───────── */
@@ -92,6 +137,12 @@ a:hover {
 .page--wide {
   max-width: var(--measure-wide);
 }
+
+.site-main {
+  padding: 2.5rem 0 6rem;
+}
+
+/* ───────── header ───────── */
 
 .site-header {
   padding: 3.5rem 0 2rem;
@@ -115,7 +166,7 @@ a:hover {
 }
 
 .site-header__brand:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
 }
 
 .site-nav {
@@ -129,20 +180,38 @@ a:hover {
 .site-nav a {
   text-decoration: none;
   color: var(--color-muted);
+  position: relative;
 }
 
 .site-nav a:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
 }
 
-.site-main {
-  padding: 2.5rem 0 6rem;
+/* a hairline that blooms underneath nav links on hover —
+   small, slow, present only if you look. */
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.35em;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 320ms var(--ease);
 }
+
+.site-nav a:hover::after {
+  transform: scaleX(1);
+}
+
+/* ───────── footer ───────── */
 
 .site-footer {
+  margin-top: 5rem;
   padding: 3rem 0 4rem;
   border-top: 1px solid var(--color-rule);
-  margin-top: 4rem;
 }
 
 .site-footer__inner {
@@ -152,7 +221,12 @@ a:hover {
   text-align: center;
 }
 
-/* ───────── index / list pages ───────── */
+.site-footer__inner a {
+  color: var(--color-muted);
+  text-decoration-color: var(--color-rule);
+}
+
+/* ───────── home / index ───────── */
 
 .lede {
   margin: 0 0 4rem;
@@ -160,23 +234,21 @@ a:hover {
   line-height: 1.85;
   color: var(--color-text-soft);
   font-style: italic;
+  text-wrap: balance;
 }
 
 .section-label {
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-muted);
-  font-style: normal;
-  font-family: var(--font-sans);
-  margin: 0 0 1.75rem;
+  margin-bottom: 2.25rem;
 }
 
-.entry-list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
+/* ───────── entry list ─────────
+   Quiet table of contents. No boxes, no cards.
+   Each entry is a date in margin + title + summary, separated by space. */
 
 .entry-list > li + li {
   margin-top: 2.75rem;
@@ -191,40 +263,47 @@ a:hover {
 .entry__date {
   display: block;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: var(--color-muted);
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.65rem;
 }
 
 .entry__title {
-  margin: 0 0 0.55rem;
   font-size: 1.5rem;
   line-height: 1.35;
   font-weight: 500;
   letter-spacing: -0.005em;
   color: var(--color-text);
   text-wrap: balance;
+  margin-bottom: 0.6rem;
 }
 
 .entry__title a {
   text-decoration: none;
   color: inherit;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-repeat: no-repeat;
+  background-size: 0% 1px;
+  background-position: 0 100%;
+  transition: background-size 380ms var(--ease), color 200ms var(--ease);
 }
 
 .entry__title a:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
+  background-size: 100% 1px;
 }
 
 .entry__summary {
-  margin: 0;
   font-size: 1rem;
   line-height: 1.85;
   color: var(--color-text-soft);
   letter-spacing: 0.01em;
+  text-wrap: pretty;
 }
 
-/* ───────── article ───────── */
+/* ───────── article header ───────── */
 
 .article-header {
   margin: 1rem 0 3rem;
@@ -233,68 +312,78 @@ a:hover {
 
 .article-eyebrow {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-muted);
-  margin: 0 0 1.25rem;
+  margin-bottom: 1.25rem;
 }
 
 .article-title {
-  margin: 0 0 1.15rem;
-  font-size: clamp(1.85rem, 4vw, 2.35rem);
-  line-height: 1.25;
+  font-size: clamp(1.95rem, 4.4vw, 2.55rem);
+  line-height: 1.22;
   font-weight: 500;
-  letter-spacing: -0.005em;
+  letter-spacing: -0.01em;
   color: var(--color-text);
   text-wrap: balance;
+  margin-bottom: 1.25rem;
 }
 
 .article-subtitle {
-  margin: 0 0 1.5rem;
+  margin-bottom: 1.75rem;
   padding-left: 1rem;
   border-left: 2px solid var(--color-rule);
   font-size: 1.05rem;
   line-height: 1.85;
   color: var(--color-text-soft);
   letter-spacing: 0.01em;
+  font-style: italic;
 }
 
 .article-meta {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.04em;
+  font-size: 0.74rem;
+  letter-spacing: 0.06em;
   color: var(--color-muted);
+  text-transform: uppercase;
 }
 
 .article-meta > * + *::before {
   content: "·";
-  margin: 0 0.55rem;
+  margin: 0 0.6rem;
   color: var(--color-faint);
 }
 
 .article-rule {
   border: 0;
   border-top: 1px solid var(--color-rule);
-  margin: 2rem 0 2.5rem;
-  width: 100%;
+  margin: 2.25rem 0 2.75rem;
 }
+
+/* ───────── article body ─────────
+   This is the room the whole site exists for. */
 
 .article-body {
   font-size: 1.075rem;
-  line-height: 2;
-  letter-spacing: 0.012em;
+  line-height: 2.15;
+  letter-spacing: 0.02em;
   color: var(--color-text);
-  /* Prevent orphan punctuation when wrapping CJK */
   text-wrap: pretty;
 }
 
 .article-body > * + * {
-  margin-top: 1.5rem;
+  margin-top: 2.1rem;
 }
 
 .article-body p {
   margin: 0;
+}
+
+/* The first paragraph after the rule sits a touch larger and quieter —
+   it's the threshold of the essay. */
+.article-body > p:first-of-type::first-line {
+  font-variant: small-caps;
+  letter-spacing: 0.04em;
 }
 
 .article-body h1,
@@ -310,35 +399,34 @@ a:hover {
 
 .article-body h1 {
   font-size: 1.55rem;
-  margin-top: 3.6rem;
+  margin-top: 4.5rem;
 }
 
 .article-body h2 {
   font-size: 1.25rem;
-  margin-top: 3.4rem;
-  padding-top: 0;
+  margin-top: 4.5rem;
 }
 
-/* Subtle hairline above h2 to make section breaks felt, not seen */
+/* hairline above h2 — section breaks felt, not seen */
 .article-body > h2::before {
   content: "";
   display: block;
   width: 2.5rem;
   height: 1px;
   background: var(--color-rule);
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.9rem;
 }
 
 .article-body h3 {
   font-size: 1.1rem;
-  margin-top: 2.6rem;
+  margin-top: 3.2rem;
   color: var(--color-text-soft);
 }
 
 .article-body h2 + p,
 .article-body h3 + p,
 .article-body h1 + p {
-  margin-top: 1rem;
+  margin-top: 1.4rem;
 }
 
 .article-body strong {
@@ -348,8 +436,7 @@ a:hover {
 
 .article-body em {
   font-style: italic;
-  /* For CJK, italic synthesis is blocked globally; em on Chinese will simply
-     not visually differ — that's intentional, the user uses **bold** for emphasis */
+  /* CJK em is intentionally invisible — author uses **bold** for emphasis */
 }
 
 .article-body a {
@@ -361,15 +448,16 @@ a:hover {
 }
 
 .article-body a:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
   text-decoration-color: currentColor;
 }
 
 .article-body blockquote {
-  margin: 2.2rem 0;
+  margin: 2.4rem 0;
   padding: 0.2rem 0 0.2rem 1.4rem;
   border-left: 2px solid var(--color-rule);
   color: var(--color-text-soft);
+  font-style: italic;
   letter-spacing: 0.012em;
 }
 
@@ -379,18 +467,13 @@ a:hover {
 
 .article-body ul,
 .article-body ol {
-  padding-left: 1.6rem;
-  color: var(--color-text);
-}
-
-.article-body ul {
-  list-style: none;
   padding-left: 0;
 }
 
-.article-body ul > li {
+.article-body ul > li,
+.article-body ol > li {
   position: relative;
-  padding-left: 1.4rem;
+  padding-left: 1.5rem;
 }
 
 .article-body ul > li::before {
@@ -404,11 +487,26 @@ a:hover {
 }
 
 .article-body ol {
-  padding-left: 1.8rem;
+  counter-reset: list;
+}
+
+.article-body ol > li {
+  counter-increment: list;
+}
+
+.article-body ol > li::before {
+  content: counter(list) ".";
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  line-height: 2.1;
 }
 
 .article-body li + li {
-  margin-top: 0.55rem;
+  margin-top: 0.6rem;
 }
 
 .article-body hr {
@@ -427,15 +525,10 @@ a:hover {
 }
 
 .article-body code {
-  font-family:
-    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
   font-size: 0.86em;
   background: transparent;
   padding: 0 0.2em;
-  border-radius: 0;
   color: var(--color-text-soft);
-  /* Subtle box-shadow underline so inline code reads as different
-     without breaking the Chinese text rhythm */
   box-shadow: inset 0 -1px 0 var(--color-rule);
   letter-spacing: 0;
 }
@@ -454,7 +547,6 @@ a:hover {
 .article-body pre code {
   background: transparent;
   padding: 0;
-  border-radius: 0;
   box-shadow: none;
   color: var(--color-text);
 }
@@ -462,7 +554,7 @@ a:hover {
 /* ───────── article footer ───────── */
 
 .article-footer {
-  margin-top: 4.5rem;
+  margin-top: 5rem;
   padding-top: 2rem;
   border-top: 1px solid var(--color-rule);
   font-size: 0.95rem;
@@ -476,26 +568,37 @@ a:hover {
 }
 
 .article-footer a:hover {
-  color: var(--color-link-hover);
+  color: var(--color-accent);
 }
 
-/* ───────── prose pages (about, now, topic, project) ───────── */
+/* ───────── prose pages (about, now, for-agents) ───────── */
 
 .prose-page__title {
-  margin: 0 0 0.6rem;
   font-size: clamp(1.85rem, 4vw, 2.3rem);
   font-weight: 500;
   letter-spacing: -0.01em;
   line-height: 1.2;
   color: var(--color-text);
+  margin-bottom: 0.7rem;
 }
 
 .prose-page__subtitle {
-  margin: 0 0 2.5rem;
+  margin-bottom: 2.75rem;
   font-size: 1.05rem;
   line-height: 1.85;
   color: var(--color-text-soft);
   letter-spacing: 0.01em;
+  font-style: italic;
+  text-wrap: balance;
+}
+
+.prose-page__meta {
+  font-family: var(--font-sans);
+  font-size: 0.74rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  margin-bottom: 2.75rem;
 }
 
 .prose-page__section + .prose-page__section {
@@ -504,12 +607,12 @@ a:hover {
 
 .prose-page__section h2 {
   font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--color-muted);
   font-weight: 500;
-  margin: 0 0 1.25rem;
+  margin-bottom: 1.4rem;
 }
 
 .prose-page__section p,
@@ -520,36 +623,50 @@ a:hover {
   color: var(--color-text);
 }
 
+.prose-page__section p + p {
+  margin-top: 1.1rem;
+}
+
 .prose-page__section ul {
-  list-style: none;
   padding: 0;
-  margin: 0;
+}
+
+.prose-page__section li {
+  position: relative;
+  padding-left: 1.4rem;
 }
 
 .prose-page__section li + li {
-  margin-top: 0.75rem;
-  padding-top: 0.75rem;
+  margin-top: 0.85rem;
+  padding-top: 0.85rem;
   border-top: 1px dashed var(--color-rule-soft);
 }
 
 .prose-page__section li::before {
   content: "—";
+  position: absolute;
+  left: 0;
+  top: 0;
   color: var(--color-faint);
-  margin-right: 0.7rem;
   font-style: normal;
 }
 
+.prose-page__section li + li::before {
+  top: 0.85rem;
+}
+
+/* ───────── api list (for-agents page) ───────── */
+
 .api-list {
-  margin: 1.25rem 0 0;
-  padding: 0;
+  margin-top: 1.25rem;
   display: grid;
-  gap: 0.9rem;
+  gap: 0;
 }
 
 .api-list__row {
   display: grid;
-  gap: 0.2rem;
-  padding: 0.85rem 0;
+  gap: 0.25rem;
+  padding: 0.95rem 0;
   border-top: 1px dashed var(--color-rule-soft);
 }
 
@@ -557,13 +674,7 @@ a:hover {
   border-bottom: 1px dashed var(--color-rule-soft);
 }
 
-.api-list dt {
-  margin: 0;
-}
-
 .api-list dt code {
-  font-family:
-    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
   font-size: 0.86rem;
   background: transparent;
   padding: 0;
@@ -572,19 +683,10 @@ a:hover {
 }
 
 .api-list dd {
-  margin: 0;
   font-size: 0.95rem;
   font-style: italic;
   line-height: 1.7;
   color: var(--color-muted);
-}
-
-.prose-page__meta {
-  font-family: var(--font-sans);
-  font-size: 0.78rem;
-  letter-spacing: 0.06em;
-  color: var(--color-muted);
-  margin-bottom: 2.5rem;
 }
 
 /* ───────── responsive ───────── */
@@ -615,10 +717,63 @@ a:hover {
 
   .article-body {
     font-size: 1.02rem;
-    line-height: 1.9;
+    line-height: 2.05;
+    letter-spacing: 0.018em;
+  }
+
+  .article-body > * + * {
+    margin-top: 1.85rem;
   }
 
   .entry__title {
     font-size: 1.35rem;
+  }
+
+  .article-header {
+    margin: 0.5rem 0 2.25rem;
+  }
+}
+
+/* ───────── reduced motion ───────── */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
+/* ───────── print ─────────
+   Because long essays are sometimes read on paper. */
+
+@media print {
+  :root {
+    --color-bg: #ffffff;
+    --color-text: #000000;
+    --color-text-soft: #222222;
+    --color-muted: #555555;
+    --color-rule: #cccccc;
+  }
+
+  .site-header,
+  .site-footer,
+  .article-footer {
+    display: none;
+  }
+
+  body {
+    font-size: 12pt;
+    line-height: 1.7;
+  }
+
+  .article-body {
+    font-size: 12pt;
+  }
+
+  a {
+    color: #000;
+    text-decoration: none;
   }
 }
