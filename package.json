@@ -11,6 +11,8 @@
     "validate:content": "node scripts/validate-content.cjs"
   },
   "dependencies": {
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "gray-matter": "^4.0.3",
     "marked": "^18.0.0",
     "next": "^16.2.1",
