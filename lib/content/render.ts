@@ -1,5 +1,14 @@
 import { marked, type Tokens } from "marked";
 
+function escapeHtml(input: string): string {
+  return input
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
 /**
  * 盘古之白 — insert a thin space (U+2009) between CJK and Latin/digit
  * boundaries. Applied to the markdown source before parsing, so HTML
@@ -55,6 +64,13 @@ function configureMarked() {
           inner +
           `</h${token.depth}>`
         );
+      },
+      // Disallow raw HTML pass-through. Anything that looks like an HTML
+      // tag in the markdown source is rendered as escaped text instead of
+      // injected into the DOM. Removes the entire <script>/onerror surface
+      // even if a future content source is less trusted than the author.
+      html(token: Tokens.HTML | Tokens.Tag) {
+        return escapeHtml(token.raw);
       },
     },
   });

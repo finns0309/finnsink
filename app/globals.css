@@ -16,6 +16,13 @@
   --color-accent:     #8a4a2b;
   --color-mark:       #f0e6c8;
 
+  /* Font strategy: system fonts only, on purpose.
+     We never download a webfont — every visitor reads in the best
+     serif their machine already has. This means the site looks
+     slightly different on macOS, Windows, and Linux, and that is
+     a feature, not a bug. Zero requests, zero FOUT, zero layout
+     shift, instant first paint. If you ever want a single uniform
+     look across machines, switch to next/font and self-host. */
   --font-serif:
     "Source Serif 4", "Iowan Old Style",
     "Apple Garamond", Charter, Baskerville, "Times New Roman",
@@ -71,6 +78,31 @@ button {
   border-radius: 1px;
 }
 
+/* ───────── skip link ─────────
+   Keyboard users land on this first; visually hidden until focused.
+   Lets readers jump past header/nav straight into the essay. */
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.6rem 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  text-decoration: none;
+  border: 1px solid var(--color-rule);
+  border-radius: 0 0 4px 0;
+  transform: translateY(-110%);
+  transition: transform 220ms var(--ease);
+  z-index: 200;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
 /* ───────── root ───────── */
 
 html {
@@ -89,7 +121,8 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-serif);
-  font-size: 18px;
+  /* rem so that the site honors the reader's browser font-size preference */
+  font-size: 1.125rem;
   line-height: 1.8;
   font-feature-settings: "kern", "liga", "calt", "halt", "palt";
   font-variant-east-asian: proportional-width;
@@ -422,13 +455,6 @@ code {
   margin: 0;
 }
 
-/* The first paragraph after the rule sits a touch larger and quieter —
-   it's the threshold of the essay. */
-.article-body > p:first-of-type::first-line {
-  font-variant: small-caps;
-  letter-spacing: 0.04em;
-}
-
 .article-body h1,
 .article-body h2,
 .article-body h3,
@@ -447,17 +473,10 @@ code {
 
 .article-body h2 {
   font-size: 1.25rem;
-  margin-top: 4.5rem;
-}
-
-/* hairline above h2 — section breaks felt, not seen */
-.article-body > h2::before {
-  content: "";
-  display: block;
-  width: 2.5rem;
-  height: 1px;
-  background: var(--color-rule);
-  margin-bottom: 1.9rem;
+  /* No hairline above h2 — the whitespace is the section break.
+     A short dash here read as a stray ornament, not as structure,
+     so we let the vertical rhythm carry the meaning. */
+  margin-top: 5.5rem;
 }
 
 /* heading anchors — visible on hover, in the left margin */
@@ -490,12 +509,6 @@ code {
 
 .article-body .heading-anchor:hover {
   color: var(--color-accent);
-}
-
-.article-body > h2::before {
-  /* keep the section hairline above the heading text, not the anchor */
-  position: relative;
-  z-index: 1;
 }
 
 .article-body h3 {
@@ -886,7 +899,7 @@ code {
 
 @media (max-width: 640px) {
   body {
-    font-size: 17px;
+    font-size: 1.0625rem;
   }
 
   .page {

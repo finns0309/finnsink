@@ -39,8 +39,13 @@ export default function RootLayout({ children }: Readonly<{ children: ReactNode 
   return (
     <html lang="zh-CN">
       <body>
+        <a className="skip-link" href="#main">
+          跳到正文
+        </a>
         <SiteHeader />
-        <main className="site-main">{children}</main>
+        <main id="main" className="site-main">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>
