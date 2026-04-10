@@ -41,11 +41,7 @@ When adding a new content type or field, update **both** the schema and the deri
 
 ### Routes (`app/`)
 
-App Router. Page routes under `app/{about,now,essays,for-agents,…}` consume the content helpers directly (server components). JSON/HTTP endpoints live under `app/api/` and mirror the content store (`posts.json`, `topics.json`, `graph.json`, `backlinks/`, `search.json`, `cmd/`, …) — they are how the "for agents" surface is exposed. `lib/api/response.ts` is the shared JSON response helper.
-
-### Terminal subsystem (`lib/terminal/`)
-
-A small parse → execute → render pipeline (`runTerminalCommand` in `lib/terminal/index.ts`) powers the `/api/cmd` endpoint and the on-page terminal UI. Add new commands by extending `execute.ts` and the corresponding renderer in `render.ts`; types live in `types.ts`.
+App Router. Page routes under `app/{about,now,essays,for-agents,…}` consume the content helpers directly (server components). JSON/HTTP endpoints live under `app/api/` and mirror the content store (`posts.json`, `topics.json`, `graph.json`, `backlinks/`, `search.json`, …) — they are how the "for agents" surface is exposed. `lib/api/response.ts` is the shared JSON response helper. The canonical list of agent-facing endpoints is hardcoded in `app/for-agents/page.tsx`; keep it in sync when adding or removing routes.
 
 ## Conventions
 
