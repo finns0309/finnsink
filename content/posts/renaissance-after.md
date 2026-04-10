@@ -3,8 +3,8 @@ title: 复兴之后（上）：当理解不再需要许可
 slug: renaissance-after
 summary: 把文艺复兴理解成"欧洲人重新读了几本古书"，就像把今天理解成"人类多了一个聊天框"。技术上没说错，但完全没碰到真正发生的事。
 thesis: 每一次知识基础设施的系统升级，都会改写"谁有资格理解世界"的隐性规则。今天正在发生的，就是这样一次升级。
-published_at: 2026-04-09
-updated_at: 2026-04-09
+published_at: 2026-04-04
+updated_at: 2026-04-04
 topics: []
 stance: stable
 person_snapshot:

@@ -34,6 +34,8 @@ person_snapshot:
 
 ## 本地开发
 
+建议把仓库放在非 iCloud 同步目录，例如 `/Users/finn/Code/FinnsBlogs`。如果继续直接在 `Documents/` 里开发，macOS 的按需下载可能会把源码文件标记成 `dataless`，进而导致 Git、Next.js、甚至普通文件读取都变慢或卡住。
+
 安装依赖：
 
 ```bash
@@ -44,6 +46,12 @@ npm ci
 
 ```bash
 npm run dev -- --hostname 127.0.0.1 -p 3000
+```
+
+如果你本机开了代理，依赖安装明显卡住时，可以临时关掉当前命令的代理：
+
+```bash
+env -u HTTP_PROXY -u HTTPS_PROXY npm ci
 ```
 
 常用检查：

@@ -3,8 +3,8 @@ title: '谁在维持那个"我"？'
 slug: who-maintains-the-self
 summary: 当代 agent 的连续性大多来自外部维护，而不是内部生成。它们制造的是主体幻觉，而不是主体本身——拿到的是成品，而不是蓝图。
 thesis: 角色稳定性不等于主体生成。一个主体的成立，需要在真实代价下自训练、被经验不可逆地改写、能跨时间自我维持——而不是依赖一整套外部脚手架持续供给。
-published_at: 2026-04-09
-updated_at: 2026-04-09
+published_at: 2026-03-30
+updated_at: 2026-03-30
 topics: []
 stance: stable
 person_snapshot:

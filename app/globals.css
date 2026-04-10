@@ -17,9 +17,9 @@
   --color-mark:       #f0e6c8;
 
   --font-serif:
-    var(--font-source-serif), "Source Serif 4", "Iowan Old Style",
+    "Source Serif 4", "Iowan Old Style",
     "Apple Garamond", Charter, Baskerville, "Times New Roman",
-    var(--font-noto-serif-sc), "Noto Serif SC", "Source Han Serif SC",
+    "Noto Serif SC", "Source Han Serif SC",
     "Songti SC", STSong, SimSun, serif;
   --font-sans:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",

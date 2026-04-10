@@ -88,7 +88,6 @@ export default async function EssayPage({ params }: EssayPageProps) {
       <ReadingProgress />
       <script
         type="application/ld+json"
-        // eslint-disable-next-line react/no-danger
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <article className="page">
