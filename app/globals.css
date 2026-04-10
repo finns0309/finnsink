@@ -444,6 +444,7 @@ code {
   line-height: 2.15;
   letter-spacing: 0.02em;
   color: var(--color-text);
+  text-align: justify;
   text-wrap: pretty;
 }
 
