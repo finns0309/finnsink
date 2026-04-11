@@ -448,11 +448,17 @@ code {
 }
 
 .article-body > * + * {
-  margin-top: 3.2rem;
+  margin-top: 4rem;
 }
 
 .article-body p {
   margin: 0;
+}
+
+/* Extra visual pause created by double blank lines in the markdown source */
+.article-body .breath {
+  margin: 0;
+  height: 1.6rem;
 }
 
 .article-body h1,
@@ -928,7 +934,7 @@ code {
   }
 
   .article-body > * + * {
-    margin-top: 2.8rem;
+    margin-top: 3.4rem;
   }
 
   .entry__title {

@@ -1,4 +1,4 @@
-import { marked, type Tokens } from "marked";
+import { marked, type Tokens, type TokenizerAndRendererExtension } from "marked";
 
 function escapeHtml(input: string): string {
   return input
@@ -43,11 +43,39 @@ function slugifyHeading(plainText: string): string {
     .replace(/[#?&/\\]+/g, "");
 }
 
+/**
+ * Markdown normally collapses any number of blank lines into one paragraph
+ * break. This extension detects runs of 2+ blank lines between paragraphs
+ * and emits a <div class="breath"></div> spacer so the author can control
+ * visual rhythm by adding blank lines in the source.
+ */
+const breathExtension: TokenizerAndRendererExtension = {
+  name: "breath",
+  level: "block",
+  start(src: string) {
+    return src.match(/\n{3,}/)?.index;
+  },
+  tokenizer(src: string) {
+    const match = src.match(/^(\n{3,})/);
+    if (match) {
+      return {
+        type: "breath",
+        raw: match[0],
+      };
+    }
+  },
+  renderer() {
+    return '<div class="breath"></div>\n';
+  },
+};
+
 let configured = false;
 
 function configureMarked() {
   if (configured) return;
   configured = true;
+
+  marked.use({ extensions: [breathExtension] });
 
   marked.use({
     gfm: true,
