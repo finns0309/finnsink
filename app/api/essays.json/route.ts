@@ -3,5 +3,5 @@ import { jsonData } from "@/lib/api/response";
 
 export function GET() {
   const posts = getPosts().map(({ content, ...post }) => post);
-  return jsonData(posts, { resource: "posts", count: posts.length });
+  return jsonData(posts, { resource: "essays", count: posts.length });
 }

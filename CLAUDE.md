@@ -41,7 +41,7 @@ When adding a new content type or field, update **both** the schema and the deri
 
 ### Routes (`app/`)
 
-App Router. Page routes under `app/{about,now,essays,for-agents,…}` consume the content helpers directly (server components). JSON/HTTP endpoints live under `app/api/` and mirror the content store (`posts.json`, `topics.json`, `graph.json`, `backlinks/`, `search.json`, …) — they are how the "for agents" surface is exposed. `lib/api/response.ts` is the shared JSON response helper. The canonical list of agent-facing endpoints is hardcoded in `app/for-agents/page.tsx`; keep it in sync when adding or removing routes.
+App Router. Page routes under `app/{about,now,essays,for-agents,…}` consume the content helpers directly (server components). JSON/HTTP endpoints live under `app/api/` and mirror the content store (`essays.json`, `topics.json`, `graph.json`, `backlinks/`, `search.json`, …) — they are how the "for agents" surface is exposed. `lib/api/response.ts` is the shared JSON response helper. The canonical list of agent-facing endpoints is hardcoded in `app/for-agents/page.tsx`; keep it in sync when adding or removing routes.
 
 ## Conventions
 

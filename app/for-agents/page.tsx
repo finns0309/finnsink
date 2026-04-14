@@ -37,8 +37,8 @@ const groups: Group[] = [
     blurb:
       "Long-form writing in Chinese. Listings return metadata only; the slug endpoints include full markdown.",
     endpoints: [
-      { path: "/api/posts.json", description: "all essays, metadata only" },
-      { path: "/api/posts/[slug].json", description: "single essay with body and frontmatter" },
+      { path: "/api/essays.json", description: "all essays, metadata only" },
+      { path: "/api/essays/[slug].json", description: "single essay with body and frontmatter" },
     ],
   },
   {

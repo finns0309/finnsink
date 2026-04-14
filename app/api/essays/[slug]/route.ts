@@ -9,15 +9,14 @@ export async function GET(_: Request, { params }: RouteProps) {
   const { slug } = await params;
 
   if (!slug) {
-    return jsonNotFound("post");
+    return jsonNotFound("essay");
   }
 
-  const normalizedSlug = slug.replace(/\.json$/i, "");
-  const post = getPostBySlug(normalizedSlug);
+  const post = getPostBySlug(slug);
 
   if (!post) {
-    return jsonNotFound("post");
+    return jsonNotFound("essay");
   }
 
-  return jsonData(post, { resource: "post", target: normalizedSlug });
+  return jsonData(post, { resource: "essay", target: slug });
 }
