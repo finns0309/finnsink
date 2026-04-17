@@ -8,6 +8,7 @@ updated_at: 2026-04-17
 topics: []
 stance: working
 person_snapshot:
+  - 我相信"直觉设计"不是设计师的天赋，而是维度匹配的副作用。
 ---
 # 一维与二维：人机交互的维度论
 
