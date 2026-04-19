@@ -39,6 +39,23 @@
   --ease: cubic-bezier(0.2, 0, 0, 1);
 }
 
+/* Dark mode follows OS preference. Deliberately not reversed — we keep the
+   warm tint, so it reads like aged paper at night rather than a cold terminal. */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:         #1c1915;
+    --color-bg-soft:    #252019;
+    --color-text:       #e6dcc8;
+    --color-text-soft:  #b8ac95;
+    --color-muted:      #857b6c;
+    --color-faint:      #5a5244;
+    --color-rule:       #2e2a22;
+    --color-rule-soft:  #26221c;
+    --color-accent:     #d69968;
+    --color-mark:       #3a3220;
+  }
+}
+
 /* ───────── reset (the only one we need) ───────── */
 
 *,
@@ -107,6 +124,7 @@ button {
 
 html {
   background: var(--color-bg);
+  color-scheme: light dark;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
@@ -448,11 +466,7 @@ code {
 }
 
 .article-body > * + * {
-  margin-top: 4rem;
-}
-
-.article-body p {
-  margin: 0;
+  margin-top: 1.6rem;
 }
 
 /* Extra visual pause created by double blank lines in the markdown source */
@@ -934,7 +948,7 @@ code {
   }
 
   .article-body > * + * {
-    margin-top: 3.4rem;
+    margin-top: 1.4rem;
   }
 
   .entry__title {
