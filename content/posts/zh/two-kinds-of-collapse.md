@@ -1,6 +1,7 @@
 ---
 title: 两种坍缩
 slug: two-kinds-of-collapse
+lang: zh
 summary: 'Breaking Bad 和 Better Call Saul 各讲了一种"我"的坍缩——一个因为 ego 太强而毁灭，一个因为从未真正拥有过"我"而被吞噬。'
 thesis: '"我"不是一个可以简单拥有或缺失的东西，而是一个需要在持续张力中被维持的过程。太紧会断，太松会散。'
 published_at: 2026-01-12

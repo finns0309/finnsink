@@ -139,9 +139,14 @@ function parseFrontmatter(raw, filePath) {
 }
 
 function readPosts() {
-  return readDirectory(path.join(CONTENT_ROOT, "posts"), ".md").map((filePath) => {
-    return parseFrontmatter(fs.readFileSync(filePath, "utf8"), filePath);
-  });
+  const langs = ["zh", "en", "ja"];
+  return langs.flatMap((lang) =>
+    readDirectory(path.join(CONTENT_ROOT, "posts", lang), ".md").map((filePath) => {
+      const post = parseFrontmatter(fs.readFileSync(filePath, "utf8"), filePath);
+      post.lang = post.lang ?? lang;
+      return post;
+    }),
+  );
 }
 
 const profile = readJson(path.join(CONTENT_ROOT, "profile.json"));
@@ -155,7 +160,7 @@ const knownPostSlugs = new Set(posts.map((post) => post.slug));
 const knownProjectSlugs = new Set(projects.map((project) => project.slug));
 const knownRoutes = new Set([
   ...STATIC_ROUTES,
-  ...posts.map((post) => `/essays/${post.slug}`),
+  ...posts.filter((post) => post.lang === "zh").map((post) => `/essays/${post.slug}`),
   ...topics.map((topic) => `/topics/${topic.slug}`),
   ...projects.map((project) => `/projects/${project.slug}`),
 ]);
@@ -191,7 +196,7 @@ for (const post of posts) {
         severity: "error",
         code: "post.topic_missing",
         message: `Post "${post.slug}" references missing topic "${topicSlug}".`,
-        location: `content/posts/${post.slug}.md`,
+        location: `content/posts/${post.lang}/${post.slug}.md`,
       });
     }
   }
@@ -202,7 +207,7 @@ for (const post of posts) {
         severity: "error",
         code: "post.related_missing",
         message: `Post "${post.slug}" references missing related post "${related.slug}".`,
-        location: `content/posts/${post.slug}.md`,
+        location: `content/posts/${post.lang}/${post.slug}.md`,
       });
     }
   }

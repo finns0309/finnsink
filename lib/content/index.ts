@@ -4,19 +4,24 @@ import path from "node:path";
 import matter from "gray-matter";
 
 import {
+  DEFAULT_LANG,
   edgeSchema,
+  langSchema,
   nowSchema,
   postSchema,
   profileSchema,
   projectSchema,
   topicSchema,
   type Edge,
+  type Lang,
   type Now,
   type Post,
   type Profile,
   type Project,
   type Topic,
 } from "./schemas";
+
+const LANGS = langSchema.options;
 
 const CONTENT_ROOT = path.join(process.cwd(), "content");
 
@@ -39,6 +44,8 @@ type ContentStore = {
   projectsBySlug: Map<string, Project>;
   posts: Post[];
   postsBySlug: Map<string, Post>;
+  postsByLang: Map<Lang, Post[]>;
+  postsBySlugAndLang: Map<string, Map<Lang, Post>>;
   postsByTopic: Map<string, Post[]>;
   projectsByTopic: Map<string, Project[]>;
   edges: Edge[];
@@ -186,14 +193,46 @@ function buildContentStore(): ContentStore {
     readJsonFile(filePath, projectSchema),
   );
   const posts = sortByDateDescending(
-    readDirectory(path.join(CONTENT_ROOT, "posts"), ".md", readMarkdownFile),
+    LANGS.flatMap((lang) =>
+      readDirectory(path.join(CONTENT_ROOT, "posts", lang), ".md", (filePath) => {
+        const post = readMarkdownFile(filePath);
+        if (post.lang !== lang) {
+          throw new Error(
+            `Post "${post.slug}" has frontmatter lang="${post.lang}" but lives in content/posts/${lang}/. Files must match their directory.`,
+          );
+        }
+        return post;
+      }),
+    ),
   );
   const edges = readJsonFile(path.join(CONTENT_ROOT, "edges.json"), edgeSchema.array());
 
   const topicsBySlug = buildIndex(topics, "topic");
   const projectsBySlug = buildIndex(projects, "project");
-  const postsBySlug = buildIndex(posts, "post");
-  const postsByTopic = buildGroupedIndex(posts, (post) => post.topics);
+
+  // Split posts by language. `postsBySlug` is the default-language (zh) lookup
+  // kept for backward compatibility with routes that pre-date i18n.
+  // `postsBySlugAndLang` is the authoritative per-language index going forward.
+  const postsByLang = new Map<Lang, Post[]>();
+  const postsBySlugAndLang = new Map<string, Map<Lang, Post>>();
+  for (const post of posts) {
+    const inLang = postsByLang.get(post.lang) ?? [];
+    inLang.push(post);
+    postsByLang.set(post.lang, inLang);
+
+    let bySlug = postsBySlugAndLang.get(post.slug);
+    if (!bySlug) {
+      bySlug = new Map<Lang, Post>();
+      postsBySlugAndLang.set(post.slug, bySlug);
+    }
+    if (bySlug.has(post.lang)) {
+      throw new Error(`Duplicate post slug "${post.slug}" in lang "${post.lang}"`);
+    }
+    bySlug.set(post.lang, post);
+  }
+
+  const postsBySlug = buildIndex(postsByLang.get(DEFAULT_LANG) ?? [], "post");
+  const postsByTopic = buildGroupedIndex(postsByLang.get(DEFAULT_LANG) ?? [], (post) => post.topics);
   const projectsByTopic = buildGroupedIndex(projects, (project) => project.themes);
 
   const relatedPostsBySlug = new Map<
@@ -248,6 +287,8 @@ function buildContentStore(): ContentStore {
     projectsBySlug,
     posts,
     postsBySlug,
+    postsByLang,
+    postsBySlugAndLang,
     postsByTopic,
     projectsByTopic,
     edges,
@@ -293,20 +334,32 @@ export function getProjectBySlug(slug: string) {
   return getContentStore().projectsBySlug.get(slug);
 }
 
-export function getPosts(): Post[] {
+export function getPosts(lang: Lang = DEFAULT_LANG): Post[] {
+  return getContentStore().postsByLang.get(lang) ?? [];
+}
+
+export function getAllPosts(): Post[] {
   return getContentStore().posts;
 }
 
-export function getFeaturedPosts() {
-  return getPosts().filter((post) => post.featured);
+export function getFeaturedPosts(lang: Lang = DEFAULT_LANG) {
+  return getPosts(lang).filter((post) => post.featured);
 }
 
-export function getPostBySlug(slug: string) {
-  return getContentStore().postsBySlug.get(slug);
+export function getPostBySlug(slug: string, lang: Lang = DEFAULT_LANG) {
+  return getContentStore().postsBySlugAndLang.get(slug)?.get(lang);
 }
 
-export function getAdjacentPosts(slug: string): { newer: Post | null; older: Post | null } {
-  const posts = getPosts();
+export function getAvailableLangs(slug: string): Lang[] {
+  const byLang = getContentStore().postsBySlugAndLang.get(slug);
+  return byLang ? Array.from(byLang.keys()) : [];
+}
+
+export function getAdjacentPosts(
+  slug: string,
+  lang: Lang = DEFAULT_LANG,
+): { newer: Post | null; older: Post | null } {
+  const posts = getPosts(lang);
   const index = posts.findIndex((post) => post.slug === slug);
 
   if (index === -1) {
@@ -423,9 +476,10 @@ export function validateContent(): ContentValidationReport {
   const knownTopicSlugs = new Set(store.topics.map((topic) => topic.slug));
   const knownPostSlugs = new Set(store.posts.map((post) => post.slug));
   const knownProjectSlugs = new Set(store.projects.map((project) => project.slug));
+  const defaultLangPosts = store.postsByLang.get(DEFAULT_LANG) ?? [];
   const knownRoutes = new Set<string>([
     ...STATIC_ROUTES,
-    ...store.posts.map((post) => `/essays/${post.slug}`),
+    ...defaultLangPosts.map((post) => `/essays/${post.slug}`),
     ...store.topics.map((topic) => `/topics/${topic.slug}`),
     ...store.projects.map((project) => `/projects/${project.slug}`),
   ]);
@@ -459,7 +513,7 @@ export function validateContent(): ContentValidationReport {
           severity: "error",
           code: "post.topic_missing",
           message: `Post "${post.slug}" references missing topic "${topicSlug}".`,
-          location: `content/posts/${post.slug}.md`,
+          location: `content/posts/${post.lang}/${post.slug}.md`,
         });
       }
     }
@@ -470,7 +524,7 @@ export function validateContent(): ContentValidationReport {
           severity: "error",
           code: "post.related_missing",
           message: `Post "${post.slug}" references missing related post "${related.slug}".`,
-          location: `content/posts/${post.slug}.md`,
+          location: `content/posts/${post.lang}/${post.slug}.md`,
         });
       }
     }

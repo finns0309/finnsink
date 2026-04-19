@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+export const langSchema = z.enum(["zh", "en", "ja"]);
+
+export const DEFAULT_LANG = "zh" as const;
+
 export const relationTypeSchema = z.enum([
   "extends",
   "revises",
@@ -78,6 +82,7 @@ export const relatedPostSchema = z.object({
 export const postFrontmatterSchema = z.object({
   title: z.string(),
   slug: z.string(),
+  lang: langSchema,
   summary: z.string(),
   thesis: z.string(),
   published_at: z.string(),
@@ -97,6 +102,7 @@ export const postSchema = postFrontmatterSchema.extend({
   reading_time_min: z.number().int().positive(),
 });
 
+export type Lang = z.infer<typeof langSchema>;
 export type Profile = z.infer<typeof profileSchema>;
 export type Now = z.infer<typeof nowSchema>;
 export type Topic = z.infer<typeof topicSchema>;

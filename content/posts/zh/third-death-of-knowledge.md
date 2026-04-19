@@ -1,6 +1,7 @@
 ---
 title: 知识的第三次死亡
 slug: third-death-of-knowledge
+lang: zh
 summary: 当一个人可以在三分钟内获得一段流畅的、看起来很专业的解释时，"知道"这件事到底还意味着什么？
 thesis: 死去的不是知识本身，而是知识的信号功能：能说出来不再等于真的理解。
 published_at: 2026-04-06

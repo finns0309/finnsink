@@ -1,6 +1,7 @@
 ---
 title: 复兴之后（下）：当解放本身也被解放
 slug: renaissance-after-2
+lang: zh
 summary: 上一次只有解放。这一次，是解放和祛魅同时到货。
 thesis: 真正需要被发明的，是一种不依赖稀缺性、不依赖能力垄断、不依赖"我比别人特殊"就能成立的价值。
 published_at: 2026-04-05
