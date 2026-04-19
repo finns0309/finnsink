@@ -1,27 +1,35 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import type { Lang } from "@/lib/content/schemas";
 import { getMessages } from "@/lib/i18n/messages";
 
-type SiteHeaderProps = {
-  lang: Lang;
-};
+function langFromPath(pathname: string): Lang {
+  if (pathname === "/en" || pathname.startsWith("/en/")) return "en";
+  if (pathname === "/ja" || pathname.startsWith("/ja/")) return "ja";
+  return "zh";
+}
 
 function prefix(lang: Lang): string {
   return lang === "zh" ? "" : `/${lang}`;
 }
 
-export function SiteHeader({ lang }: SiteHeaderProps) {
+export function SiteHeader() {
+  const pathname = usePathname() ?? "/";
+  const lang = langFromPath(pathname);
   const t = getMessages(lang);
   const base = prefix(lang);
+
   const navigation = [
     { href: `${base}/essays`, label: t.nav.essays },
     { href: `${base}/now`, label: t.nav.now },
     { href: `${base}/about`, label: t.nav.about },
   ];
 
-  // Only surface langs we actually serve routes for. Re-add "ja" once PR for
-  // Japanese content lands; until then linking to /ja would 404.
+  // Only surface langs we actually serve routes for. Re-add "ja" once the
+  // Japanese content tree exists; until then linking to /ja would 404.
   const langs: Lang[] = ["zh", "en"];
 
   return (

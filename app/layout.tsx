@@ -51,11 +51,11 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <a className="skip-link" href="#main">
           {t.skipToContent}
         </a>
-        <SiteHeader lang={lang} />
+        <SiteHeader />
         <main id="main" className="site-main">
           {children}
         </main>
-        <SiteFooter lang={lang} />
+        <SiteFooter />
         <Analytics />
         <SpeedInsights />
       </body>
