@@ -29,10 +29,10 @@ const groups: Group[] = [
   {
     label: "essays",
     blurb:
-      "Long-form writing. Posts are bilingual (zh/en) where translations exist; fetch a specific language with the slug endpoint.",
+      "Long-form writing. Posts are bilingual (zh/en) where translations exist. Each response includes `available_langs` so agents can enumerate translations; pass `?lang=zh|en` to select.",
     endpoints: [
-      { path: "/api/essays.json", description: "all essays, metadata only" },
-      { path: "/api/essays/[slug].json", description: "single essay with body and frontmatter" },
+      { path: "/api/essays.json?lang=zh|en", description: "all essays in one language, metadata only" },
+      { path: "/api/essays/[slug].json?lang=zh|en", description: "single essay with body; omitted lang defaults to zh" },
     ],
   },
   {

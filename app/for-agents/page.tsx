@@ -35,10 +35,10 @@ const groups: Group[] = [
   {
     label: "essays",
     blurb:
-      "Long-form writing in Chinese. Listings return metadata only; the slug endpoints include full markdown.",
+      "Long-form writing. Default is Chinese; pass `?lang=en` for English. Each response includes an `available_langs` array so you can enumerate translations.",
     endpoints: [
-      { path: "/api/essays.json", description: "all essays, metadata only" },
-      { path: "/api/essays/[slug].json", description: "single essay with body and frontmatter" },
+      { path: "/api/essays.json?lang=zh|en", description: "all essays in one language, metadata only" },
+      { path: "/api/essays/[slug].json?lang=zh|en", description: "single essay with body; omitted lang falls back to zh" },
     ],
   },
   {
@@ -86,9 +86,16 @@ export default function ForAgentsPage() {
           endpoints also set <code>X-Resource-Count</code>. Errors use a <code>{`{ error }`}</code> envelope.
         </p>
         <p>
-          The substantive writing on this site is in Chinese; the framing copy is in
-          English. The <code>title</code>, <code>summary</code>, and body of each post are
-          all Chinese-language strings.
+          The site ships in Chinese by default and English where translations exist.
+          Every essay payload carries a <code>lang</code> field and an{" "}
+          <code>available_langs</code> array. Listings and slug endpoints accept{" "}
+          <code>?lang=zh</code> or <code>?lang=en</code>; omitting the parameter
+          returns Chinese.
+        </p>
+        <p>
+          Per-language mirrors live at{" "}
+          <code>/llms.txt</code> &middot; <code>/en/llms.txt</code> and{" "}
+          <code>/rss.xml</code> &middot; <code>/en/rss.xml</code>.
         </p>
       </section>
 

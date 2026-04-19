@@ -1,11 +1,11 @@
-import { buildAtomFeed } from "@/lib/feeds";
+import { buildLlmsTxt } from "@/lib/feeds";
 
 export const dynamic = "force-static";
 
 export function GET() {
-  return new Response(buildAtomFeed("zh"), {
+  return new Response(buildLlmsTxt("en"), {
     headers: {
-      "Content-Type": "application/atom+xml; charset=utf-8",
+      "Content-Type": "text/plain; charset=utf-8",
       "Cache-Control": "public, max-age=3600, s-maxage=3600",
     },
   });

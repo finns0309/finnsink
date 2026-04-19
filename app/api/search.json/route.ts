@@ -1,5 +1,6 @@
 import { searchContent } from "@/lib/content";
 import { jsonBadRequest, jsonEnvelope } from "@/lib/api/response";
+import { langFromRequest } from "@/lib/api/lang";
 
 export function GET(request: Request) {
   const { searchParams } = new URL(request.url);
@@ -9,7 +10,8 @@ export function GET(request: Request) {
     return jsonBadRequest("Missing search query", { resource: "search" });
   }
 
-  const results = searchContent(query);
+  const lang = langFromRequest(request);
+  const results = searchContent(query, lang);
 
   return jsonEnvelope(results, {
     resource: "search",

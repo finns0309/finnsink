@@ -1,12 +1,17 @@
 import { getNow, getProfile, getTopics } from "@/lib/content";
-import { jsonData } from "@/lib/api/response";
+import { jsonData, jsonNotFound } from "@/lib/api/response";
+import { langFromRequest } from "@/lib/api/lang";
 
-export function GET() {
-  const profile = getProfile();
+export function GET(request: Request) {
+  const lang = langFromRequest(request);
+  const profile = getProfile(lang);
+  const now = getNow(lang);
+  if (!profile || !now) return jsonNotFound("start_payload");
 
   return jsonData({
+    lang,
     profile,
-    now: getNow(),
+    now,
     suggested_topics: getTopics().map((topic) => ({
       slug: topic.slug,
       name: topic.name,

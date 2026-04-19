@@ -419,7 +419,7 @@ export function getProjectRelatedPosts(project: Project) {
   return getContentStore().relatedPostsByProjectSlug.get(project.slug) ?? [];
 }
 
-export function searchContent(query: string): ContentSearchResults {
+export function searchContent(query: string, lang: Lang = DEFAULT_LANG): ContentSearchResults {
   const normalizedQuery = query.trim();
 
   if (!normalizedQuery) {
@@ -433,7 +433,7 @@ export function searchContent(query: string): ContentSearchResults {
 
   return {
     query: normalizedQuery,
-    posts: getPosts().filter((post) =>
+    posts: getPosts(lang).filter((post) =>
       includesQuery(
         [post.title, post.summary, post.thesis, post.content, ...post.topics, ...post.keywords],
         normalizedQuery,

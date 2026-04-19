@@ -30,11 +30,19 @@ export async function generateMetadata({ params }: EssayPageProps): Promise<Meta
   }
 
   const url = `${getSiteUrl()}/essays/${post.slug}`;
+  const siblings = getAvailableLangs(slug);
+  const languages: Record<string, string> = {};
+  for (const l of siblings) {
+    const siblingUrl = l === "zh"
+      ? `${getSiteUrl()}/essays/${post.slug}`
+      : `${getSiteUrl()}/${l}/essays/${post.slug}`;
+    languages[l === "zh" ? "zh-CN" : l] = siblingUrl;
+  }
 
   return {
     title: post.title,
     description: post.summary,
-    alternates: { canonical: url },
+    alternates: { canonical: url, languages },
     openGraph: {
       type: "article",
       title: post.title,

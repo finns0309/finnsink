@@ -1,11 +1,12 @@
-import { getPostBySlug } from "@/lib/content";
+import { getAvailableLangs, getPostBySlug } from "@/lib/content";
 import { jsonData, jsonNotFound } from "@/lib/api/response";
+import { langFromRequest } from "@/lib/api/lang";
 
 type RouteProps = {
   params: Promise<{ slug?: string }>;
 };
 
-export async function GET(_: Request, { params }: RouteProps) {
+export async function GET(request: Request, { params }: RouteProps) {
   const { slug } = await params;
 
   if (!slug) {
@@ -13,11 +14,15 @@ export async function GET(_: Request, { params }: RouteProps) {
   }
 
   const normalizedSlug = slug.replace(/\.json$/i, "");
-  const post = getPostBySlug(normalizedSlug);
+  const lang = langFromRequest(request);
+  const post = getPostBySlug(normalizedSlug, lang);
 
   if (!post) {
     return jsonNotFound("essay");
   }
 
-  return jsonData(post, { resource: "essay", target: normalizedSlug });
+  return jsonData(
+    { ...post, available_langs: getAvailableLangs(normalizedSlug) },
+    { resource: "essay", target: normalizedSlug },
+  );
 }
