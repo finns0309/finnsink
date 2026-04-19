@@ -1,19 +1,19 @@
 {
   "id": "finn",
   "name": "Finn",
-  "summary": "[EN draft] Writing so I can find out what I actually think.",
-  "long_summary": "[EN draft] This is Finn's writing site. The core question: how symbols, language, and systems shape (and limit) cognition and subjectivity. The essays start from semiotics, continental philosophy, and the technical reality around us, and try to pull apart concepts that look self-evident — ability, freedom, growth, knowledge, action — to see where their referents actually point. Updated irregularly. Longer. Slower.",
+  "summary": "Writing so I can find out what I actually think.",
+  "long_summary": "Finn's writing site. The central question: how symbols, language, and systems shape — and limit — our cognition and sense of self. The essays start from semiotics, continental philosophy, and the technical present, and try to pry apart concepts that look self-evident — ability, freedom, growth, knowledge, action — to see where their referents actually land. Written irregularly, slowly, and at length.",
   "location": "Beijing",
   "roles": ["writer", "independent developer"],
   "themes": [],
   "beliefs": [
-    "[EN draft] Naming is compression; every compression costs an experience.",
-    "[EN draft] Splicing and extending are two different operations; most things called innovation belong to the former.",
-    "[EN draft] Empty signifiers bypass meaning and call emotion directly. Recognizing them is the prerequisite for immunity.",
-    "[EN draft] A subject is not set up; it is trained, in real costs.",
-    "[EN draft] The difference between invocation and understanding is the most important cognitive boundary of our time.",
-    "[EN draft] Infrastructure moves first. People follow."
+    "Naming is compression. Every compression costs an experience.",
+    "Splicing and extending are two different operations. Most things called innovation belong to the first.",
+    "Empty signifiers bypass meaning and pull directly on emotion. Recognizing them is the prerequisite for immunity.",
+    "A subject is not declared into existence. It is trained, under real cost.",
+    "The line between invocation and understanding is the most important cognitive divide of this era.",
+    "Infrastructure moves first. People follow."
   ],
-  "start_here": ["/en", "/en/essays/every-naming-a-funeral", "/en/essays/when-language-boundary-moves"],
+  "start_here": ["/en"],
   "links": {}
 }
