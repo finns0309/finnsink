@@ -149,7 +149,7 @@ function readPosts() {
   );
 }
 
-const profile = readJson(path.join(CONTENT_ROOT, "profile.json"));
+const profile = readJson(path.join(CONTENT_ROOT, "profile.zh.json"));
 const topics = readDirectory(path.join(CONTENT_ROOT, "topics"), ".json").map(readJson);
 const projects = readDirectory(path.join(CONTENT_ROOT, "projects"), ".json").map(readJson);
 const posts = readPosts();
@@ -173,7 +173,7 @@ for (const theme of profile.themes ?? []) {
       severity: "warning",
       code: "profile.theme_missing_topic",
       message: `Profile theme "${theme}" does not resolve to a topic page.`,
-      location: "content/profile.json",
+      location: "content/profile.zh.json",
     });
   }
 }
@@ -184,7 +184,7 @@ for (const route of profile.start_here ?? []) {
       severity: "error",
       code: "profile.start_here_missing_route",
       message: `Start route "${route}" does not resolve to a known page.`,
-      location: "content/profile.json",
+      location: "content/profile.zh.json",
     });
   }
 }

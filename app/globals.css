@@ -257,6 +257,61 @@ code {
   transform: scaleX(1);
 }
 
+/* Language switcher sits inside the primary nav, separated by its own tone.
+   Present, not shouty. */
+.site-nav__lang {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  padding-left: 0.8rem;
+  margin-left: 0.4rem;
+  border-left: 1px solid var(--color-rule);
+  font-size: 0.85rem;
+  letter-spacing: 0.01em;
+  font-style: normal;
+  color: var(--color-faint);
+}
+
+.site-nav__lang a {
+  color: var(--color-faint);
+  text-decoration: none;
+  font-style: normal;
+}
+
+.site-nav__lang a:hover {
+  color: var(--color-accent);
+}
+
+.site-nav__lang a::after {
+  display: none;
+}
+
+.site-nav__lang-current {
+  color: var(--color-text-soft);
+  font-style: normal;
+}
+
+.site-nav__lang-sep {
+  margin: 0 0.1rem;
+  color: var(--color-rule);
+}
+
+/* Inline "Also in: EN" indicator rendered in the article footer when a post
+   exists in other languages. */
+.article-footer__also {
+  color: var(--color-muted);
+}
+
+.article-footer__also a {
+  color: var(--color-muted);
+  text-decoration: underline;
+  text-decoration-color: var(--color-rule);
+}
+
+.article-footer__also a:hover {
+  color: var(--color-accent);
+}
+
 /* ───────── footer ───────── */
 
 .site-footer {

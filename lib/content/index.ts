@@ -37,7 +37,9 @@ const STATIC_ROUTES = [
 
 type ContentStore = {
   profile: Profile;
+  profileByLang: Map<Lang, Profile>;
   now: Now;
+  nowByLang: Map<Lang, Now>;
   topics: Topic[];
   topicsBySlug: Map<string, Topic>;
   projects: Project[];
@@ -184,8 +186,23 @@ function includesQuery(values: Array<string | undefined>, query: string) {
 }
 
 function buildContentStore(): ContentStore {
-  const profile = readJsonFile(path.join(CONTENT_ROOT, "profile.json"), profileSchema);
-  const now = readJsonFile(path.join(CONTENT_ROOT, "now.json"), nowSchema);
+  const profileByLang = new Map<Lang, Profile>();
+  const nowByLang = new Map<Lang, Now>();
+  for (const lang of LANGS) {
+    const profilePath = path.join(CONTENT_ROOT, `profile.${lang}.json`);
+    if (fs.existsSync(profilePath)) {
+      profileByLang.set(lang, readJsonFile(profilePath, profileSchema));
+    }
+    const nowPath = path.join(CONTENT_ROOT, `now.${lang}.json`);
+    if (fs.existsSync(nowPath)) {
+      nowByLang.set(lang, readJsonFile(nowPath, nowSchema));
+    }
+  }
+
+  const profile = profileByLang.get(DEFAULT_LANG);
+  const now = nowByLang.get(DEFAULT_LANG);
+  if (!profile) throw new Error(`Missing content/profile.${DEFAULT_LANG}.json`);
+  if (!now) throw new Error(`Missing content/now.${DEFAULT_LANG}.json`);
   const topics = readDirectory(path.join(CONTENT_ROOT, "topics"), ".json", (filePath) =>
     readJsonFile(filePath, topicSchema),
   ).sort((a, b) => a.name.localeCompare(b.name));
@@ -280,7 +297,9 @@ function buildContentStore(): ContentStore {
 
   return {
     profile,
+    profileByLang,
     now,
+    nowByLang,
     topics,
     topicsBySlug,
     projects,
@@ -310,12 +329,16 @@ export function clearContentStoreCache() {
   cachedStore = null;
 }
 
-export function getProfile(): Profile {
-  return getContentStore().profile;
+export function getProfile(): Profile;
+export function getProfile(lang: Lang): Profile | undefined;
+export function getProfile(lang: Lang = DEFAULT_LANG): Profile | undefined {
+  return getContentStore().profileByLang.get(lang);
 }
 
-export function getNow(): Now {
-  return getContentStore().now;
+export function getNow(): Now;
+export function getNow(lang: Lang): Now | undefined;
+export function getNow(lang: Lang = DEFAULT_LANG): Now | undefined {
+  return getContentStore().nowByLang.get(lang);
 }
 
 export function getTopics(): Topic[] {
@@ -490,7 +513,7 @@ export function validateContent(): ContentValidationReport {
         severity: "warning",
         code: "profile.theme_missing_topic",
         message: `Profile theme "${theme}" does not resolve to a topic page.`,
-        location: "content/profile.json",
+        location: "content/profile.zh.json",
       });
     }
   }
@@ -501,7 +524,7 @@ export function validateContent(): ContentValidationReport {
         severity: "error",
         code: "profile.start_here_missing_route",
         message: `Start route "${route}" does not resolve to a known page.`,
-        location: "content/profile.json",
+        location: "content/profile.zh.json",
       });
     }
   }

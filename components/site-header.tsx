@@ -1,24 +1,53 @@
 import Link from "next/link";
 
-const navigation = [
-  { href: "/essays", label: "essays" },
-  { href: "/now", label: "now" },
-  { href: "/about", label: "about" },
-];
+import type { Lang } from "@/lib/content/schemas";
+import { getMessages } from "@/lib/i18n/messages";
 
-export function SiteHeader() {
+type SiteHeaderProps = {
+  lang: Lang;
+};
+
+function prefix(lang: Lang): string {
+  return lang === "zh" ? "" : `/${lang}`;
+}
+
+export function SiteHeader({ lang }: SiteHeaderProps) {
+  const t = getMessages(lang);
+  const base = prefix(lang);
+  const navigation = [
+    { href: `${base}/essays`, label: t.nav.essays },
+    { href: `${base}/now`, label: t.nav.now },
+    { href: `${base}/about`, label: t.nav.about },
+  ];
+
+  const langs: Lang[] = ["zh", "en", "ja"];
+
   return (
     <header className="site-header">
       <div className="page site-header__inner">
-        <Link href="/" className="site-header__brand">
+        <Link href={base || "/"} className="site-header__brand">
           finn
         </Link>
-        <nav className="site-nav">
+        <nav className="site-nav" aria-label="primary">
           {navigation.map((item) => (
             <Link key={item.href} href={item.href}>
               {item.label}
             </Link>
           ))}
+          <span className="site-nav__lang" aria-label={t.switcher.label}>
+            {langs.map((l, i) => (
+              <span key={l}>
+                {i > 0 ? <span aria-hidden="true" className="site-nav__lang-sep">·</span> : null}
+                {l === lang ? (
+                  <span className="site-nav__lang-current" aria-current="true">
+                    {t.switcher.langs[l]}
+                  </span>
+                ) : (
+                  <Link href={l === "zh" ? "/" : `/${l}`}>{t.switcher.langs[l]}</Link>
+                )}
+              </span>
+            ))}
+          </span>
         </nav>
       </div>
     </header>

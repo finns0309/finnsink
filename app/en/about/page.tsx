@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 import { getProfile } from "@/lib/content";
 import { getMessages } from "@/lib/i18n/messages";
@@ -7,9 +8,10 @@ export const metadata = {
   title: "About",
 };
 
-export default function AboutPage() {
-  const profile = getProfile();
-  const t = getMessages("zh");
+export default function EnAboutPage() {
+  const profile = getProfile("en");
+  if (!profile) notFound();
+  const t = getMessages("en");
 
   return (
     <div className="page">
@@ -43,7 +45,7 @@ export default function AboutPage() {
       ) : null}
 
       <footer className="article-footer">
-        <Link href="/for-agents">{t.about.forAgentsLink}</Link>
+        <Link href="/en/for-agents">{t.about.forAgentsLink}</Link>
       </footer>
     </div>
   );
