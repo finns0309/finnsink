@@ -287,7 +287,8 @@ code {
 }
 
 .site-nav__lang-current {
-  color: var(--color-text-soft);
+  color: var(--color-accent);
+  font-weight: 500;
   font-style: normal;
 }
 
@@ -296,19 +297,23 @@ code {
   color: var(--color-rule);
 }
 
-/* Inline "Also in: EN" indicator rendered in the article footer when a post
-   exists in other languages. */
-.article-footer__also {
-  color: var(--color-muted);
+/* "Also in: EN" indicator that lives inline with the date in the article
+   header. The `article-meta > * + *::before` rule already inserts a middle-dot
+   between siblings, so this class only needs link styling. */
+.article-meta__also {
+  text-transform: none;
+  letter-spacing: 0;
 }
 
-.article-footer__also a {
+.article-meta__also a {
   color: var(--color-muted);
   text-decoration: underline;
+  text-decoration-thickness: 0.5px;
   text-decoration-color: var(--color-rule);
+  text-underline-offset: 0.2em;
 }
 
-.article-footer__also a:hover {
+.article-meta__also a:hover {
   color: var(--color-accent);
 }
 

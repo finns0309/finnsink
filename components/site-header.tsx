@@ -20,7 +20,9 @@ export function SiteHeader({ lang }: SiteHeaderProps) {
     { href: `${base}/about`, label: t.nav.about },
   ];
 
-  const langs: Lang[] = ["zh", "en", "ja"];
+  // Only surface langs we actually serve routes for. Re-add "ja" once PR for
+  // Japanese content lands; until then linking to /ja would 404.
+  const langs: Lang[] = ["zh", "en"];
 
   return (
     <header className="site-header">

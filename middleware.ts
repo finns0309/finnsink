@@ -30,10 +30,11 @@ function preferredLangFromAccept(header: string | null): Lang | null {
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const currentLang = langFromPathname(pathname);
+  const cookieLang = request.cookies.get(PREF_COOKIE)?.value as Lang | undefined;
 
   // Root-path-only Accept-Language redirect for first-time visitors.
   // Deeper URLs stay where the sharer put them so external links are stable.
-  if (pathname === "/" && !request.cookies.get(PREF_COOKIE)) {
+  if (pathname === "/" && !cookieLang) {
     const preferred = preferredLangFromAccept(request.headers.get("accept-language"));
     if (preferred && preferred !== "zh") {
       const target = request.nextUrl.clone();
@@ -46,7 +47,22 @@ export function middleware(request: NextRequest) {
   requestHeaders.set("x-lang", currentLang);
   requestHeaders.set("x-pathname", pathname);
 
-  return NextResponse.next({ request: { headers: requestHeaders } });
+  const response = NextResponse.next({ request: { headers: requestHeaders } });
+
+  // Whenever the user is on a given language's URL, record it as their
+  // preference. This breaks the Accept-Language auto-redirect loop after the
+  // user clicks the switcher — subsequent visits to `/` then respect their choice.
+  if (cookieLang !== currentLang) {
+    response.cookies.set({
+      name: PREF_COOKIE,
+      value: currentLang,
+      path: "/",
+      maxAge: 60 * 60 * 24 * 365,
+      sameSite: "lax",
+    });
+  }
+
+  return response;
 }
 
 export const config = {

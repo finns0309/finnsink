@@ -105,6 +105,17 @@ export default async function EssayPage({ params }: EssayPageProps) {
           {post.thesis ? <p className="article-subtitle">{post.thesis}</p> : null}
           <p className="article-meta">
             <time dateTime={post.published_at}>{formatLongDate(post.published_at)}</time>
+            {otherLangs.length ? (
+              <span className="article-meta__also">
+                {t.essay.availableIn}{" "}
+                {otherLangs.map((l, i) => (
+                  <span key={l}>
+                    {i > 0 ? ", " : null}
+                    <Link href={`/${l}/essays/${post.slug}`}>{t.switcher.langs[l]}</Link>
+                  </span>
+                ))}
+              </span>
+            ) : null}
           </p>
         </header>
 
@@ -135,19 +146,6 @@ export default async function EssayPage({ params }: EssayPageProps) {
 
         <footer className="article-footer">
           <Link href="/essays">{t.essay.back}</Link>
-          {otherLangs.length ? (
-            <span className="article-footer__also">
-              {" · "}
-              {t.essay.availableIn}
-              {": "}
-              {otherLangs.map((l, i) => (
-                <span key={l}>
-                  {i > 0 ? ", " : null}
-                  <Link href={`/${l}/essays/${post.slug}`}>{t.switcher.langs[l]}</Link>
-                </span>
-              ))}
-            </span>
-          ) : null}
         </footer>
       </article>
     </>
