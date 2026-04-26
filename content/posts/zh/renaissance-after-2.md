@@ -6,7 +6,6 @@ summary: 上一次只有解放。这一次，是解放和祛魅同时到货。
 thesis: 真正需要被发明的，是一种不依赖稀缺性、不依赖能力垄断、不依赖"我比别人特殊"就能成立的价值。
 published_at: 2026-04-05
 updated_at: 2026-04-05
-topics: []
 stance: working
 person_snapshot:
   - 我相信未来的价值结构会从占有型推向存在型。

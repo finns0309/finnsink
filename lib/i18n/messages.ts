@@ -13,6 +13,7 @@ type Messages = {
     older: string;
     back: string;
     availableIn: string;
+    contents: string;
   };
   now: { title: string; updated: string; focus: string; workingOn: string; openLoops: string; reading: string };
   about: { currently: string; workingBeliefs: string; forAgentsLink: string };
@@ -38,6 +39,7 @@ export const messages: Record<Lang, Messages> = {
       older: "older →",
       back: "← back to essays",
       availableIn: "Also in",
+      contents: "目录",
     },
     now: { title: "Now", updated: "updated", focus: "thinking about", workingOn: "working on", openLoops: "open loops", reading: "reading" },
     about: { currently: "currently", workingBeliefs: "working beliefs", forAgentsLink: "if you are not human →" },
@@ -66,6 +68,7 @@ export const messages: Record<Lang, Messages> = {
       older: "older →",
       back: "← back to essays",
       availableIn: "Also in",
+      contents: "Contents",
     },
     now: { title: "Now", updated: "updated", focus: "thinking about", workingOn: "working on", openLoops: "open loops", reading: "reading" },
     about: { currently: "currently", workingBeliefs: "working beliefs", forAgentsLink: "if you are not human →" },
@@ -94,6 +97,7 @@ export const messages: Record<Lang, Messages> = {
       older: "古い →",
       back: "← エッセイ一覧へ",
       availableIn: "他言語版",
+      contents: "目次",
     },
     now: { title: "Now", updated: "更新", focus: "考えていること", workingOn: "取り組み中", openLoops: "未決のループ", reading: "読書" },
     about: { currently: "現在", workingBeliefs: "working beliefs", forAgentsLink: "人間ではない場合 →" },

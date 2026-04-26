@@ -16,7 +16,7 @@ function prefix(lang: Lang): string {
   return lang === "zh" ? "" : `/${lang}`;
 }
 
-export function SiteHeader() {
+export function SiteHeader({ langs }: { langs: Lang[] }) {
   const pathname = usePathname() ?? "/";
   const lang = langFromPath(pathname);
   const t = getMessages(lang);
@@ -27,10 +27,6 @@ export function SiteHeader() {
     { href: `${base}/now`, label: t.nav.now },
     { href: `${base}/about`, label: t.nav.about },
   ];
-
-  // Only surface langs we actually serve routes for. Re-add "ja" once the
-  // Japanese content tree exists; until then linking to /ja would 404.
-  const langs: Lang[] = ["zh", "en"];
 
   return (
     <header className="site-header">

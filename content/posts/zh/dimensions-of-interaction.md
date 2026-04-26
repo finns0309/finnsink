@@ -6,7 +6,6 @@ summary: '"一维 vs 二维"不是 UX 偏好，是任务本体论的结构选择
 thesis: 维度选择由任务的本体论决定，不由美学决定。好产品的"自然感"不是装出来的，是维度匹配的副作用。
 published_at: 2026-04-17
 updated_at: 2026-04-17
-topics: []
 stance: working
 person_snapshot:
   - 我相信"直觉设计"不是设计师的天赋，而是维度匹配的副作用。

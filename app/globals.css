@@ -725,6 +725,140 @@ code {
   color: var(--color-text);
 }
 
+/* ───────── article TOC ─────────
+   Mobile/tablet: a quiet block above the body (only shown if the essay has
+   ≥3 h2s, so short pieces stay clean).
+   Wide desktop: pulled into the right margin via absolute positioning,
+   sticky as the reader scrolls. The article itself stays visually centered
+   because we don't change its container width — the TOC simply escapes it. */
+
+.article-toc {
+  margin: -0.5rem 0 2.75rem;
+  padding: 1rem 0 1.25rem;
+  border-top: 1px dashed var(--color-rule-soft);
+  border-bottom: 1px dashed var(--color-rule-soft);
+  font-family: var(--font-sans);
+}
+
+.article-toc__label {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--color-faint);
+  margin-bottom: 0.85rem;
+}
+
+.article-toc__list {
+  display: grid;
+  gap: 0.5rem;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--color-text-soft);
+  counter-reset: toc;
+}
+
+.article-toc__list li {
+  counter-increment: toc;
+  position: relative;
+  padding-left: 1.6rem;
+}
+
+.article-toc__list li::before {
+  content: counter(toc, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0.05em;
+  font-size: 0.72rem;
+  letter-spacing: 0.04em;
+  color: var(--color-faint);
+}
+
+.article-toc__list a {
+  color: var(--color-text-soft);
+  text-decoration: none;
+  text-wrap: balance;
+}
+
+.article-toc__list a:hover {
+  color: var(--color-accent);
+}
+
+@media (min-width: 1200px) {
+  /* Pull the TOC out of flow and into the right margin. The article's
+     centered max-width means there's enough empty gutter past the right
+     edge on viewports ≥1200px. .article-header is the closest positioned
+     ancestor we control reliably; we anchor relative to .page (the article
+     container) by giving it position:relative on this breakpoint only. */
+  article.page {
+    position: relative;
+  }
+
+  .article-toc {
+    position: absolute;
+    top: 0;
+    left: calc(100% + 1rem);
+    /* Fill the article's full height so the inner sticky child has a scope
+       large enough to stick across the whole essay. Without this the parent
+       collapses to the TOC's intrinsic height and sticky stops working
+       almost immediately. */
+    height: 100%;
+    width: 13rem;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    /* Don't catch pointer events in the empty space below the sticky inner;
+       the sticky child re-enables them on itself. */
+    pointer-events: none;
+  }
+
+  .article-toc__inner {
+    position: sticky;
+    top: 3rem;
+    padding: 0.25rem 0 0 1.25rem;
+    max-height: calc(100vh - 6rem);
+    overflow-y: auto;
+    border-left: 1px solid var(--color-rule);
+    pointer-events: auto;
+  }
+
+  .article-toc__label {
+    margin-bottom: 1rem;
+  }
+
+  .article-toc__list {
+    font-size: 0.85rem;
+    gap: 0.65rem;
+  }
+}
+
+/* ───────── figures ─────────
+   Markdown `![alt](src "caption")` on its own line emits a <figure>.
+   The optional title attribute becomes the caption. Inline images in
+   prose keep marked's default <img> rendering. */
+
+.article-body figure {
+  margin: 2.6rem 0;
+  text-align: center;
+}
+
+.article-body figure img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 2px;
+}
+
+.article-body figcaption {
+  margin-top: 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-style: italic;
+  line-height: 1.6;
+  color: var(--color-muted);
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
 /* ───────── essay prev / next ───────── */
 
 .essay-nav {

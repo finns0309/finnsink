@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
+import { getServedLangs } from "@/lib/content";
 import type { Lang } from "@/lib/content/schemas";
 import { LOCALE_TAG, getMessages } from "@/lib/i18n/messages";
 import { getSiteUrl, siteConfig } from "@/lib/site";
@@ -46,12 +47,12 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
   const t = getMessages(lang);
 
   return (
-    <html lang={LOCALE_TAG[lang]}>
+    <html lang={LOCALE_TAG[lang]} suppressHydrationWarning>
       <body>
         <a className="skip-link" href="#main">
           {t.skipToContent}
         </a>
-        <SiteHeader />
+        <SiteHeader langs={getServedLangs()} />
         <main id="main" className="site-main">
           {children}
         </main>

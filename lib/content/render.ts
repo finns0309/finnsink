@@ -1,5 +1,12 @@
 import { marked, type Tokens, type TokenizerAndRendererExtension } from "marked";
 
+export type Heading = { depth: number; text: string; id: string };
+
+export type RenderResult = {
+  html: string;
+  headings: Heading[];
+};
+
 function escapeHtml(input: string): string {
   return input
     .replace(/&/g, "&amp;")
@@ -17,19 +24,17 @@ function escapeHtml(input: string): string {
  * Skipped inside fenced code blocks and inline code spans.
  */
 function pangu(input: string): string {
-  // Split on fenced code blocks; only transform the prose pieces.
   const parts = input.split(/(```[\s\S]*?```)/g);
   return parts
     .map((part) => {
       if (part.startsWith("```")) return part;
-      // Skip inline code spans within prose pieces too.
       const subparts = part.split(/(`[^`]*`)/g);
       return subparts
         .map((sub) => {
           if (sub.startsWith("`")) return sub;
           return sub
-            .replace(/([\u4e00-\u9fff])([A-Za-z0-9])/g, "$1\u2009$2")
-            .replace(/([A-Za-z0-9])([\u4e00-\u9fff])/g, "$1\u2009$2");
+            .replace(/([一-鿿])([A-Za-z0-9])/g, "$1 $2")
+            .replace(/([A-Za-z0-9])([一-鿿])/g, "$1 $2");
         })
         .join("");
     })
@@ -69,13 +74,59 @@ const breathExtension: TokenizerAndRendererExtension = {
   },
 };
 
+/**
+ * Block-level figure. Matches a line that contains only a markdown image,
+ * optionally with a title — `![alt](src "caption")`. The title becomes the
+ * figcaption; without a title we still emit a <figure> for consistent styling.
+ *
+ * Inline images (within a paragraph) are not affected; they keep marked's
+ * default <img> rendering.
+ */
+type FigureToken = {
+  type: "figure";
+  raw: string;
+  alt: string;
+  src: string;
+  caption: string;
+};
+
+const figureExtension: TokenizerAndRendererExtension = {
+  name: "figure",
+  level: "block",
+  start(src: string) {
+    return src.match(/^!\[/)?.index;
+  },
+  tokenizer(src: string) {
+    const match = src.match(/^!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)[ \t]*(?:\n|$)/);
+    if (match) {
+      return {
+        type: "figure",
+        raw: match[0],
+        alt: match[1] ?? "",
+        src: match[2] ?? "",
+        caption: match[3] ?? "",
+      } satisfies FigureToken;
+    }
+  },
+  renderer(token) {
+    const t = token as unknown as FigureToken;
+    const alt = escapeHtml(t.alt);
+    const src = escapeHtml(t.src);
+    const caption = t.caption
+      ? `<figcaption>${escapeHtml(t.caption)}</figcaption>`
+      : "";
+    return `<figure><img src="${src}" alt="${alt}" loading="lazy" />${caption}</figure>\n`;
+  },
+};
+
 let configured = false;
+let collectedHeadings: Heading[] = [];
 
 function configureMarked() {
   if (configured) return;
   configured = true;
 
-  marked.use({ extensions: [breathExtension] });
+  marked.use({ extensions: [breathExtension, figureExtension] });
 
   marked.use({
     gfm: true,
@@ -83,9 +134,9 @@ function configureMarked() {
     renderer: {
       heading(this: { parser: { parseInline: (tokens: Tokens.Generic[]) => string } }, token: Tokens.Heading) {
         const inner = this.parser.parseInline(token.tokens);
-        // Strip any tags from the inner HTML to derive a clean id.
         const plain = inner.replace(/<[^>]+>/g, "");
         const id = encodeURIComponent(slugifyHeading(plain));
+        collectedHeadings.push({ depth: token.depth, text: plain, id });
         return (
           `<h${token.depth} id="${id}">` +
           `<a class="heading-anchor" href="#${id}" aria-label="link to section">#</a>` +
@@ -104,7 +155,11 @@ function configureMarked() {
   });
 }
 
-export function renderMarkdown(markdown: string): string {
+export function renderMarkdown(markdown: string): RenderResult {
   configureMarked();
-  return marked.parse(pangu(markdown)) as string;
+  // Reset per-call so concurrent SSR doesn't cross-pollute. marked.parse is
+  // synchronous — Node's event loop guarantees no interleaving inside a call.
+  collectedHeadings = [];
+  const html = marked.parse(pangu(markdown)) as string;
+  return { html, headings: [...collectedHeadings] };
 }

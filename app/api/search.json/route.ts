@@ -1,5 +1,5 @@
 import { searchContent } from "@/lib/content";
-import { jsonBadRequest, jsonEnvelope } from "@/lib/api/response";
+import { jsonBadRequest, jsonData } from "@/lib/api/response";
 import { langFromRequest } from "@/lib/api/lang";
 
 export function GET(request: Request) {
@@ -13,9 +13,9 @@ export function GET(request: Request) {
   const lang = langFromRequest(request);
   const results = searchContent(query, lang);
 
-  return jsonEnvelope(results, {
+  return jsonData(results, {
     resource: "search",
     query,
-    count: results.posts.length + results.topics.length + results.projects.length,
+    count: results.posts.length,
   });
 }

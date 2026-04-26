@@ -4,15 +4,6 @@ export const langSchema = z.enum(["zh", "en", "ja"]);
 
 export const DEFAULT_LANG = "zh" as const;
 
-export const relationTypeSchema = z.enum([
-  "extends",
-  "revises",
-  "disagrees",
-  "applies",
-  "introduces",
-  "summarizes",
-]);
-
 export const stanceSchema = z.enum(["seed", "working", "stable", "changed"]);
 
 export const profileSchema = z.object({
@@ -22,7 +13,6 @@ export const profileSchema = z.object({
   long_summary: z.string(),
   location: z.string(),
   roles: z.array(z.string()),
-  themes: z.array(z.string()),
   beliefs: z.array(z.string()),
   current_work: z
     .object({
@@ -44,41 +34,6 @@ export const nowSchema = z.object({
   reading: z.array(z.string()),
 });
 
-export const topicSchema = z.object({
-  id: z.string(),
-  slug: z.string(),
-  name: z.string(),
-  summary: z.string(),
-  core_questions: z.array(z.string()),
-  current_position: z.string(),
-  representative_posts: z.array(z.string()),
-  related_topics: z.array(z.string()).default([]),
-  updated_at: z.string(),
-});
-
-export const projectSchema = z.object({
-  id: z.string(),
-  slug: z.string(),
-  name: z.string(),
-  summary: z.string(),
-  status: z.enum(["idea", "in_progress", "paused", "done"]),
-  started_at: z.string(),
-  themes: z.array(z.string()),
-  goals: z.array(z.string()),
-  related_posts: z.array(z.string()).default([]),
-});
-
-export const edgeSchema = z.object({
-  from: z.string(),
-  to: z.string(),
-  type: relationTypeSchema,
-});
-
-export const relatedPostSchema = z.object({
-  slug: z.string(),
-  relation: relationTypeSchema,
-});
-
 export const postFrontmatterSchema = z.object({
   title: z.string(),
   slug: z.string(),
@@ -87,14 +42,9 @@ export const postFrontmatterSchema = z.object({
   thesis: z.string(),
   published_at: z.string(),
   updated_at: z.string(),
-  topics: z.array(z.string()),
   keywords: z.array(z.string()).default([]),
-  audience: z.array(z.enum(["human", "agent"])).default(["human", "agent"]),
   stance: stanceSchema,
-  featured: z.boolean().default(false),
   person_snapshot: z.array(z.string()),
-  disagrees_with: z.array(z.string()).default([]),
-  related_posts: z.array(relatedPostSchema).default([]),
 });
 
 export const postSchema = postFrontmatterSchema.extend({
@@ -105,8 +55,5 @@ export const postSchema = postFrontmatterSchema.extend({
 export type Lang = z.infer<typeof langSchema>;
 export type Profile = z.infer<typeof profileSchema>;
 export type Now = z.infer<typeof nowSchema>;
-export type Topic = z.infer<typeof topicSchema>;
-export type Project = z.infer<typeof projectSchema>;
-export type Edge = z.infer<typeof edgeSchema>;
 export type PostFrontmatter = z.infer<typeof postFrontmatterSchema>;
 export type Post = z.infer<typeof postSchema>;

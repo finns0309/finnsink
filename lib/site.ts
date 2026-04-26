@@ -39,18 +39,6 @@ export function formatDate(value: string) {
   }).format(date);
 }
 
-export function formatLongDate(value: string) {
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) {
-    return value;
-  }
-  return new Intl.DateTimeFormat("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
-}
-
 export function formatIsoDate(value: string) {
   if (/^\d{4}-\d{2}-\d{2}$/.test(value)) {
     return value;

@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import { getNow } from "@/lib/content";
 import { getMessages } from "@/lib/i18n/messages";
-import { formatLongDate } from "@/lib/site";
+import { formatDate } from "@/lib/site";
 
 export const metadata = {
   title: "Now",
@@ -16,7 +16,7 @@ export default function EnNowPage() {
   return (
     <div className="page">
       <h1 className="prose-page__title">{t.now.title}</h1>
-      <p className="prose-page__meta">{t.now.updated} {formatLongDate(now.updated_at)}</p>
+      <p className="prose-page__meta">{t.now.updated} {formatDate(now.updated_at)}</p>
 
       <section className="prose-page__section">
         <p>{now.narrative}</p>

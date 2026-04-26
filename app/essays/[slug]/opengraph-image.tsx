@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 import { getPostBySlug, getPosts } from "@/lib/content";
 import { loadGoogleFont } from "@/lib/og-fonts";
-import { formatLongDate, siteConfig } from "@/lib/site";
+import { formatDate, siteConfig } from "@/lib/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -30,7 +30,7 @@ export default async function Image({ params }: ImageProps) {
     titleChars +
     subtitleChars +
     "FINN finns ink essay " +
-    formatLongDate(post.published_at);
+    formatDate(post.published_at);
 
   const [serif, serifBold] = await Promise.all([
     loadGoogleFont({ family: "Noto Serif SC", weight: 400, text: allText }),
@@ -131,7 +131,7 @@ export default async function Image({ params }: ImageProps) {
           }}
         >
           <span style={{ fontStyle: "italic" }}>
-            {formatLongDate(post.published_at)}
+            {formatDate(post.published_at)}
           </span>
           <span style={{ fontStyle: "italic" }}>{siteConfig.name}</span>
         </div>

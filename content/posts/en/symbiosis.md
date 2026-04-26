@@ -6,7 +6,6 @@ summary: In 1960, Licklider wrote Man-Computer Symbiosis and imagined two living
 thesis: Symbiosis is not designed. It is selected for. Nature took millions of years to find its filter; ours does not yet exist.
 published_at: 2026-04-19
 updated_at: 2026-04-19
-topics: []
 stance: working
 person_snapshot:
   - I believe symbiosis cannot be engineered into existence. It can only be grown through time and a selection mechanism.

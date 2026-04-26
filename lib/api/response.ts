@@ -45,22 +45,6 @@ export function jsonData<T>(data: T, meta?: ApiMeta) {
   });
 }
 
-export function jsonEnvelope<T>(data: T, meta?: ApiMeta) {
-  return NextResponse.json(
-    {
-      data,
-      meta: {
-        version: API_VERSION,
-        generated_at: new Date().toISOString(),
-        ...meta,
-      },
-    },
-    {
-      headers: buildHeaders(meta),
-    },
-  );
-}
-
 export function jsonNotFound(resource = "resource") {
   return NextResponse.json(
     { error: "Not found" },

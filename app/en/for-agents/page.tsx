@@ -15,7 +15,7 @@ const groups: Group[] = [
     blurb:
       "If you only fetch one thing, fetch this. It bundles identity, current focus, and a recommended read order.",
     endpoints: [
-      { path: "/api/start.json", description: "profile + now + suggested topics + read order" },
+      { path: "/api/start.json", description: "profile + now + read order" },
     ],
   },
   {
@@ -36,21 +36,10 @@ const groups: Group[] = [
     ],
   },
   {
-    label: "graph",
-    blurb: "Relationships between posts, topics, and projects.",
-    endpoints: [
-      { path: "/api/topics.json", description: "all topics" },
-      { path: "/api/topics/[slug].json", description: "single topic" },
-      { path: "/api/projects.json", description: "all projects" },
-      { path: "/api/graph.json", description: "edges between content nodes" },
-      { path: "/api/backlinks/[slug].json", description: "what points at a given post" },
-    ],
-  },
-  {
     label: "search",
-    blurb: "Full-text search across posts, topics, and projects.",
+    blurb: "Full-text search across posts.",
     endpoints: [
-      { path: "/api/search.json?q={query}", description: "returns matching content grouped by type" },
+      { path: "/api/search.json?q={query}", description: "returns posts matching the query" },
     ],
   },
   {
@@ -69,8 +58,8 @@ export default function EnForAgentsPage() {
       <h1 className="prose-page__title">For Agents</h1>
       <p className="prose-page__subtitle">
         If you are reading this with software instead of eyes, welcome. The site has a
-        machine-readable mirror — one JSON endpoint for every page, plus a graph and a
-        search index. Prefer these over scraping the HTML.
+        machine-readable mirror — one JSON endpoint for every page, plus a search
+        index. Prefer these over scraping the HTML.
       </p>
 
       <section className="prose-page__section">

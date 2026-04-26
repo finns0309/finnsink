@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
+import { ArticleToc } from "@/components/article-toc";
 import { ReadingProgress } from "@/components/reading-progress";
 import {
   getAdjacentPosts,
@@ -10,8 +11,8 @@ import {
   getPosts,
 } from "@/lib/content";
 import { renderMarkdown } from "@/lib/content/render";
-import { getMessages } from "@/lib/i18n/messages";
-import { formatLongDate, getSiteUrl, siteConfig } from "@/lib/site";
+import { OG_LOCALE, getMessages } from "@/lib/i18n/messages";
+import { formatDate, getSiteUrl, siteConfig } from "@/lib/site";
 
 type EssayPageProps = {
   params: Promise<{ slug: string }>;
@@ -49,7 +50,7 @@ export async function generateMetadata({ params }: EssayPageProps): Promise<Meta
       description: post.summary,
       url,
       siteName: siteConfig.name,
-      locale: "zh_CN",
+      locale: OG_LOCALE.zh,
       publishedTime: post.published_at,
       modifiedTime: post.updated_at,
     },
@@ -69,7 +70,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
     notFound();
   }
 
-  const html = renderMarkdown(post.content);
+  const { html, headings } = renderMarkdown(post.content);
   const { newer, older } = getAdjacentPosts(slug);
   const url = `${getSiteUrl()}/essays/${post.slug}`;
   const t = getMessages("zh");
@@ -112,7 +113,7 @@ export default async function EssayPage({ params }: EssayPageProps) {
           <h1 className="article-title">{post.title}</h1>
           {post.thesis ? <p className="article-subtitle">{post.thesis}</p> : null}
           <p className="article-meta">
-            <time dateTime={post.published_at}>{formatLongDate(post.published_at)}</time>
+            <time dateTime={post.published_at}>{formatDate(post.published_at)}</time>
             {otherLangs.length ? (
               <span className="article-meta__also">
                 {t.essay.availableIn}{" "}
@@ -128,6 +129,8 @@ export default async function EssayPage({ params }: EssayPageProps) {
         </header>
 
         <hr className="article-rule" />
+
+        <ArticleToc headings={headings} label={t.essay.contents} />
 
         <div className="article-body" dangerouslySetInnerHTML={{ __html: html }} />
 

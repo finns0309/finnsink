@@ -1,11 +1,6 @@
 import type { MetadataRoute } from "next";
 
-import {
-  getAvailableLangs,
-  getPosts,
-  getProjects,
-  getTopics,
-} from "@/lib/content";
+import { getAvailableLangs, getPosts } from "@/lib/content";
 import type { Lang } from "@/lib/content/schemas";
 import { getSiteUrl } from "@/lib/site";
 
@@ -20,11 +15,9 @@ function staticUrl(siteUrl: string, path: string, lang: Lang): string {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const staticPaths = ["", "/about", "/now", "/essays", "/topics", "/projects", "/for-agents"];
-
-  // Static routes: zh canonical + en alternate if we serve an /en equivalent.
-  // We only ship /en for /, /about, /now, /essays, /for-agents — the rest stay zh-only.
-  const enStaticPaths = new Set(["", "/about", "/now", "/essays", "/for-agents"]);
+  const staticPaths = ["", "/about", "/now", "/essays", "/for-agents"];
+  // All static routes have an /en mirror.
+  const enStaticPaths = new Set(staticPaths);
 
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path) => {
     const languages: Record<string, string> = { "zh-CN": staticUrl(siteUrl, path, "zh") };
@@ -38,46 +31,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     };
   });
 
-  // Emit one entry per essay per language, each pointing at siblings via hreflang.
-  const zhPosts = getPosts("zh");
-  const enPosts = getPosts("en");
+  // Emit one entry per (slug, lang) pair. Each entry shares the same hreflang
+  // alternates set, computed once per slug.
+  const allPosts = [...getPosts("zh"), ...getPosts("en")];
+  const seenSlugs = new Set<string>();
   const postRoutes: MetadataRoute.Sitemap = [];
 
-  for (const post of zhPosts) {
+  for (const post of allPosts) {
+    if (seenSlugs.has(`${post.slug}:${post.lang}`)) continue;
+    seenSlugs.add(`${post.slug}:${post.lang}`);
+
     const siblings = getAvailableLangs(post.slug);
     const languages: Record<string, string> = {};
     for (const lang of siblings) {
       languages[lang === "zh" ? "zh-CN" : lang] = postUrl(siteUrl, post.slug, lang);
     }
     postRoutes.push({
-      url: postUrl(siteUrl, post.slug, "zh"),
+      url: postUrl(siteUrl, post.slug, post.lang),
       lastModified: new Date(post.updated_at),
       alternates: { languages },
     });
   }
 
-  for (const post of enPosts) {
-    const siblings = getAvailableLangs(post.slug);
-    const languages: Record<string, string> = {};
-    for (const lang of siblings) {
-      languages[lang === "zh" ? "zh-CN" : lang] = postUrl(siteUrl, post.slug, lang);
-    }
-    postRoutes.push({
-      url: postUrl(siteUrl, post.slug, "en"),
-      lastModified: new Date(post.updated_at),
-      alternates: { languages },
-    });
-  }
-
-  const topicRoutes = getTopics().map((topic) => ({
-    url: `${siteUrl}/topics/${topic.slug}`,
-    lastModified: new Date(topic.updated_at),
-  }));
-
-  const projectRoutes = getProjects().map((project) => ({
-    url: `${siteUrl}/projects/${project.slug}`,
-    lastModified: new Date(project.started_at),
-  }));
-
-  return [...staticRoutes, ...postRoutes, ...topicRoutes, ...projectRoutes];
+  return [...staticRoutes, ...postRoutes];
 }
