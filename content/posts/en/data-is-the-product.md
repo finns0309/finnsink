@@ -17,6 +17,8 @@ person_snapshot:
   - I believe the most important question for building a product in the AI era is not "what can I do with AI?" but "what do I have that AI cannot produce on its own?"
 ---
 
+# Data Is the Product
+
 When scheduling, scaffolding, engineering, and interfaces can all be competently handled by AI, what is a product actually selling?
 
 ## A Music Player
@@ -95,7 +97,15 @@ The business logic of providing-data companies is fundamentally different from p
 
 My music player is a perfect small-scale demonstration of this dynamic. I built the entire engineering layer in a day. But I am completely parasitic on NetEase's data layer. They spent over a decade accumulating that catalog. If I tried to replicate the data rather than the code, I would fail entirely. The code is trivially reproducible. The data is not.
 
-If the processing era's war was "whose engineering is better," the providing era's war is "whose data is bigger." And the winner-take-all dynamics of the latter are far more extreme than the former. You can comfortably use three different word processors. You are unlikely to maintain active presences on three different social networks.
+If the processing era's war was "whose engineering is better," the providing era's war is "whose data is bigger" — or, more precisely, "who has the most data settling inside their walls." And the winner-take-all dynamics of the latter are far more extreme than the former. You can comfortably use three different word processors. You are unlikely to maintain active presences on three different social networks, and you are even less likely to run the same team on both Slack and Discord.
+
+But there is a class of products on this line that is easy to overlook, because they provide not the platform's own data, but the user's.
+
+Notion, Slack, Discord, Google Drive, GitHub — these products do not own content. They do not transform content. They do not generate content. What they do is **host the user's data and provide organizational infrastructure around it.** The notes you write in Notion come out the same way they went in. Notion does not make your notes better (that would be processing), does not show you other people's notes (that would be providing third-party data), and does not write notes for you (that would be producing). It gives your data a structured home — databases, relations, views, permissions, collaboration. Slack works the same way: your messages are organized by channel, thread, and timeline, making them consumable by your team in real time. Ownership of the data stays with you. The product handles distribution and persistence.
+
+These products look very different from Netflix or Spotify on the surface, but on one critical dimension they stand on the same side: **their moats are not in engineering, but in data.** Netflix's moat is its content library — leave Netflix and you lose access to those shows. Notion's moat is not the data itself — you can export every page — but the organizational structure, usage habits, team collaboration patterns, and migration cost that have formed around the data. A team that has used a Notion workspace for two years, with thousands of pages, dozens of databases, and countless relations and formulas, will not switch to a functionally identical competitor. Not because they cannot move the data, but because they cannot move the structure.
+
+So "providing data" actually has two subtypes. One is platforms holding third-party data assets — content libraries, UGC pools, search indexes — where the moat is content accumulation and licensing. The other is platforms hosting users' first-party data — notes, messages, code, files — where the moat is migration cost and network effects. The ownership models differ, but the conclusion on "what will not be flattened by AI" is the same. AI can replicate Notion's editor and Slack's interface in a matter of days. It cannot replicate two years of a team's accumulated data, organizational decisions, and collaboration topology inside those products. The engineering is replaceable. The data is not — regardless of whether it belongs to the platform or to the user.
 
 ## Producing Data: The Third Road
 
