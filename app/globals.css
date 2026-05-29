@@ -9,8 +9,8 @@
   --color-bg-soft:    #f4efe3;
   --color-text:       #2a2622;
   --color-text-soft:  #4a443c;
-  --color-muted:      #8a8278;
-  --color-faint:      #b8ad9c;
+  --color-muted:      #767067;
+  --color-faint:      #958c7e;
   --color-rule:       #e6dfce;
   --color-rule-soft:  #efe9d9;
   --color-accent:     #8a4a2b;
@@ -47,8 +47,8 @@
     --color-bg-soft:    #252019;
     --color-text:       #e6dcc8;
     --color-text-soft:  #b8ac95;
-    --color-muted:      #857b6c;
-    --color-faint:      #5a5244;
+    --color-muted:      #8b8273;
+    --color-faint:      #6d665a;
     --color-rule:       #2e2a22;
     --color-rule-soft:  #26221c;
     --color-accent:     #d69968;
@@ -125,6 +125,9 @@ button {
 html {
   background: var(--color-bg);
   color-scheme: light dark;
+  /* TOC / heading-anchor / skip-link jumps land with air above the target
+     instead of flush against the viewport's top edge. */
+  scroll-padding-top: 3rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
