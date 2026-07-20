@@ -1,6 +1,7 @@
 import { getPosts } from "@/lib/content";
+import { renderMarkdown } from "@/lib/content/render";
 import type { Lang } from "@/lib/content/schemas";
-import { LOCALE_TAG } from "@/lib/i18n/messages";
+import { LOCALE_TAG, getMessages } from "@/lib/i18n/messages";
 import { siteConfig } from "@/lib/site";
 
 function escapeXml(value: string): string {
@@ -35,7 +36,12 @@ export function buildAtomFeed(lang: Lang): string {
       const url = `${siteUrl}${postPath(lang, post.slug)}`;
       const published = new Date(post.published_at).toISOString();
       const modified = new Date(post.updated_at).toISOString();
-      const body = [post.thesis, post.summary].filter(Boolean).join("\n\n");
+      // Full-content feed. Relative links inside the essay are made absolute
+      // so they resolve in readers that ignore xml:base.
+      const contentHtml = renderMarkdown(post.content).html.replace(
+        /(href|src)="\//g,
+        `$1="${siteUrl}/`,
+      );
 
       return `  <entry>
     <title>${escapeXml(post.title)}</title>
@@ -44,7 +50,7 @@ export function buildAtomFeed(lang: Lang): string {
     <published>${published}</published>
     <updated>${modified}</updated>
     <summary type="text">${escapeXml(post.summary)}</summary>
-    <content type="text">${escapeXml(body)}</content>
+    <content type="html">${escapeXml(contentHtml)}</content>
     <author><name>${escapeXml(siteConfig.name)}</name></author>
   </entry>`;
     })
@@ -53,7 +59,7 @@ export function buildAtomFeed(lang: Lang): string {
   return `<?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="${LOCALE_TAG[lang]}">
   <title>${escapeXml(siteConfig.name)}</title>
-  <subtitle>${escapeXml(siteConfig.description)}</subtitle>
+  <subtitle>${escapeXml(getMessages(lang).siteDescription)}</subtitle>
   <link rel="self" type="application/atom+xml" href="${feedUrl}"/>
   <link rel="alternate" type="text/html" href="${siteUrl}${sitePath(lang)}"/>
   <id>${siteUrl}${sitePath(lang)}</id>

@@ -14,5 +14,9 @@
     "Infrastructure moves first. People follow."
   ],
   "start_here": ["/en"],
-  "links": {}
+  "links": {
+    "Email": "mailto:hi@finns.ink",
+    "GitHub": "https://github.com/finns0309",
+    "RSS": "/en/rss.xml"
+  }
 }

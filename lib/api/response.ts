@@ -14,6 +14,9 @@ function buildHeaders(meta?: ApiMeta) {
   const headers = new Headers({
     "X-API-Version": API_VERSION,
     "X-Generated-At": new Date().toISOString(),
+    // Content only changes on deploy (which purges the CDN cache), so let
+    // the edge absorb repeat agent traffic instead of the function.
+    "Cache-Control": "public, s-maxage=3600, stale-while-revalidate=86400",
   });
 
   if (meta?.resource) {

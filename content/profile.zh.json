@@ -14,5 +14,9 @@
     "基础设施先变，人后变"
   ],
   "start_here": ["/", "/essays/every-naming-a-funeral", "/essays/empty-signifiers", "/essays/third-death-of-knowledge"],
-  "links": {}
+  "links": {
+    "邮箱": "mailto:hi@finns.ink",
+    "GitHub": "https://github.com/finns0309",
+    "RSS": "/rss.xml"
+  }
 }

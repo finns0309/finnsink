@@ -19,6 +19,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // All static routes have an /en mirror.
   const enStaticPaths = new Set(staticPaths);
 
+  const allPosts = [...getPosts("zh"), ...getPosts("en")];
+  // Real content dates — a lastModified that changes on every crawl teaches
+  // crawlers to distrust the signal.
+  const newestPost = allPosts.map((p) => p.updated_at).sort().at(-1);
+  const staticLastModified = newestPost ? new Date(newestPost) : new Date();
+
   const staticRoutes: MetadataRoute.Sitemap = staticPaths.map((path) => {
     const languages: Record<string, string> = { "zh-CN": staticUrl(siteUrl, path, "zh") };
     if (enStaticPaths.has(path)) {
@@ -26,14 +32,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }
     return {
       url: staticUrl(siteUrl, path, "zh"),
-      lastModified: new Date(),
+      lastModified: staticLastModified,
       alternates: { languages },
     };
   });
 
   // Emit one entry per (slug, lang) pair. Each entry shares the same hreflang
   // alternates set, computed once per slug.
-  const allPosts = [...getPosts("zh"), ...getPosts("en")];
   const seenSlugs = new Set<string>();
   const postRoutes: MetadataRoute.Sitemap = [];
 
