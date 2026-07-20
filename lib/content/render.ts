@@ -41,8 +41,45 @@ function pangu(input: string): string {
     .join("");
 }
 
+// A `*`-delimiter run wedged between punctuation and a letter, in either
+// direction. The classes mirror CommonMark's flanking definition exactly:
+// punctuation is \p{P}+\p{S}, whitespace is \s, anything else is letter-ish.
+// The stray (?!\*) / callback guards keep us from splitting a longer run.
+const BROKEN_CJK_CLOSER = /([\p{P}\p{S}])(\*{1,3})(?=[^\s\p{P}\p{S}])/gu;
+const BROKEN_CJK_OPENER = /([^\s\p{P}\p{S}])(\*{1,3})(?=[\p{P}\p{S}])(?!\*)/gu;
+
+/**
+ * CommonMark's emphasis flanking rules mis-handle CJK prose: a `**` sitting
+ * between punctuation and a letter — closing (`…执行层。**这对…`) or opening
+ * (`…而是**"引语"…`) — doesn't count as flanking, the pair never matches, and
+ * the asterisks leak into the rendered page. A zero-width space (U+200B)
+ * beside the punctuation restores flanking with no visible output.
+ * Code blocks and inline code are skipped, same as pangu().
+ */
+function fixCjkEmphasis(input: string): string {
+  const parts = input.split(/(```[\s\S]*?```)/g);
+  return parts
+    .map((part) => {
+      if (part.startsWith("```")) return part;
+      const subparts = part.split(/(`[^`]*`)/g);
+      return subparts
+        .map((sub) =>
+          sub.startsWith("`")
+            ? sub
+            : sub
+                .replace(BROKEN_CJK_CLOSER, (match, punct: string, run: string) =>
+                  punct === "*" ? match : `${punct}\u200B${run}`,
+                )
+                .replace(BROKEN_CJK_OPENER, "$1$2\u200B"),
+        )
+        .join("");
+    })
+    .join("");
+}
+
 function slugifyHeading(plainText: string): string {
   return plainText
+    .replace(/\u200B/g, "")
     .trim()
     .replace(/\s+/g, "-")
     .replace(/[#?&/\\]+/g, "");
@@ -160,6 +197,12 @@ export function renderMarkdown(markdown: string): RenderResult {
   // Reset per-call so concurrent SSR doesn't cross-pollute. marked.parse is
   // synchronous — Node's event loop guarantees no interleaving inside a call.
   collectedHeadings = [];
-  const html = marked.parse(pangu(markdown)) as string;
-  return { html, headings: [...collectedHeadings] };
+  const html = marked.parse(fixCjkEmphasis(pangu(markdown))) as string;
+  // Wide GFM tables scroll inside their own container instead of forcing
+  // page-level horizontal scroll on phones. Safe on the raw string: raw HTML
+  // in markdown is escaped, so these tags can only come from the renderer.
+  const withTables = html
+    .replace(/<table>/g, '<div class="table-wrap"><table>')
+    .replace(/<\/table>/g, "</table></div>");
+  return { html: withTables, headings: [...collectedHeadings] };
 }
