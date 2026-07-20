@@ -40,7 +40,11 @@ export async function generateMetadata({ params }: EssayPageProps): Promise<Meta
   return {
     title: post.title,
     description: post.summary,
-    alternates: { canonical: url, languages },
+    alternates: {
+      canonical: url,
+      languages,
+      types: { "application/atom+xml": "/en/rss.xml" },
+    },
     openGraph: {
       type: "article",
       title: post.title,

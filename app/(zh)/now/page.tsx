@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
+
 import { getNow } from "@/lib/content";
 import { getMessages } from "@/lib/i18n/messages";
-import { formatDate } from "@/lib/site";
+import { formatDate, pageAlternates } from "@/lib/site";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Now",
+  alternates: pageAlternates("/now", "zh"),
 };
 
 export default function NowPage() {

@@ -1,9 +1,12 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { getMessages } from "@/lib/i18n/messages";
+import { pageAlternates } from "@/lib/site";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "For Agents",
+  alternates: pageAlternates("/for-agents", "en"),
 };
 
 type Endpoint = { path: string; description: string };

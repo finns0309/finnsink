@@ -1,26 +1,11 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 import type { Lang } from "@/lib/content/schemas";
 import { getMessages } from "@/lib/i18n/messages";
 
-function langFromPath(pathname: string): Lang {
-  if (pathname === "/en" || pathname.startsWith("/en/")) return "en";
-  if (pathname === "/ja" || pathname.startsWith("/ja/")) return "ja";
-  return "zh";
-}
-
-function prefix(lang: Lang): string {
-  return lang === "zh" ? "" : `/${lang}`;
-}
-
-export function SiteHeader({ langs }: { langs: Lang[] }) {
-  const pathname = usePathname() ?? "/";
-  const lang = langFromPath(pathname);
+export function SiteHeader({ lang, langs }: { lang: Lang; langs: Lang[] }) {
   const t = getMessages(lang);
-  const base = prefix(lang);
+  const base = lang === "zh" ? "" : `/${lang}`;
 
   const navigation = [
     { href: `${base}/essays`, label: t.nav.essays },

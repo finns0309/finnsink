@@ -1,53 +1,46 @@
 import { NextResponse, type NextRequest } from "next/server";
 
-import type { Lang } from "@/lib/content/schemas";
-
-const SUPPORTED: Lang[] = ["zh", "en", "ja"];
 const PREF_COOKIE = "preferred_lang";
 
-function langFromPathname(pathname: string): Lang {
-  for (const lang of SUPPORTED) {
-    if (lang === "zh") continue;
-    if (pathname === `/${lang}` || pathname.startsWith(`/${lang}/`)) return lang;
-  }
-  return "zh";
+// Only languages with a served page tree may be redirect targets — `ja` has
+// UI messages but no routes, so redirecting there would land on a 404.
+type ServedLang = "zh" | "en";
+
+function langFromPathname(pathname: string): ServedLang {
+  return pathname === "/en" || pathname.startsWith("/en/") ? "en" : "zh";
 }
 
-function preferredLangFromAccept(header: string | null): Lang | null {
-  if (!header) return null;
-  const tokens = header
-    .split(",")
-    .map((t) => t.trim().split(";")[0].toLowerCase())
-    .filter(Boolean);
-  for (const token of tokens) {
-    if (token.startsWith("en")) return "en";
-    if (token.startsWith("ja")) return "ja";
-    if (token.startsWith("zh")) return "zh";
+function prefersEnglish(header: string | null): boolean {
+  if (!header) return false;
+  for (const raw of header.split(",")) {
+    const token = raw.trim().split(";")[0]?.toLowerCase();
+    if (!token) continue;
+    if (token.startsWith("zh")) return false;
+    if (token.startsWith("en")) return true;
   }
-  return null;
+  return false;
 }
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
   const currentLang = langFromPathname(pathname);
-  const cookieLang = request.cookies.get(PREF_COOKIE)?.value as Lang | undefined;
+  const cookieLang = request.cookies.get(PREF_COOKIE)?.value;
 
   // Root-path-only Accept-Language redirect for first-time visitors.
   // Deeper URLs stay where the sharer put them so external links are stable.
-  if (pathname === "/" && !cookieLang) {
-    const preferred = preferredLangFromAccept(request.headers.get("accept-language"));
-    if (preferred && preferred !== "zh") {
-      const target = request.nextUrl.clone();
-      target.pathname = `/${preferred}`;
-      return NextResponse.redirect(target);
-    }
+  if (
+    pathname === "/" &&
+    !cookieLang &&
+    prefersEnglish(request.headers.get("accept-language"))
+  ) {
+    const target = request.nextUrl.clone();
+    target.pathname = "/en";
+    return NextResponse.redirect(target);
   }
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-lang", currentLang);
-  requestHeaders.set("x-pathname", pathname);
-
-  const response = NextResponse.next({ request: { headers: requestHeaders } });
+  // No request-header rewriting here: layouts derive language statically from
+  // the route tree, which keeps every page prerendered and CDN-served.
+  const response = NextResponse.next();
 
   // Whenever the user is on a given language's URL, record it as their
   // preference. This breaks the Accept-Language auto-redirect loop after the

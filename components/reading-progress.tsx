@@ -1,24 +1,26 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * A 2px hairline at the top of the viewport that fills as you scroll
- * through an article. Pure scaleX transform — no layout, no repaint
- * beyond the bar itself. The only client-side JS on the site.
+ * through an article. Writes the transform straight to the DOM node —
+ * no per-frame React re-render. The only client-side JS on the site.
  */
 export function ReadingProgress() {
-  const [progress, setProgress] = useState(0);
+  const barRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     let frame = 0;
 
     const update = () => {
-      const scrollTop = window.scrollY;
       const docHeight =
         document.documentElement.scrollHeight - window.innerHeight;
-      const next = docHeight > 0 ? Math.min(1, Math.max(0, scrollTop / docHeight)) : 0;
-      setProgress(next);
+      const next =
+        docHeight > 0 ? Math.min(1, Math.max(0, window.scrollY / docHeight)) : 0;
+      if (barRef.current) {
+        barRef.current.style.transform = `scaleX(${next})`;
+      }
       frame = 0;
     };
 
@@ -41,8 +43,9 @@ export function ReadingProgress() {
   return (
     <div className="reading-progress" aria-hidden="true">
       <div
+        ref={barRef}
         className="reading-progress__bar"
-        style={{ transform: `scaleX(${progress})` }}
+        style={{ transform: "scaleX(0)" }}
       />
     </div>
   );

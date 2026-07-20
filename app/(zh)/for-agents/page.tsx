@@ -1,7 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
-export const metadata = {
+import { pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
   title: "For Agents",
+  alternates: pageAlternates("/for-agents", "zh"),
 };
 
 type Endpoint = {

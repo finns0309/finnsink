@@ -41,7 +41,9 @@ When adding a new content type or field, update **both** the schema and the deri
 
 ### Routes (`app/`)
 
-App Router. Page routes under `app/{about,now,essays,for-agents,…}` consume the content helpers directly (server components). JSON/HTTP endpoints live under `app/api/` and mirror the content store (`essays.json`, `topics.json`, `graph.json`, `backlinks/`, `search.json`, …) — they are how the "for agents" surface is exposed. `lib/api/response.ts` is the shared JSON response helper. The canonical list of agent-facing endpoints is hardcoded in `app/for-agents/page.tsx`; keep it in sync when adding or removing routes.
+App Router with **two root layouts**: Chinese pages live in the `app/(zh)/` route group, English pages under `app/en/`. Each root layout hardcodes its `<html lang>`, metadata, and feed alternate, and renders the shared `components/site-shell.tsx`. This keeps every page statically prerendered — **never read `headers()`/`cookies()` in layouts or pages**; that opts the whole tree back into per-request rendering (`middleware.ts` handles the root-path language redirect and preference cookie instead). Each language tree has its own `not-found.tsx` plus a `[...rest]` catch-all page that routes unmatched paths to the localized 404. Static pages declare canonical + hreflang via `pageAlternates()` from `lib/site.ts`.
+
+Page routes consume the content helpers directly (server components). JSON/HTTP endpoints live under `app/api/` and mirror the content store (`essays.json`, `topics.json`, `graph.json`, `backlinks/`, `search.json`, …) — they are how the "for agents" surface is exposed. `lib/api/response.ts` is the shared JSON response helper (sets `Cache-Control: s-maxage` — content only changes on deploy). The canonical list of agent-facing endpoints is hardcoded in `app/(zh)/for-agents/page.tsx`; keep it in sync when adding or removing routes.
 
 ## Conventions
 

@@ -1,10 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { getProfile } from "@/lib/content";
 import { getMessages } from "@/lib/i18n/messages";
+import { pageAlternates } from "@/lib/site";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "About",
+  alternates: pageAlternates("/about", "zh"),
 };
 
 export default function AboutPage() {
@@ -39,6 +42,20 @@ export default function AboutPage() {
               <li key={belief}>{belief}</li>
             ))}
           </ul>
+        </section>
+      ) : null}
+
+      {Object.keys(profile.links).length ? (
+        <section className="prose-page__section">
+          <h2>{t.about.links}</h2>
+          <p>
+            {Object.entries(profile.links).map(([label, href], index) => (
+              <span key={label}>
+                {index > 0 ? " · " : ""}
+                <a href={href}>{label}</a>
+              </span>
+            ))}
+          </p>
         </section>
       ) : null}
 

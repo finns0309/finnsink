@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { getPosts } from "@/lib/content";
 import { getMessages } from "@/lib/i18n/messages";
-import { formatDate } from "@/lib/site";
+import { formatDate, pageAlternates } from "@/lib/site";
+
+export const metadata: Metadata = {
+  alternates: pageAlternates("/", "en"),
+};
 
 export default function EnHomePage() {
   const posts = getPosts("en");

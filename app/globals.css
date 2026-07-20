@@ -276,7 +276,7 @@ code {
 }
 
 .site-nav__lang a {
-  color: var(--color-faint);
+  color: var(--color-muted);
   text-decoration: none;
   font-style: normal;
 }
@@ -396,7 +396,7 @@ code {
   font-size: 0.72rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--color-faint);
+  color: var(--color-muted);
   font-weight: 500;
   margin-bottom: 1.75rem;
   padding-bottom: 0.75rem;
@@ -728,6 +728,45 @@ code {
   color: var(--color-text);
 }
 
+/* ───────── tables ─────────
+   GFM tables. renderMarkdown wraps each <table> in .table-wrap, so a wide
+   table scrolls inside its own container instead of stretching the page.
+   No text-align here — GFM column alignment must keep winning. */
+
+.article-body .table-wrap {
+  overflow-x: auto;
+  margin: 2.6rem 0;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.article-body th,
+.article-body td {
+  padding: 0.55rem 1.25rem 0.55rem 0;
+  vertical-align: top;
+  border-bottom: 1px solid var(--color-rule-soft);
+}
+
+.article-body th:last-child,
+.article-body td:last-child {
+  padding-right: 0;
+}
+
+.article-body thead th {
+  font-family: var(--font-sans);
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: var(--color-muted);
+  border-bottom: 1px solid var(--color-rule);
+}
+
 /* ───────── article TOC ─────────
    Mobile/tablet: a quiet block above the body (only shown if the essay has
    ≥3 h2s, so short pieces stay clean).
@@ -786,6 +825,37 @@ code {
   color: var(--color-accent);
 }
 
+/* Mobile/tablet: the TOC is a native <details>, collapsed by default, so a
+   long contents block never stands between the reader and the first line.
+   Desktop swaps in the always-visible sidebar variant below. */
+.article-toc__desktop {
+  display: none;
+}
+
+.article-toc__summary {
+  cursor: pointer;
+  list-style: none;
+  margin-bottom: 0;
+}
+
+.article-toc__summary::-webkit-details-marker {
+  display: none;
+}
+
+.article-toc__summary::after {
+  content: "+";
+  margin-left: 0.6em;
+  color: var(--color-faint);
+}
+
+details[open] > .article-toc__summary {
+  margin-bottom: 0.85rem;
+}
+
+details[open] > .article-toc__summary::after {
+  content: "−";
+}
+
 @media (min-width: 1200px) {
   /* Pull the TOC out of flow and into the right margin. The article's
      centered max-width means there's enough empty gutter past the right
@@ -794,6 +864,14 @@ code {
      container) by giving it position:relative on this breakpoint only. */
   article.page {
     position: relative;
+  }
+
+  .article-toc__mobile {
+    display: none;
+  }
+
+  .article-toc__desktop {
+    display: block;
   }
 
   .article-toc {

@@ -1,4 +1,16 @@
+import type { Viewport } from "next";
+
+import type { Lang } from "@/lib/content/schemas";
+
 const DEFAULT_SITE_URL = "https://example.com";
+
+/** Shared by both root layouts — keeps the browser chrome on the paper tint. */
+export const siteViewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#faf7f0" },
+    { media: "(prefers-color-scheme: dark)", color: "#1c1915" },
+  ],
+};
 
 function normalizeSiteUrl(value?: string) {
   if (!value) {
@@ -26,6 +38,22 @@ export const siteConfig = {
   description: "Notes on attention, knowledge, and tools — written slowly, in Chinese.",
   url: getSiteUrl(),
 };
+
+/**
+ * Canonical + hreflang pair for a static page that exists in both languages.
+ * `zhPath` is the zh route ("/", "/essays", …); the en twin lives under /en.
+ * Relative URLs — resolved against metadataBase by Next.
+ */
+export function pageAlternates(zhPath: string, lang: Lang) {
+  const enPath = zhPath === "/" ? "/en" : `/en${zhPath}`;
+  return {
+    canonical: lang === "zh" ? zhPath : enPath,
+    languages: { "zh-CN": zhPath, en: enPath },
+    // Page-level `alternates` replaces the layout's wholesale, so the feed
+    // link must ride along here or it disappears from every page.
+    types: { "application/atom+xml": lang === "zh" ? "/rss.xml" : "/en/rss.xml" },
+  };
+}
 
 export function formatDate(value: string) {
   const date = new Date(value);

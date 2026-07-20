@@ -1,11 +1,13 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { getPosts } from "@/lib/content";
 import type { Post } from "@/lib/content/schemas";
-import { formatDate } from "@/lib/site";
+import { formatDate, pageAlternates } from "@/lib/site";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "Essays",
+  alternates: pageAlternates("/essays", "zh"),
 };
 
 function groupByYear(posts: Post[]): Array<{ year: number; posts: Post[] }> {
