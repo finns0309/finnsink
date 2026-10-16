@@ -1,11 +1,11 @@
 {
   "id": "finn",
   "name": "Finn",
-  "summary": "Writing so I can find out what I actually think.",
-  "intro": "I'm Finn, in Beijing. I write long essays and build small tools — this is where the writing, the things I've made, and what I'm thinking about now all live.",
-  "long_summary": "Finn's personal site. The central question: how symbols, language, and systems shape — and limit — our cognition and sense of self. The essays start from semiotics, continental philosophy, and the technical present, and try to pry apart concepts that look self-evident — ability, freedom, growth, knowledge, action — to see where their referents actually land. Written irregularly, slowly, and at length.",
+  "summary": "A lot of things, I only figure out halfway through writing them down.",
+  "intro": "I'm Finn, in Beijing. I write long essays and build small tools for myself, usually for small reasons — NetEase Cloud Music's desktop lyrics looked too ugly, so I hacked an overlay for them, and after enough fixing decided I might as well build my own player.",
+  "long_summary": "Most of the early essays take words apart: ability, freedom, growth, knowledge — words everyone uses every day, and I wanted to see for myself what they point to. Later I wrote more about where I went and what I made, like the 2026 National Day trip I planned around visa rules, flight prices and a bathtub, or making an animated short with AI. What comes next, honestly, I'm not sure.",
   "location": "Beijing",
-  "roles": ["writer", "independent developer"],
+  "roles": ["writing long essays", "building small tools"],
   "beliefs": [
     "Naming is compression. Every compression costs an experience.",
     "Splicing and extending are two different operations. Most things called innovation belong to the first.",

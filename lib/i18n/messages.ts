@@ -45,6 +45,9 @@ type Messages = {
     workingOn: string;
     openLoops: string;
     reading: string;
+    recentWriting: string;
+    activeProjects: string;
+    all: string;
   };
   about: {
     currently: string;
@@ -63,7 +66,7 @@ type Messages = {
 
 export const messages: Record<Lang, Messages> = {
   zh: {
-    siteDescription: "Finn 的个人站：中文长文、几件小工具，和最近在想的事。",
+    siteDescription: "Finn 的个人站，放着我写的长文、做的小工具，还有最近在忙的事。",
     nav: { writing: "写作", projects: "项目", now: "近况", about: "关于" },
     skipToContent: "跳到正文",
     home: {
@@ -78,8 +81,8 @@ export const messages: Record<Lang, Messages> = {
     },
     writing: {
       title: "写作",
-      lede: (count, since) => `长文，慢慢写。目前 ${count} 篇，最早一篇写于 ${since}。`,
-      thinking: "标着 ✻ 的几篇，我还在想，之后可能会改。",
+      lede: (count, since) => `目前写了 ${count} 篇，最早的一篇是 ${since}写的。`,
+      thinking: "标了 ✻ 的几篇我其实还没想完，之后可能还会改。",
     },
     essay: {
       adjacent: "相邻文章",
@@ -95,7 +98,7 @@ export const messages: Record<Lang, Messages> = {
     },
     projects: {
       title: "项目",
-      lede: "写东西之外，我也做一些小工具。大多先是给自己用的，用顺手了才放出来。",
+      lede: "这些基本都是先做给自己用的，用到觉得能放出来了，才放到 GitHub 上。",
       status: { active: "在做", stable: "可用", prototype: "原型", archived: "归档" },
       private: "私有仓库",
       related: (title) => `相关文章《${title}》`,
@@ -105,8 +108,11 @@ export const messages: Record<Lang, Messages> = {
       updated: "更新于",
       focus: "在想",
       workingOn: "在做",
-      openLoops: "悬而未决",
+      openLoops: "还悬着的事",
       reading: "在读",
+      recentWriting: "最近写的",
+      activeProjects: "还在做的项目",
+      all: "全部",
     },
     about: {
       currently: "现在",
@@ -114,22 +120,22 @@ export const messages: Record<Lang, Messages> = {
       links: "找到我",
       colophon: "关于这个站",
       colophonBody:
-        "内容就是仓库里的 Markdown 和 JSON 文件，用 Next.js 渲染，部署在 Vercel。排版只用你设备上已有的字体，不额外下载 webfont。每一页都有一份给 agent 读的 JSON。2026 年 4 月上线时它是个博客，V2 改成了现在这样的个人站。",
+        "内容就是仓库里的 Markdown 和 JSON 文件，用 Next.js 渲染，部署在 Vercel。字体只用你设备上本来就有的，没有额外下载 webfont。每一页都有一份给 agent 读的 JSON。这个站 2026 年 4 月上线的时候还只是个博客，现在的样子是 V2。",
       source: "源码",
       forAgentsLink: "如果你不是人类 →",
     },
     forAgents: { humanLink: "← back to the human side" },
     notFound: {
       title: "这里没有页面。",
-      body: "你找的东西要么从未存在，要么已经被搬走，要么只是一个手抖的链接。",
+      body: "这个地址下面什么都没有，可能是链接打错了，也可能是我把页面挪走了。",
       home: "← 回首页",
       essays: "看看写作",
     },
-    footer: { tagline: "Finn · 慢慢写", source: "源码" },
+    footer: { tagline: "Finn", source: "源码" },
     switcher: { label: "语言", langs: { zh: "中", en: "EN", ja: "日" } },
   },
   en: {
-    siteDescription: "Finn's personal site: long-form essays, small tools, and what's happening now.",
+    siteDescription: "Finn's personal site: long essays, small tools, and what I've been busy with lately.",
     nav: { writing: "Writing", projects: "Projects", now: "Now", about: "About" },
     skipToContent: "Skip to content",
     home: {
@@ -145,8 +151,8 @@ export const messages: Record<Lang, Messages> = {
     writing: {
       title: "Writing",
       lede: (count, since) =>
-        `Long essays, written slowly. ${count} in English so far, the first from ${since}. More are in Chinese.`,
-      thinking: "Pieces marked ✻ are still being thought through and may change.",
+        `${count} essays in English so far, the first from ${since}. Most of the writing is in Chinese.`,
+      thinking: "The ones marked ✻ I haven't finished thinking through yet, so they may still change.",
     },
     essay: {
       adjacent: "Adjacent essays",
@@ -162,7 +168,7 @@ export const messages: Record<Lang, Messages> = {
     },
     projects: {
       title: "Projects",
-      lede: "Besides writing, I build small tools — most of them for myself first, released once they feel right.",
+      lede: "Most of these I built for myself first, and only put on GitHub once they felt ready to share.",
       status: { active: "Active", stable: "Stable", prototype: "Prototype", archived: "Archived" },
       private: "Private repo",
       related: (title) => `Related: ${title}`,
@@ -172,8 +178,11 @@ export const messages: Record<Lang, Messages> = {
       updated: "Updated",
       focus: "Thinking about",
       workingOn: "Working on",
-      openLoops: "Open loops",
+      openLoops: "Still unresolved",
       reading: "Reading",
+      recentWriting: "Recently written",
+      activeProjects: "Projects in progress",
+      all: "All",
     },
     about: {
       currently: "Currently",
@@ -181,18 +190,18 @@ export const messages: Record<Lang, Messages> = {
       links: "Elsewhere",
       colophon: "About this site",
       colophonBody:
-        "The content is plain Markdown and JSON in the repository, rendered with Next.js and deployed on Vercel. Type is set in whatever fonts your device already has — no webfonts. Every page has a JSON twin for agents. It launched as a blog in April 2026; V2 turned it into this personal site.",
+        "The content is just Markdown and JSON files in the repo, rendered with Next.js and deployed on Vercel. It uses whatever fonts your device already has — no webfonts downloaded. Every page has a JSON version for agents. When it launched in April 2026 it was just a blog; what you see now is V2.",
       source: "Source",
       forAgentsLink: "If you are not human →",
     },
     forAgents: { humanLink: "← back to the human side" },
     notFound: {
       title: "Nothing lives here.",
-      body: "What you're looking for either never existed, has been moved, or is just a slightly off link.",
+      body: "There's nothing at this address — maybe the link is mistyped, or I moved the page.",
       home: "← Home",
       essays: "See the writing",
     },
-    footer: { tagline: "Finn · written slowly", source: "Source" },
+    footer: { tagline: "Finn", source: "Source" },
     switcher: { label: "Language", langs: { zh: "中", en: "EN", ja: "日" } },
   },
   ja: {
@@ -238,8 +247,11 @@ export const messages: Record<Lang, Messages> = {
       updated: "更新",
       focus: "考えていること",
       workingOn: "取り組み中",
-      openLoops: "未決のループ",
+      openLoops: "未解決のこと",
       reading: "読書",
+      recentWriting: "最近の文章",
+      activeProjects: "進行中のプロジェクト",
+      all: "すべて",
     },
     about: {
       currently: "現在",
@@ -257,7 +269,7 @@ export const messages: Record<Lang, Messages> = {
       home: "← ホームへ",
       essays: "文章を見る",
     },
-    footer: { tagline: "Finn · ゆっくり書く", source: "ソース" },
+    footer: { tagline: "Finn", source: "ソース" },
     switcher: { label: "言語", langs: { zh: "中", en: "EN", ja: "日" } },
   },
 };

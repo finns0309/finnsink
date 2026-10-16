@@ -88,7 +88,7 @@ export function EssayView({ lang, slug }: { lang: Lang; slug: string }) {
       <article className="page">
         <header className="article-header">
           <h1 className="article-title keep-words">
-            <Phrase text={post.title} />
+            <Phrase text={post.title} clauses />
           </h1>
           {post.thesis ? <p className="article-standfirst">{post.thesis}</p> : null}
           <p className="meta dot-list">

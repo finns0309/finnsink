@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 
 import { Phrase } from "@/components/phrase";
 import { EssayRow, ProjectRow } from "@/components/rows";
+import { narrativeParagraphs } from "@/components/views/now";
 import { getNow, getPostBySlug, getPosts, getProfile, getProjects } from "@/lib/content";
 import type { Lang, Post } from "@/lib/content/schemas";
 import { getMessages } from "@/lib/i18n/messages";
@@ -54,13 +55,9 @@ export function HomeView({ lang }: { lang: Lang }) {
 
       <section className="hero">
         <h1 className="hero__title keep-words">
-          <Phrase text={profile.summary} />
+          <Phrase text={profile.summary} clauses />
         </h1>
         {profile.intro ? <p className="hero__intro">{profile.intro}</p> : null}
-        <p className="hero__meta meta dot-list">
-          <span>{profile.location}</span>
-          <span>{profile.roles.join(" / ")}</span>
-        </p>
       </section>
 
       <section className="section" aria-labelledby="home-now">
@@ -72,7 +69,7 @@ export function HomeView({ lang }: { lang: Lang }) {
             {t.home.nowMore} →
           </Link>
         </div>
-        <p className="now-note">{now.narrative}</p>
+        <p className="now-note">{narrativeParagraphs(now.narrative)[0]}</p>
         <p className="now-note__meta meta">
           {t.now.updated} {formatDate(now.updated_at, lang)}
         </p>

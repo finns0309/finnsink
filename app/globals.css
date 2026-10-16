@@ -328,6 +328,10 @@ code {
   margin-top: 1rem;
 }
 
+.page-meta + .page-lede {
+  margin-top: 1.5rem;
+}
+
 .prose-section .meta {
   margin-top: 0.75rem;
 }
@@ -444,10 +448,6 @@ code {
   line-height: 1.85;
   color: var(--color-text-soft);
   letter-spacing: 0.01em;
-}
-
-.hero__meta {
-  margin-top: 1rem;
 }
 
 .now-note {
@@ -1159,6 +1159,11 @@ details[open] > .article-toc__summary::after {
 /* Pairs with <Phrase>: lines may only break where it put a <wbr>. */
 .keep-words {
   word-break: keep-all;
+}
+
+.keep-words .phrase {
+  display: inline-block;
+  max-width: 100%;
 }
 
 .sr-only {
