@@ -11,7 +11,9 @@
       "GitHub": "https://github.com/finns0309/muse",
       "下载": "https://github.com/finns0309/muse/releases/latest"
     },
-    "related_essays": ["data-is-the-product"]
+    "related_essays": [
+      "data-is-the-product"
+    ]
   },
   {
     "slug": "echo",
@@ -24,7 +26,9 @@
     "links": {
       "GitHub": "https://github.com/finns0309/echo"
     },
-    "related_essays": ["data-is-the-product"]
+    "related_essays": [
+      "data-is-the-product"
+    ]
   },
   {
     "slug": "agent-protocol",
@@ -53,10 +57,25 @@
   {
     "slug": "musev2",
     "name": "MuseV2",
-    "summary": "muse 的一个分支，用来试一套 Claude 风格的界面。",
+    "summary": "muse 的分支，换上了一套 Claude 风格的界面。",
+    "description": "输入框变成一张 composer 卡片，/ 打开带子菜单的命令列表；用一句话说想听什么，就能排出一个队列；听歌记录会被整理成按时期和纪念日讲的故事；放歌时，菜单栏里的 ✻ 跟着节拍转。可以和 muse 同时运行。",
     "year": 2026,
     "status": "active",
-    "visibility": "private",
-    "kind": "macOS 应用"
+    "kind": "macOS 应用",
+    "links": {
+      "GitHub": "https://github.com/finns0309/MuseV2"
+    }
+  },
+  {
+    "slug": "echov2",
+    "name": "echoV2",
+    "summary": "桌面上的通用显示器：muse 和 agent 都往这里投内容，echoV2 决定什么时候、在哪、以什么样子显示。",
+    "description": "歌词只是其中一个内容包。八个主题里，有风铃和新世纪，也有排成一整版报纸的「晨报」、立在桌上的折叠屏「Duo」、住在屏幕底边的麻薯桌宠「もち」，和拼出字句的萤火虫「流萤」。可以开多个窗口，agent 能点名窗口，让几张卡片同时上台。",
+    "year": 2026,
+    "status": "active",
+    "kind": "macOS 应用",
+    "links": {
+      "GitHub": "https://github.com/finns0309/echoV2"
+    }
   }
 ]

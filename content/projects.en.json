@@ -11,7 +11,9 @@
       "GitHub": "https://github.com/finns0309/muse",
       "Download": "https://github.com/finns0309/muse/releases/latest"
     },
-    "related_essays": ["data-is-the-product"]
+    "related_essays": [
+      "data-is-the-product"
+    ]
   },
   {
     "slug": "echo",
@@ -24,7 +26,9 @@
     "links": {
       "GitHub": "https://github.com/finns0309/echo"
     },
-    "related_essays": ["data-is-the-product"]
+    "related_essays": [
+      "data-is-the-product"
+    ]
   },
   {
     "slug": "agent-protocol",
@@ -53,10 +57,25 @@
   {
     "slug": "musev2",
     "name": "MuseV2",
-    "summary": "A fork of muse for trying out a Claude-style interface.",
+    "summary": "A fork of muse that grew a Claude-style interface.",
+    "description": "The input became a composer card and / opens a command menu with submenus; describe what you want to hear in a sentence and it builds a queue; your listening history is retold as stories of eras and anniversaries; while a song plays, the ✻ in the menu bar turns with the beat. It runs alongside muse.",
     "year": 2026,
     "status": "active",
-    "visibility": "private",
-    "kind": "macOS app"
+    "kind": "macOS app",
+    "links": {
+      "GitHub": "https://github.com/finns0309/MuseV2"
+    }
+  },
+  {
+    "slug": "echov2",
+    "name": "echoV2",
+    "summary": "A general-purpose display for the desktop: muse and agents send it content, and echoV2 decides when, where and how it appears.",
+    "description": "Lyrics are just one content pack. Its eight themes include wind chimes and an Evangelion-style title card, a full newspaper front page, a foldable phone standing on the desk, a mochi pet living along the bottom of the screen, and fireflies that swarm into words. It runs several windows at once, and agents can address a window by name or put cards on stage together.",
+    "year": 2026,
+    "status": "active",
+    "kind": "macOS app",
+    "links": {
+      "GitHub": "https://github.com/finns0309/echoV2"
+    }
   }
 ]
