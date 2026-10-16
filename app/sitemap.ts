@@ -15,7 +15,7 @@ function staticUrl(siteUrl: string, path: string, lang: Lang): string {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = getSiteUrl();
-  const staticPaths = ["", "/about", "/now", "/essays", "/for-agents"];
+  const staticPaths = ["", "/about", "/now", "/essays", "/projects", "/for-agents"];
   // All static routes have an /en mirror.
   const enStaticPaths = new Set(staticPaths);
 

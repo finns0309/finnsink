@@ -1,14 +1,14 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
   <style>
     .glyph {
-      font-family: "Source Serif 4", "Iowan Old Style", "Charter", "Georgia", "Times New Roman", serif;
+      font-family: "Charter", "Iowan Old Style", "Source Serif 4", "Georgia", "Times New Roman", serif;
       font-style: italic;
       font-weight: 500;
       font-size: 30px;
-      fill: #2a2622;
+      fill: #1f1e1d;
     }
     @media (prefers-color-scheme: dark) {
-      .glyph { fill: #faf7f0; }
+      .glyph { fill: #faf9f5; }
     }
   </style>
   <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" class="glyph">f</text>

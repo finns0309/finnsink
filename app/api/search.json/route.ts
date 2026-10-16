@@ -16,6 +16,6 @@ export function GET(request: Request) {
   return jsonData(results, {
     resource: "search",
     query,
-    count: results.posts.length,
+    count: results.posts.length + results.projects.length,
   });
 }

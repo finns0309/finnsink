@@ -6,47 +6,22 @@
 
 ## 进行中
 
-### i18n（中英日三语）
+### V2：从博客到个人站（2026-10，分支 `v2`）
 
-**状态：** 方案已敲定 2026-04-19，未开工。
+**状态：** 已在 `v2` 分支实现，待预览后合并到 `main`。V1 保留在标签 `v1`。
 
-**核心决策：**
-- URL：中文无前缀 (`/essays/foo`)；其他语言加前缀 (`/en/essays/foo`, `/ja/essays/foo`)
-- 内容：`content/posts/{zh,en,ja}/<slug>.md`，slug 跨语言共享；同一 slug 出现在哪几个目录 = 该文在哪几种语言存在
-- 翻译：完全本地 AI 翻译，commit 静态 .md；站点运行时不含任何 AI 调用
-- 语言切换器：文章页只显示该文实际存在的语言；首页等列表页显示全部
-- 自动跟随 `Accept-Language` 重定向（受众多为非中文母语），用 `preferred_lang` cookie 记录手动选择避免循环
+- 首页从文章列表改成「名片」：一句话、自我介绍、✻ 近况、最近写的、从这几篇读起、做过的东西、找到我
+- 新增 `/projects`（`content/projects.{lang}.json` + `/api/projects.json`）
+- 文章页显示阅读时长、`stance`（✻ 还在想）与 `person_snapshot`（写下这篇时）
+- `/essays` 改成按年分组的紧凑索引
+- Claude 风格的视觉：象牙 + 陶土、内容衬线 / 界面无衬线、句首大写；中文界面文案、中文日期
+- 修复：阅读时长对中文的估算、OG 分享图空白（Next 16 的 params 是 Promise）、`＊` 分节符、llms.txt 的双斜杠与失效的 Topics
 
-**首轮只做中英**，挑 2 篇测试：
-- `every-naming-a-funeral`
-- `when-language-boundary-moves`
+**合并前待定：** 项目列表与文案（只链接了公开仓库）、`now.*.json` 内容已过期（2026-04-09）。
 
-**PR 切分：**
+### i18n（中英）
 
-- [x] **PR 1 — 基础架构 + 内容迁移**
-  - `Post` schema 加 `lang` 必填字段
-  - `postsByLang` / `postsBySlugAndLang` 索引；旧 `postsBySlug` 保留为 zh alias
-  - `content/posts/*.md` → `content/posts/zh/*.md`
-  - 路由：`app/[lang]/...` + middleware 把 `/essays/*` 重写到 `/zh/essays/*`
-  - 验证：现有中文 URL 不变、功能不变。**不引入任何英文内容**。
-
-- [x] **PR 2 — 英文支持 + 切换器**
-  - `content/posts/en/` 放 2 篇翻译
-  - `profile.en.json` / `now.en.json`
-  - `lib/i18n/messages/{zh,en}.ts` UI 文案
-  - Header 语言切换器（按页面类型决定显示几种）
-  - 文章页底部 "Available in" 指示器
-  - Middleware 的 Accept-Language 重定向 + cookie
-
-- [x] **PR 3 — SEO + agents API**
-  - `<html lang>` 每页动态，essay 页 `<link rel="alternate" hreflang>` 列出所有语言版本
-  - `sitemap.xml` 含 `xhtml:link` 语言 alternates
-  - RSS 分 feed：`/rss.xml`（zh）、`/en/rss.xml`
-  - `llms.txt` 分 feed：`/llms.txt`（zh）、`/en/llms.txt`
-  - 所有 `/api/*` 端点接受 `?lang=zh|en`；essay 响应带 `available_langs` 数组
-  - `for-agents` 页面描述 `?lang=` 用法
-
----
+**状态：** 中英两语已上线（2026-07）。日文暂缓。
 
 ## 待办（未排期）
 

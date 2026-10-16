@@ -2,20 +2,19 @@ import Link from "next/link";
 
 import type { Lang } from "@/lib/content/schemas";
 import { getMessages } from "@/lib/i18n/messages";
+import { localePath } from "@/lib/site";
 
 export function NotFoundPage({ lang }: { lang: Lang }) {
   const t = getMessages(lang);
-  const base = lang === "zh" ? "" : `/${lang}`;
 
   return (
     <div className="page not-found">
-      <p className="not-found__eyebrow">404</p>
-      <h1 className="not-found__title">{t.notFound.title}</h1>
-      <p className="not-found__body">{t.notFound.body}</p>
-      <p className="not-found__actions">
-        <Link href={base || "/"}>{t.notFound.home}</Link>
-        <span aria-hidden="true">·</span>
-        <Link href={`${base}/essays`}>{t.notFound.essays}</Link>
+      <p className="section__label">404</p>
+      <h1 className="page-title">{t.notFound.title}</h1>
+      <p className="page-lede">{t.notFound.body}</p>
+      <p className="not-found__actions meta dot-list">
+        <Link href={localePath(lang, "/")}>{t.notFound.home}</Link>
+        <Link href={localePath(lang, "/essays")}>{t.notFound.essays}</Link>
       </p>
     </div>
   );

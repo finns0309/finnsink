@@ -9,10 +9,12 @@ import {
   nowSchema,
   postSchema,
   profileSchema,
+  projectsFileSchema,
   type Lang,
   type Now,
   type Post,
   type Profile,
+  type Project,
 } from "./schemas";
 
 const LANGS = langSchema.options;
@@ -24,6 +26,7 @@ const STATIC_ROUTES = [
   "/about",
   "/now",
   "/essays",
+  "/projects",
   "/for-agents",
 ] as const;
 
@@ -33,11 +36,13 @@ type ContentStore = {
   posts: Post[];
   postsByLang: Map<Lang, Post[]>;
   postsBySlugAndLang: Map<string, Map<Lang, Post>>;
+  projectsByLang: Map<Lang, Project[]>;
 };
 
 export type ContentSearchResults = {
   query: string;
   posts: Post[];
+  projects: Project[];
 };
 
 export type ContentValidationIssue = {
@@ -52,6 +57,7 @@ export type ContentValidationReport = {
   generatedAt: string;
   counts: {
     posts: number;
+    projects: number;
   };
   issues: ContentValidationIssue[];
 };
@@ -63,9 +69,12 @@ function readJsonFile<T>(filePath: string, parser: { parse: (input: unknown) => 
   return parser.parse(JSON.parse(raw));
 }
 
+// CJK prose has no spaces to split on, so count characters for it and words
+// for everything else. ~400 汉字 or ~220 English words per minute.
 function estimateReadingTime(content: string) {
-  const words = content.trim().split(/\s+/).filter(Boolean).length;
-  return Math.max(1, Math.ceil(words / 200));
+  const cjkChars = content.match(/[\u3400-\u9fff\uf900-\ufaff]/g)?.length ?? 0;
+  const latinWords = content.replace(/[\u3400-\u9fff\uf900-\ufaff]/g, " ").match(/[A-Za-z0-9][\w'’-]*/g)?.length ?? 0;
+  return Math.max(1, Math.round(cjkChars / 400 + latinWords / 220));
 }
 
 function normalizeFrontmatterDates(data: Record<string, unknown>) {
@@ -135,6 +144,14 @@ function buildContentStore(): ContentStore {
     }
   }
 
+  const projectsByLang = new Map<Lang, Project[]>();
+  for (const lang of LANGS) {
+    const projectsPath = path.join(CONTENT_ROOT, `projects.${lang}.json`);
+    if (fs.existsSync(projectsPath)) {
+      projectsByLang.set(lang, readJsonFile(projectsPath, projectsFileSchema));
+    }
+  }
+
   if (!profileByLang.has(DEFAULT_LANG)) throw new Error(`Missing content/profile.${DEFAULT_LANG}.json`);
   if (!nowByLang.has(DEFAULT_LANG)) throw new Error(`Missing content/now.${DEFAULT_LANG}.json`);
 
@@ -176,6 +193,7 @@ function buildContentStore(): ContentStore {
     posts,
     postsByLang,
     postsBySlugAndLang,
+    projectsByLang,
   };
 }
 
@@ -230,6 +248,10 @@ export function getServedLangs(): Lang[] {
   return LANGS.filter((l) => langs.has(l));
 }
 
+export function getProjects(lang: Lang = DEFAULT_LANG): Project[] {
+  return getContentStore().projectsByLang.get(lang) ?? [];
+}
+
 export function getAdjacentPosts(
   slug: string,
   lang: Lang = DEFAULT_LANG,
@@ -251,7 +273,7 @@ export function searchContent(query: string, lang: Lang = DEFAULT_LANG): Content
   const normalizedQuery = query.trim();
 
   if (!normalizedQuery) {
-    return { query: "", posts: [] };
+    return { query: "", posts: [], projects: [] };
   }
 
   return {
@@ -259,6 +281,12 @@ export function searchContent(query: string, lang: Lang = DEFAULT_LANG): Content
     posts: getPosts(lang).filter((post) =>
       includesQuery(
         [post.title, post.summary, post.thesis, post.content, ...post.keywords],
+        normalizedQuery,
+      ),
+    ),
+    projects: getProjects(lang).filter((project) =>
+      includesQuery(
+        [project.name, project.summary, project.description, project.kind],
         normalizedQuery,
       ),
     ),
@@ -274,6 +302,31 @@ export function validateContent(): ContentValidationReport {
     ...STATIC_ROUTES,
     ...defaultLangPosts.map((post) => `/essays/${post.slug}`),
   ]);
+
+  for (const [lang, projects] of store.projectsByLang) {
+    const seen = new Set<string>();
+    for (const project of projects) {
+      if (seen.has(project.slug)) {
+        issues.push({
+          severity: "error",
+          code: "project.duplicate_slug",
+          message: `Project slug "${project.slug}" appears twice.`,
+          location: `content/projects.${lang}.json`,
+        });
+      }
+      seen.add(project.slug);
+      for (const slug of project.related_essays) {
+        if (!getPostBySlug(slug, lang)) {
+          issues.push({
+            severity: "error",
+            code: "project.related_essay_missing",
+            message: `Project "${project.slug}" links essay "${slug}", which has no ${lang} version.`,
+            location: `content/projects.${lang}.json`,
+          });
+        }
+      }
+    }
+  }
 
   const profile = store.profileByLang.get(DEFAULT_LANG);
   if (profile) {
@@ -292,7 +345,10 @@ export function validateContent(): ContentValidationReport {
   return {
     ok: issues.every((issue) => issue.severity !== "error"),
     generatedAt: new Date().toISOString(),
-    counts: { posts: store.posts.length },
+    counts: {
+      posts: store.posts.length,
+      projects: Array.from(store.projectsByLang.values()).reduce((sum, list) => sum + list.length, 0),
+    },
     issues,
   };
 }

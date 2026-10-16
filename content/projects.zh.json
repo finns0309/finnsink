@@ -1,0 +1,76 @@
+[
+  {
+    "slug": "muse",
+    "name": "muse",
+    "summary": "网易云音乐的随叫随到命令面板。⌥Space 唤出，换首歌，再消失。",
+    "description": "住在菜单栏里，没有 Dock 图标，整个界面就是一个面板：闲着时是一张正在播放的卡片，封面的颜色会铺满整个面板；一打字就变成搜索。",
+    "year": 2026,
+    "status": "active",
+    "kind": "macOS 应用",
+    "links": {
+      "GitHub": "https://github.com/finns0309/muse"
+    }
+  },
+  {
+    "slug": "echo",
+    "name": "echo",
+    "summary": "桌面悬浮歌词，muse 的可视层。只读不控，跟着音乐换氛围。",
+    "description": "播放交给 muse，echo 只负责“音乐愿意留在屏幕上的样子”：歌词、封面氛围，和随主题切换的窗框。",
+    "year": 2026,
+    "status": "active",
+    "kind": "macOS 应用",
+    "links": {
+      "GitHub": "https://github.com/finns0309/echo"
+    }
+  },
+  {
+    "slug": "agent-protocol",
+    "name": "Agent Protocol",
+    "summary": "本地优先的多 agent 世界运行时：许多 agent 共享同一个持续的世界，在频道里协作，自己决定要不要开口。",
+    "description": "大多数 agent 系统是一个 agent、一个任务、一个工具循环。这个项目试的是另一种形状：一个持续存在的世界，里面有很多 agent 和外部参与者，每次重启都可能走向不同的结局。",
+    "year": 2026,
+    "status": "prototype",
+    "kind": "运行时",
+    "links": {
+      "GitHub": "https://github.com/finns0309/agent-protocol"
+    }
+  },
+  {
+    "slug": "caller",
+    "name": "Caller",
+    "summary": "随时召唤的个人信息面板：同时按下左右两个 ⌥，敲几个字母，回车就粘进刚才的输入框。",
+    "description": "Swift 原生，常驻菜单栏。支持拼音首字母和全拼，地址、常用命令这类东西不用再去翻文档。",
+    "year": 2026,
+    "status": "stable",
+    "kind": "macOS 应用"
+  },
+  {
+    "slug": "chase",
+    "name": "Chase",
+    "summary": "旅行心愿地图：在 Apple Maps 风格的底图上标记想去和去过的地方。",
+    "description": "React 加 MapLibre，用免费矢量瓦片，不需要 API key，也没有后端，数据就存在浏览器里。",
+    "year": 2026,
+    "status": "stable",
+    "kind": "网页应用"
+  },
+  {
+    "slug": "nightwatch",
+    "name": "果核守夜人",
+    "summary": "一局四分钟的浏览器肉鸽：在温室里移动、冲刺，守夜人自动攻击虫群，收集露珠后从三项基因突变里选一项。",
+    "year": 2026,
+    "status": "prototype",
+    "kind": "浏览器游戏"
+  },
+  {
+    "slug": "finnsink",
+    "name": "FinnsInk",
+    "summary": "你正在看的这个站。内容是仓库里的文件，写给人读，也让 agent 读得懂。",
+    "year": 2026,
+    "status": "active",
+    "kind": "网站",
+    "links": {
+      "GitHub": "https://github.com/finns0309/finnsink",
+      "For agents": "/for-agents"
+    }
+  }
+]

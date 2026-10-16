@@ -2,7 +2,8 @@
   "id": "finn",
   "name": "Finn",
   "summary": "Writing so I can find out what I actually think.",
-  "long_summary": "Finn's writing site. The central question: how symbols, language, and systems shape — and limit — our cognition and sense of self. The essays start from semiotics, continental philosophy, and the technical present, and try to pry apart concepts that look self-evident — ability, freedom, growth, knowledge, action — to see where their referents actually land. Written irregularly, slowly, and at length.",
+  "intro": "I'm Finn, in Beijing. I write long essays and build small tools — this is where the writing, the things I've made, and what I'm thinking about now all live.",
+  "long_summary": "Finn's personal site. The central question: how symbols, language, and systems shape — and limit — our cognition and sense of self. The essays start from semiotics, continental philosophy, and the technical present, and try to pry apart concepts that look self-evident — ability, freedom, growth, knowledge, action — to see where their referents actually land. Written irregularly, slowly, and at length.",
   "location": "Beijing",
   "roles": ["writer", "independent developer"],
   "beliefs": [

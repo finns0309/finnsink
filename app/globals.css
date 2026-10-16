@@ -1,62 +1,65 @@
 /* ─────────────────────────────────────────────────────────────
-   Finn — a quiet reading site
-   No framework. One file. Built for long Chinese essays.
+   FinnsInk V2 — a personal site
+   One file. Ivory and clay; serif for what I write, sans for the
+   interface around it. No cards, no shadows, no webfonts, no motion.
    ───────────────────────────────────────────────────────────── */
 
 :root {
-  /* paper-warm palette, intentionally narrow */
-  --color-bg:         #faf7f0;
-  --color-bg-soft:    #f4efe3;
-  --color-text:       #2a2622;
-  --color-text-soft:  #4a443c;
-  --color-muted:      #767067;
-  --color-faint:      #958c7e;
-  --color-rule:       #e6dfce;
-  --color-rule-soft:  #efe9d9;
-  --color-accent:     #8a4a2b;
-  --color-mark:       #f0e6c8;
+  /* Ivory paper, near-black ink, one clay accent. Hairlines are alpha so
+     the same rule reads correctly on both themes. */
+  --color-bg:          #faf9f5;
+  --color-bg-soft:     #f0eee6;
+  --color-text:        #1f1e1d;
+  --color-text-soft:   #3d3d3a;
+  --color-muted:       #73726c;
+  --color-faint:       #a3a199;
+  --color-rule:        rgba(31, 30, 29, 0.13);
+  --color-rule-soft:   rgba(31, 30, 29, 0.07);
+  --color-accent:      #c96442;
+  --color-accent-soft: rgba(201, 100, 66, 0.45);
+  --color-mark:        rgba(217, 119, 87, 0.22);
 
-  /* Font strategy: system fonts only, on purpose.
-     We never download a webfont — every visitor reads in the best
-     serif their machine already has. This means the site looks
-     slightly different on macOS, Windows, and Linux, and that is
-     a feature, not a bug. Zero requests, zero FOUT, zero layout
-     shift, instant first paint. If you ever want a single uniform
-     look across machines, switch to next/font and self-host. */
+  /* System fonts only, on purpose: every visitor reads in the best face
+     their machine already has — zero requests, zero layout shift. Charter
+     leads because it is the closest system serif to a modern text face;
+     Chinese falls through to the platform's Song. */
   --font-serif:
-    "Source Serif 4", "Iowan Old Style",
-    "Apple Garamond", Charter, Baskerville, "Times New Roman",
-    "Noto Serif SC", "Source Han Serif SC",
-    "Songti SC", STSong, SimSun, serif;
+    Charter, "Iowan Old Style", "Source Serif 4", "Apple Garamond",
+    Baskerville, "Times New Roman",
+    "Noto Serif SC", "Source Han Serif SC", "Songti SC", STSong, SimSun, serif;
   --font-sans:
     -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue",
     "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono:
+    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
 
-  --measure:      36rem;
-  --measure-wide: 44rem;
+  --text-display: clamp(1.95rem, 1.45rem + 2.1vw, 2.5rem);
+  --text-body:    1.0625rem;
+  --text-ui:      0.875rem;
+  --text-meta:    0.8125rem;
 
-  /* a single shared timing function for every transition on the site */
-  --ease: cubic-bezier(0.2, 0, 0, 1);
+  --measure: 38rem;
 }
 
-/* Dark mode follows OS preference. Deliberately not reversed — we keep the
-   warm tint, so it reads like aged paper at night rather than a cold terminal. */
+/* Dark follows the OS. A warm grey rather than black, so the page still
+   reads as paper at night. */
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg:         #1c1915;
-    --color-bg-soft:    #252019;
-    --color-text:       #e6dcc8;
-    --color-text-soft:  #b8ac95;
-    --color-muted:      #8b8273;
-    --color-faint:      #6d665a;
-    --color-rule:       #2e2a22;
-    --color-rule-soft:  #26221c;
-    --color-accent:     #d69968;
-    --color-mark:       #3a3220;
+    --color-bg:          #262624;
+    --color-bg-soft:     #30302e;
+    --color-text:        #ece9e1;
+    --color-text-soft:   #c3c0b6;
+    --color-muted:       #9c9a92;
+    --color-faint:       #6f6d66;
+    --color-rule:        rgba(250, 249, 245, 0.12);
+    --color-rule-soft:   rgba(250, 249, 245, 0.06);
+    --color-accent:      #d97757;
+    --color-accent-soft: rgba(217, 119, 87, 0.5);
+    --color-mark:        rgba(217, 119, 87, 0.3);
   }
 }
 
-/* ───────── reset (the only one we need) ───────── */
+/* ───────── reset ───────── */
 
 *,
 *::before,
@@ -92,32 +95,7 @@ button {
 :focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 3px;
-  border-radius: 1px;
-}
-
-/* ───────── skip link ─────────
-   Keyboard users land on this first; visually hidden until focused.
-   Lets readers jump past header/nav straight into the essay. */
-
-.skip-link {
-  position: absolute;
-  top: 0;
-  left: 0;
-  padding: 0.6rem 1rem;
-  background: var(--color-bg);
-  color: var(--color-text);
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  text-decoration: none;
-  border: 1px solid var(--color-rule);
-  border-radius: 0 0 4px 0;
-  transform: translateY(-110%);
-  transition: transform 220ms var(--ease);
-  z-index: 200;
-}
-
-.skip-link:focus-visible {
-  transform: translateY(0);
+  border-radius: 2px;
 }
 
 /* ───────── root ───────── */
@@ -125,15 +103,12 @@ button {
 html {
   background: var(--color-bg);
   color-scheme: light dark;
-  /* TOC / heading-anchor / skip-link jumps land with air above the target
-     instead of flush against the viewport's top edge. */
   scroll-padding-top: 3rem;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-  /* Block synthetic italics on CJK */
+  /* Never fake italics or bold on CJK */
   font-synthesis: none;
-  /* Pull punctuation off the visual edge in Safari */
   hanging-punctuation: allow-end last;
 }
 
@@ -142,11 +117,9 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-serif);
-  /* rem so that the site honors the reader's browser font-size preference */
-  font-size: 1.125rem;
+  font-size: var(--text-body);
   line-height: 1.8;
-  font-feature-settings: "kern", "liga", "calt", "halt", "palt";
-  font-variant-east-asian: proportional-width;
+  font-feature-settings: "kern", "liga", "calt";
   text-wrap: pretty;
   word-break: normal;
   line-break: strict;
@@ -157,26 +130,41 @@ body {
   background: var(--color-mark);
 }
 
+/* Links keep the ink; the underline carries the clay. */
 a {
-  color: var(--color-text);
+  color: inherit;
   text-decoration: underline;
-  text-decoration-thickness: 0.5px;
-  text-underline-offset: 0.22em;
-  text-decoration-color: var(--color-faint);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: var(--color-accent-soft);
   text-decoration-skip-ink: auto;
-  transition:
-    color 200ms var(--ease),
-    text-decoration-color 200ms var(--ease);
 }
 
 a:hover {
-  color: var(--color-accent);
-  text-decoration-color: currentColor;
+  text-decoration-color: var(--color-accent);
 }
 
 code {
-  font-family:
-    ui-monospace, "SF Mono", Menlo, Monaco, Consolas, monospace;
+  font-family: var(--font-mono);
+}
+
+.skip-link {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0.6rem 1rem;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
+  text-decoration: none;
+  border: 1px solid var(--color-rule);
+  transform: translateY(-110%);
+  z-index: 200;
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 /* ───────── layout ───────── */
@@ -188,161 +176,100 @@ code {
   padding: 0 1.5rem;
 }
 
-.page--wide {
-  max-width: var(--measure-wide);
-}
-
 .site-main {
-  padding: 2.5rem 0 6rem;
+  padding: 1.5rem 0 2rem;
 }
 
 /* ───────── header ───────── */
 
 .site-header {
-  padding: 3.5rem 0 2rem;
+  padding: 3rem 0 2.5rem;
 }
 
 .site-header__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
-  gap: 2rem;
+  gap: 0.75rem 2rem;
 }
 
 .site-header__brand {
-  font-family: var(--font-serif);
-  font-size: 1.05rem;
-  font-weight: 400;
-  font-style: italic;
-  letter-spacing: 0.01em;
+  font-size: 1.2rem;
+  letter-spacing: -0.01em;
   color: var(--color-text);
   text-decoration: none;
 }
 
-.site-header__brand:hover {
-  color: var(--color-accent);
-}
-
 .site-nav {
   display: flex;
-  gap: 1.6rem;
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--color-muted);
+  align-items: baseline;
+  gap: 1.35rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
 }
 
 .site-nav a {
-  text-decoration: none;
   color: var(--color-muted);
-  position: relative;
+  text-decoration: none;
 }
 
-.site-nav a:hover {
-  color: var(--color-accent);
+.site-nav a:hover,
+.site-nav a[aria-current="page"] {
+  color: var(--color-text);
 }
 
-/* a hairline that blooms underneath nav links on hover —
-   small, slow, present only if you look. */
-.site-nav a::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -0.35em;
-  height: 1px;
-  background: currentColor;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 320ms var(--ease);
-}
-
-.site-nav a:hover::after {
-  transform: scaleX(1);
-}
-
-/* Language switcher sits inside the primary nav, separated by its own tone.
-   Present, not shouty. */
 .site-nav__lang {
   display: inline-flex;
   align-items: baseline;
-  gap: 0.35rem;
-  padding-left: 0.8rem;
-  margin-left: 0.4rem;
+  gap: 0.4rem;
+  padding-left: 1rem;
   border-left: 1px solid var(--color-rule);
-  font-size: 0.85rem;
-  letter-spacing: 0.01em;
-  font-style: normal;
-  color: var(--color-faint);
-}
-
-.site-nav__lang a {
+  font-size: var(--text-meta);
   color: var(--color-muted);
-  text-decoration: none;
-  font-style: normal;
-}
-
-.site-nav__lang a:hover {
-  color: var(--color-accent);
-}
-
-.site-nav__lang a::after {
-  display: none;
 }
 
 .site-nav__lang-current {
-  color: var(--color-accent);
+  color: var(--color-text);
   font-weight: 500;
-  font-style: normal;
 }
 
 .site-nav__lang-sep {
-  margin: 0 0.1rem;
-  color: var(--color-rule);
-}
-
-/* "Also in: EN" indicator that lives inline with the date in the article
-   header. The `article-meta > * + *::before` rule already inserts a middle-dot
-   between siblings, so this class only needs link styling. */
-.article-meta__also {
-  text-transform: none;
-  letter-spacing: 0;
-}
-
-.article-meta__also a {
-  color: var(--color-muted);
-  text-decoration: underline;
-  text-decoration-thickness: 0.5px;
-  text-decoration-color: var(--color-rule);
-  text-underline-offset: 0.2em;
-}
-
-.article-meta__also a:hover {
-  color: var(--color-accent);
+  color: var(--color-faint);
 }
 
 /* ───────── footer ───────── */
 
 .site-footer {
-  margin-top: 5rem;
-  padding: 3rem 0 4rem;
-  border-top: 1px solid var(--color-rule);
+  padding: 3rem 0 3.5rem;
 }
 
-.site-footer__inner {
-  font-size: 0.85rem;
-  font-style: italic;
+.site-footer__inner > p {
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule-soft);
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
   color: var(--color-muted);
-  text-align: center;
 }
 
-.site-footer__inner a {
+.site-footer a {
   color: var(--color-muted);
-  text-decoration-color: var(--color-rule);
+  text-decoration: none;
 }
 
-/* ───────── reading progress ─────────
-   A 2px hairline at the top of the viewport that fills as you scroll
-   through an article. The only client-side JS on the entire site. */
+.site-footer a:hover {
+  color: var(--color-text);
+}
+
+/* inline-block so a separator inside a link isn't underlined with it */
+.dot-list > * + *::before {
+  content: "·";
+  display: inline-block;
+  margin: 0 0.55em;
+  color: var(--color-faint);
+}
+
+/* ───────── reading progress ───────── */
 
 .reading-progress {
   position: fixed;
@@ -352,7 +279,6 @@ code {
   height: 2px;
   z-index: 100;
   pointer-events: none;
-  background: transparent;
 }
 
 .reading-progress__bar {
@@ -360,179 +286,247 @@ code {
   background: var(--color-accent);
   transform: scaleX(0);
   transform-origin: 0 50%;
-  /* very small smoothing — rAF already throttles, this is just polish */
-  transition: transform 80ms linear;
-  opacity: 0.85;
 }
 
-/* ───────── home / index ───────── */
+/* ───────── shared type ───────── */
 
-.lede {
-  margin: 0 0 4rem;
-  font-size: 1.05rem;
-  line-height: 1.85;
-  color: var(--color-text-soft);
-  font-style: italic;
-  text-wrap: balance;
-}
-
-.section-label {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  margin-bottom: 2.25rem;
-}
-
-/* ───────── essays page (year groups) ───────── */
-
-.essay-year + .essay-year {
-  margin-top: 4.5rem;
-}
-
-.essay-year__label {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  font-weight: 500;
-  margin-bottom: 1.75rem;
-  padding-bottom: 0.75rem;
-  border-bottom: 1px solid var(--color-rule-soft);
-}
-
-/* ───────── entry list ─────────
-   Quiet table of contents. No boxes, no cards.
-   Each entry is a date in margin + title + summary, separated by space. */
-
-.entry-list > li + li {
-  margin-top: 2.75rem;
-  padding-top: 2.75rem;
-  border-top: 1px solid var(--color-rule);
-}
-
-.entry {
-  display: block;
-}
-
-.entry__date {
-  display: block;
-  font-family: var(--font-sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  margin-bottom: 0.65rem;
-}
-
-.entry__title {
-  font-size: 1.5rem;
-  line-height: 1.35;
-  font-weight: 500;
-  letter-spacing: -0.005em;
-  color: var(--color-text);
-  text-wrap: balance;
-  margin-bottom: 0.6rem;
-}
-
-.entry__title a {
-  text-decoration: none;
-  color: inherit;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  transition: background-size 380ms var(--ease), color 200ms var(--ease);
-}
-
-.entry__title a:hover {
+/* The spark marks what is alive: the now note, essays still being thought
+   through, the breaks inside an essay. Nowhere else. */
+.spark {
   color: var(--color-accent);
-  background-size: 100% 1px;
+  font-family: var(--font-sans);
+  font-style: normal;
+  font-weight: 400;
 }
 
-.entry__summary {
-  font-size: 1rem;
+.page-title {
+  font-size: var(--text-display);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.page-lede {
+  margin-top: 1rem;
+  font-size: 1.125rem;
   line-height: 1.85;
   color: var(--color-text-soft);
   letter-spacing: 0.01em;
   text-wrap: pretty;
 }
 
-/* ───────── article header ───────── */
-
-.article-header {
-  margin: 1rem 0 3rem;
-  text-align: left;
-}
-
-.article-eyebrow {
+.meta {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  font-size: var(--text-meta);
+  line-height: 1.6;
   color: var(--color-muted);
-  margin-bottom: 1.25rem;
+  font-variant-numeric: tabular-nums;
 }
 
-.article-title {
-  font-size: clamp(1.95rem, 4.4vw, 2.55rem);
-  line-height: 1.22;
-  font-weight: 500;
-  letter-spacing: -0.01em;
+.page-meta {
+  margin-top: 1rem;
+}
+
+.prose-section .meta {
+  margin-top: 0.75rem;
+}
+
+.meta a {
+  color: var(--color-muted);
+}
+
+.meta a:hover {
   color: var(--color-text);
-  text-wrap: balance;
-  margin-bottom: 1.25rem;
 }
 
-.article-subtitle {
-  margin-bottom: 1.75rem;
-  padding-left: 1rem;
-  border-left: 2px solid var(--color-rule);
-  font-size: 1.05rem;
+/* ───────── sections ───────── */
+
+.section {
+  margin-top: 4rem;
+}
+
+.section__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.section__label {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  font-weight: 500;
+  line-height: 1.5;
+  color: var(--color-muted);
+}
+
+.section__more {
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  color: var(--color-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.section__more:hover {
+  color: var(--color-text);
+}
+
+/* ───────── rows ─────────
+   One anatomy for every list on the site: title (serif), optional
+   description under it, a quiet sans meta on the right. */
+
+.row__link {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: baseline;
+  column-gap: 1.5rem;
+  padding: 0.55rem 0;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.row__title {
+  line-height: 1.55;
+  text-wrap: pretty;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: transparent;
+}
+
+.row__link:hover .row__title {
+  text-decoration-color: var(--color-accent);
+}
+
+.row__mark {
+  margin-left: 0.4em;
+  font-size: 0.8em;
+}
+
+.row__desc {
+  grid-column: 1;
+  margin-top: 0.15rem;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--color-muted);
+}
+
+.row__meta {
+  grid-column: 2;
+  grid-row: 1;
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.rows--spacious .row__link {
+  padding: 0.75rem 0;
+}
+
+/* ───────── home ───────── */
+
+.hero__title {
+  font-size: clamp(1.75rem, 1.3rem + 1.9vw, 2.25rem);
+  font-weight: 400;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.hero__intro {
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
   line-height: 1.85;
   color: var(--color-text-soft);
   letter-spacing: 0.01em;
-  font-style: italic;
 }
 
-.article-meta {
+.hero__meta {
+  margin-top: 1rem;
+}
+
+.now-note {
+  font-size: 1.0625rem;
+  line-height: 1.9;
+  letter-spacing: 0.01em;
+}
+
+.now-note__meta {
+  margin-top: 0.5rem;
+}
+
+.elsewhere {
   font-family: var(--font-sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.06em;
-  color: var(--color-muted);
-  text-transform: uppercase;
+  font-size: var(--text-ui);
+  line-height: 2;
+  color: var(--color-text-soft);
 }
 
-.article-meta > * + *::before {
-  content: "·";
-  margin: 0 0.6rem;
-  color: var(--color-faint);
+/* ───────── writing index ───────── */
+
+.year-group {
+  margin-top: 3rem;
+}
+
+.year-group__label {
+  margin-bottom: 0.25rem;
+}
+
+/* ───────── article ───────── */
+
+.article-header {
+  margin-bottom: 2.5rem;
+}
+
+.article-title {
+  font-size: var(--text-display);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+}
+
+.article-standfirst {
+  margin-top: 1.25rem;
+  font-size: 1.125rem;
+  line-height: 1.85;
+  color: var(--color-text-soft);
+  letter-spacing: 0.01em;
+}
+
+.article-header .meta {
+  margin-top: 1.5rem;
 }
 
 .article-rule {
   border: 0;
   border-top: 1px solid var(--color-rule);
-  margin: 2.25rem 0 2.75rem;
+  margin: 0 0 2.75rem;
 }
 
-/* ───────── article body ─────────
-   This is the room the whole site exists for. */
+.stance .spark {
+  margin-right: 0.3em;
+}
+
+/* This is the room the whole site exists for. */
 
 .article-body {
-  font-size: 1.075rem;
-  line-height: 2.15;
-  letter-spacing: 0.02em;
+  font-size: var(--text-body);
+  line-height: 2;
+  letter-spacing: 0.015em;
   color: var(--color-text);
-  text-wrap: pretty;
 }
 
 .article-body > * + * {
-  margin-top: 1.6rem;
+  margin-top: 1.35em;
 }
 
-/* Extra visual pause created by double blank lines in the markdown source */
+/* Extra pause from double blank lines in the markdown source */
 .article-body .breath {
   margin: 0;
   height: 1.6rem;
@@ -542,31 +536,34 @@ code {
 .article-body h2,
 .article-body h3,
 .article-body h4 {
+  position: relative;
   font-weight: 500;
+  line-height: 1.45;
   letter-spacing: 0;
   color: var(--color-text);
-  line-height: 1.4;
   text-wrap: balance;
 }
 
 .article-body h1 {
-  font-size: 1.55rem;
-  margin-top: 4.5rem;
+  margin-top: 4rem;
+  font-size: 1.5rem;
 }
 
 .article-body h2 {
-  font-size: 1.25rem;
-  /* No hairline above h2 — the whitespace is the section break.
-     A short dash here read as a stray ornament, not as structure,
-     so we let the vertical rhythm carry the meaning. */
-  margin-top: 5.5rem;
+  margin-top: 4rem;
+  font-size: 1.3rem;
 }
 
-/* heading anchors — visible on hover, in the left margin */
-.article-body h1,
-.article-body h2,
 .article-body h3 {
-  position: relative;
+  margin-top: 2.75rem;
+  font-size: 1.1rem;
+  color: var(--color-text-soft);
+}
+
+.article-body h1 + p,
+.article-body h2 + p,
+.article-body h3 + p {
+  margin-top: 1rem;
 }
 
 .article-body .heading-anchor {
@@ -580,7 +577,6 @@ code {
   color: var(--color-faint);
   text-decoration: none;
   opacity: 0;
-  transition: opacity 220ms var(--ease), color 220ms var(--ease);
 }
 
 .article-body h1:hover .heading-anchor,
@@ -594,57 +590,24 @@ code {
   color: var(--color-accent);
 }
 
-.article-body h3 {
-  font-size: 1.1rem;
-  margin-top: 3.2rem;
-  color: var(--color-text-soft);
-}
-
-.article-body h2 + p,
-.article-body h3 + p,
-.article-body h1 + p {
-  margin-top: 1.4rem;
-}
-
 .article-body strong {
   font-weight: 600;
-  color: var(--color-text);
 }
 
+/* Kept for Latin terms; CJK never slants (font-synthesis: none). */
 .article-body em {
   font-style: italic;
-  /* CJK em is intentionally invisible — author uses **bold** for emphasis */
-}
-
-.article-body a {
-  color: var(--color-text);
-  text-decoration: underline;
-  text-decoration-color: var(--color-faint);
-  text-decoration-thickness: 0.5px;
-  text-underline-offset: 0.25em;
-}
-
-.article-body a:hover {
-  color: var(--color-accent);
-  text-decoration-color: currentColor;
 }
 
 .article-body blockquote {
-  margin: 2.4rem 0;
-  padding: 0.2rem 0 0.2rem 1.4rem;
+  margin: 2.25rem 0;
+  padding: 0.1rem 0 0.1rem 1.25rem;
   border-left: 2px solid var(--color-rule);
   color: var(--color-text-soft);
-  font-style: italic;
-  letter-spacing: 0.012em;
 }
 
 .article-body blockquote p + p {
-  margin-top: 1rem;
-}
-
-.article-body ul,
-.article-body ol {
-  padding-left: 0;
+  margin-top: 0.9rem;
 }
 
 .article-body ul > li,
@@ -677,33 +640,32 @@ code {
   left: 0;
   top: 0;
   font-family: var(--font-sans);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   color: var(--color-muted);
   line-height: 2.1;
 }
 
 .article-body li + li {
-  margin-top: 0.6rem;
+  margin-top: 0.5rem;
 }
 
 .article-body hr {
+  height: 1.5rem;
+  margin: 3rem 0;
   border: 0;
   text-align: center;
-  margin: 3rem 0;
-  height: 1rem;
-  position: relative;
 }
 
 .article-body hr::before {
-  content: "✦";
-  color: var(--color-faint);
-  font-size: 0.75rem;
-  letter-spacing: 0.5em;
+  content: "✻";
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  line-height: 1.5rem;
+  color: var(--color-accent);
 }
 
 .article-body code {
   font-size: 0.86em;
-  background: transparent;
   padding: 0 0.2em;
   color: var(--color-text-soft);
   box-shadow: inset 0 -1px 0 var(--color-rule);
@@ -711,31 +673,29 @@ code {
 }
 
 .article-body pre {
-  background: var(--color-bg-soft);
-  border: 1px solid var(--color-rule);
-  border-radius: 0.4rem;
   padding: 1rem 1.15rem;
   overflow-x: auto;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   line-height: 1.75;
   letter-spacing: 0;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-rule-soft);
+  border-radius: 0.5rem;
 }
 
 .article-body pre code {
-  background: transparent;
   padding: 0;
   box-shadow: none;
   color: var(--color-text);
 }
 
-/* ───────── tables ─────────
-   GFM tables. renderMarkdown wraps each <table> in .table-wrap, so a wide
-   table scrolls inside its own container instead of stretching the page.
-   No text-align here — GFM column alignment must keep winning. */
+/* GFM tables. renderMarkdown wraps each <table> in .table-wrap so a wide
+   table scrolls inside itself. No text-align here — GFM column alignment
+   must keep winning. */
 
 .article-body .table-wrap {
   overflow-x: auto;
-  margin: 2.6rem 0;
+  margin: 2.5rem 0;
 }
 
 .article-body table {
@@ -759,60 +719,76 @@ code {
 
 .article-body thead th {
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: var(--text-meta);
   font-weight: 500;
   color: var(--color-muted);
   border-bottom: 1px solid var(--color-rule);
 }
 
+/* Markdown `![alt](src "caption")` on its own line emits a <figure>. */
+
+.article-body figure {
+  margin: 2.5rem 0;
+  text-align: center;
+}
+
+.article-body figure img {
+  max-width: 100%;
+  height: auto;
+  margin: 0 auto;
+}
+
+.article-body figcaption {
+  margin-top: 0.75rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-meta);
+  line-height: 1.6;
+  color: var(--color-muted);
+  text-wrap: balance;
+}
+
 /* ───────── article TOC ─────────
-   Mobile/tablet: a quiet block above the body (only shown if the essay has
-   ≥3 h2s, so short pieces stay clean).
-   Wide desktop: pulled into the right margin via absolute positioning,
-   sticky as the reader scrolls. The article itself stays visually centered
-   because we don't change its container width — the TOC simply escapes it. */
+   Narrow: a collapsed <details> above the body (only for ≥3 h2s).
+   Wide: pulled into the right margin and sticky — the article column
+   itself never moves. */
 
 .article-toc {
-  margin: -0.5rem 0 2.75rem;
-  padding: 1rem 0 1.25rem;
-  border-top: 1px dashed var(--color-rule-soft);
-  border-bottom: 1px dashed var(--color-rule-soft);
+  margin: -1rem 0 2.5rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--color-rule-soft);
+  border-bottom: 1px solid var(--color-rule-soft);
   font-family: var(--font-sans);
 }
 
 .article-toc__label {
-  font-size: 0.7rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--color-faint);
-  margin-bottom: 0.85rem;
+  font-size: var(--text-meta);
+  font-weight: 500;
+  color: var(--color-muted);
 }
 
 .article-toc__list {
   display: grid;
-  gap: 0.5rem;
-  font-size: 0.92rem;
+  gap: 0.45rem;
+  margin-top: 0.75rem;
+  font-size: var(--text-ui);
   line-height: 1.5;
-  color: var(--color-text-soft);
   counter-reset: toc;
 }
 
 .article-toc__list li {
-  counter-increment: toc;
   position: relative;
   padding-left: 1.6rem;
+  counter-increment: toc;
 }
 
 .article-toc__list li::before {
   content: counter(toc, decimal-leading-zero);
   position: absolute;
   left: 0;
-  top: 0.05em;
-  font-size: 0.72rem;
-  letter-spacing: 0.04em;
+  top: 0.1em;
+  font-size: 0.75rem;
   color: var(--color-faint);
+  font-variant-numeric: tabular-nums;
 }
 
 .article-toc__list a {
@@ -822,20 +798,24 @@ code {
 }
 
 .article-toc__list a:hover {
-  color: var(--color-accent);
+  color: var(--color-text);
 }
 
-/* Mobile/tablet: the TOC is a native <details>, collapsed by default, so a
-   long contents block never stands between the reader and the first line.
-   Desktop swaps in the always-visible sidebar variant below. */
 .article-toc__desktop {
   display: none;
+}
+
+/* Under the header rule the TOC borrows that rule as its top edge. */
+@media (max-width: 1199px) {
+  .article-rule + .article-toc {
+    margin-top: -2.75rem;
+    border-top: 0;
+  }
 }
 
 .article-toc__summary {
   cursor: pointer;
   list-style: none;
-  margin-bottom: 0;
 }
 
 .article-toc__summary::-webkit-details-marker {
@@ -848,20 +828,11 @@ code {
   color: var(--color-faint);
 }
 
-details[open] > .article-toc__summary {
-  margin-bottom: 0.85rem;
-}
-
 details[open] > .article-toc__summary::after {
   content: "−";
 }
 
 @media (min-width: 1200px) {
-  /* Pull the TOC out of flow and into the right margin. The article's
-     centered max-width means there's enough empty gutter past the right
-     edge on viewports ≥1200px. .article-header is the closest positioned
-     ancestor we control reliably; we anchor relative to .page (the article
-     container) by giving it position:relative on this breakpoint only. */
   article.page {
     position: relative;
   }
@@ -878,378 +849,267 @@ details[open] > .article-toc__summary::after {
     position: absolute;
     top: 0;
     left: calc(100% + 1rem);
-    /* Fill the article's full height so the inner sticky child has a scope
-       large enough to stick across the whole essay. Without this the parent
-       collapses to the TOC's intrinsic height and sticky stops working
-       almost immediately. */
+    /* Full article height so the sticky child has room to stick. */
     height: 100%;
     width: 13rem;
     margin: 0;
     padding: 0;
     border: 0;
-    /* Don't catch pointer events in the empty space below the sticky inner;
-       the sticky child re-enables them on itself. */
     pointer-events: none;
   }
 
   .article-toc__inner {
     position: sticky;
     top: 3rem;
-    padding: 0.25rem 0 0 1.25rem;
     max-height: calc(100vh - 6rem);
     overflow-y: auto;
-    border-left: 1px solid var(--color-rule);
+    padding: 0.2rem 0 0 1.25rem;
+    border-left: 1px solid var(--color-rule-soft);
     pointer-events: auto;
   }
 
-  .article-toc__label {
-    margin-bottom: 1rem;
-  }
-
   .article-toc__list {
-    font-size: 0.85rem;
-    gap: 0.65rem;
+    font-size: var(--text-meta);
+    gap: 0.6rem;
   }
 }
 
-/* ───────── figures ─────────
-   Markdown `![alt](src "caption")` on its own line emits a <figure>.
-   The optional title attribute becomes the caption. Inline images in
-   prose keep marked's default <img> rendering. */
+/* ───────── article end ───────── */
 
-.article-body figure {
-  margin: 2.6rem 0;
-  text-align: center;
+.snapshot {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--color-rule-soft);
 }
 
-.article-body figure img {
-  max-width: 100%;
-  height: auto;
-  margin: 0 auto;
-  border-radius: 2px;
+.snapshot__text {
+  margin-top: 0.4rem;
+  line-height: 1.9;
+  color: var(--color-text-soft);
 }
 
-.article-body figcaption {
-  margin-top: 0.85rem;
-  font-family: var(--font-sans);
-  font-size: 0.85rem;
-  font-style: italic;
-  line-height: 1.6;
-  color: var(--color-muted);
-  letter-spacing: 0.01em;
-  text-wrap: balance;
+.snapshot__text + .snapshot__text {
+  margin-top: 0.25rem;
 }
-
-/* ───────── essay prev / next ───────── */
 
 .essay-nav {
-  margin-top: 5rem;
-  padding-top: 2.25rem;
-  border-top: 1px solid var(--color-rule);
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 2rem;
+  margin-top: 3rem;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--color-rule-soft);
 }
 
 .essay-nav__item {
   display: flex;
   flex-direction: column;
-  gap: 0.55rem;
-  text-decoration: none;
+  gap: 0.35rem;
   color: var(--color-text);
-  padding: 0.4rem 0;
-  transition: color 220ms var(--ease);
+  text-decoration: none;
 }
 
 .essay-nav__item--older {
   text-align: right;
 }
 
-.essay-nav__label {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  transition: color 220ms var(--ease);
-}
-
 .essay-nav__title {
-  font-size: 1.05rem;
-  line-height: 1.45;
-  font-weight: 500;
-  letter-spacing: -0.005em;
+  line-height: 1.55;
   text-wrap: balance;
-  background-image: linear-gradient(currentColor, currentColor);
-  background-repeat: no-repeat;
-  background-size: 0% 1px;
-  background-position: 0 100%;
-  transition: background-size 380ms var(--ease), color 220ms var(--ease);
-}
-
-.essay-nav__item--older .essay-nav__title {
-  background-position: 100% 100%;
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.24em;
+  text-decoration-color: transparent;
 }
 
 .essay-nav__item:hover .essay-nav__title {
-  color: var(--color-accent);
-  background-size: 100% 1px;
+  text-decoration-color: var(--color-accent);
 }
 
-.essay-nav__item:hover .essay-nav__label {
-  color: var(--color-accent);
+.back-link {
+  margin-top: 2.5rem;
+  font-family: var(--font-sans);
+  font-size: var(--text-ui);
 }
 
-/* ───────── article footer ───────── */
-
-.article-footer {
-  margin-top: 3rem;
-  padding-top: 2rem;
-  border-top: 1px solid var(--color-rule);
-  font-size: 0.95rem;
-  font-style: italic;
-  color: var(--color-muted);
-}
-
-.article-footer a {
+.back-link a {
   color: var(--color-muted);
   text-decoration: none;
 }
 
-.article-footer a:hover {
-  color: var(--color-accent);
-}
-
-/* ───────── prose pages (about, now, for-agents) ───────── */
-
-.prose-page__title {
-  font-size: clamp(1.85rem, 4vw, 2.3rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.2;
+.back-link a:hover {
   color: var(--color-text);
-  margin-bottom: 0.7rem;
 }
 
-.prose-page__subtitle {
-  margin-bottom: 2.75rem;
-  font-size: 1.05rem;
+/* ───────── projects ───────── */
+
+.project {
+  scroll-margin-top: 2rem;
+}
+
+.project + .project {
+  margin-top: 2.75rem;
+}
+
+.project__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem 1.5rem;
+  flex-wrap: wrap;
+}
+
+.project__name {
+  font-size: 1.3rem;
+  font-weight: 400;
+  line-height: 1.4;
+}
+
+.project__summary {
+  margin-top: 0.5rem;
   line-height: 1.85;
-  color: var(--color-text-soft);
-  letter-spacing: 0.01em;
-  font-style: italic;
-  text-wrap: balance;
 }
 
-.prose-page__meta {
-  font-family: var(--font-sans);
-  font-size: 0.74rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+.project__desc {
+  margin-top: 0.35rem;
+  font-size: 0.95rem;
+  line-height: 1.85;
   color: var(--color-muted);
-  margin-bottom: 2.75rem;
 }
 
-.prose-page__section + .prose-page__section {
-  margin-top: 3rem;
-}
-
-.prose-page__section h2 {
+.project__links {
+  margin-top: 0.6rem;
   font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--color-muted);
-  font-weight: 500;
-  margin-bottom: 1.4rem;
+  font-size: var(--text-ui);
 }
 
-.prose-page__section p,
-.prose-page__section li {
-  font-size: 1.02rem;
+/* ───────── prose pages (about, now, for agents) ───────── */
+
+.prose-section {
+  margin-top: 3.5rem;
+}
+
+.prose-section > h2 {
+  margin-bottom: 0.9rem;
+}
+
+.prose-section p {
   line-height: 1.95;
-  letter-spacing: 0.012em;
-  color: var(--color-text);
+  letter-spacing: 0.01em;
 }
 
-.prose-page__section p + p {
+.prose-section p + p {
+  margin-top: 1rem;
+}
+
+.prose-section ul > li {
+  position: relative;
+  padding-left: 1.25rem;
+  line-height: 1.85;
+}
+
+.prose-section ul > li + li {
+  margin-top: 0.6rem;
+}
+
+.prose-section ul > li::before {
+  content: "·";
+  position: absolute;
+  left: 0.25rem;
+  top: 0;
+  color: var(--color-muted);
+  font-weight: 700;
+}
+
+.prose-section code {
+  font-size: 0.86em;
+  color: var(--color-text-soft);
+}
+
+.api-list {
   margin-top: 1.1rem;
 }
 
-.prose-page__section ul {
-  padding: 0;
+.api-list__row {
+  display: grid;
+  gap: 0.2rem;
+  padding: 0.85rem 0;
+  border-top: 1px solid var(--color-rule-soft);
 }
 
-.prose-page__section li {
-  position: relative;
-  padding-left: 1.4rem;
+.api-list__row:last-child {
+  border-bottom: 1px solid var(--color-rule-soft);
 }
 
-.prose-page__section li + li {
-  margin-top: 0.85rem;
-  padding-top: 0.85rem;
-  border-top: 1px dashed var(--color-rule-soft);
+.api-list dt code {
+  font-size: 0.86rem;
+  color: var(--color-text);
 }
 
-.prose-page__section li::before {
-  content: "—";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--color-faint);
-  font-style: normal;
-}
-
-.prose-page__section li + li::before {
-  top: 0.85rem;
+.api-list dd {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-muted);
 }
 
 /* ───────── 404 ───────── */
 
 .not-found {
-  padding-top: 4rem;
-  padding-bottom: 6rem;
+  padding-top: 2rem;
+  padding-bottom: 4rem;
 }
 
-.not-found__eyebrow {
-  font-family: var(--font-sans);
-  font-size: 0.72rem;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--color-faint);
-  margin-bottom: 1.75rem;
-}
-
-.not-found__title {
-  font-size: clamp(1.85rem, 4vw, 2.4rem);
-  font-weight: 500;
-  letter-spacing: -0.01em;
-  line-height: 1.25;
-  color: var(--color-text);
-  margin-bottom: 1.25rem;
-  text-wrap: balance;
-}
-
-.not-found__body {
-  font-size: 1.05rem;
-  line-height: 1.85;
-  color: var(--color-text-soft);
-  font-style: italic;
-  margin-bottom: 2.5rem;
+.not-found .page-lede {
   max-width: 28rem;
 }
 
 .not-found__actions {
-  display: flex;
-  gap: 1rem;
-  align-items: baseline;
-  font-size: 0.95rem;
-  color: var(--color-muted);
+  margin-top: 2rem;
 }
 
-.not-found__actions a {
-  color: var(--color-muted);
-  text-decoration: none;
-}
-
-.not-found__actions a:hover {
-  color: var(--color-accent);
-}
-
-/* ───────── api list (for-agents page) ───────── */
-
-.api-list {
-  margin-top: 1.25rem;
-  display: grid;
-  gap: 0;
-}
-
-.api-list__row {
-  display: grid;
-  gap: 0.25rem;
-  padding: 0.95rem 0;
-  border-top: 1px dashed var(--color-rule-soft);
-}
-
-.api-list__row:last-child {
-  border-bottom: 1px dashed var(--color-rule-soft);
-}
-
-.api-list dt code {
-  font-size: 0.86rem;
-  background: transparent;
-  padding: 0;
-  color: var(--color-text);
-  letter-spacing: -0.01em;
-}
-
-.api-list dd {
-  font-size: 0.95rem;
-  font-style: italic;
-  line-height: 1.7;
-  color: var(--color-muted);
-}
-
-/* ───────── responsive ───────── */
+/* ───────── narrow screens ───────── */
 
 @media (max-width: 640px) {
-  body {
-    font-size: 1.0625rem;
-  }
-
   .page {
     padding: 0 1.25rem;
   }
 
   .site-header {
-    padding: 2.5rem 0 1.5rem;
-  }
-
-  .site-header__inner {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
+    padding: 2rem 0 1.75rem;
   }
 
   .site-nav {
-    gap: 1.25rem;
-    font-size: 0.92rem;
+    gap: 1rem;
+  }
+
+  .site-nav__lang {
+    padding-left: 0.75rem;
   }
 
   .article-body {
     font-size: 1.02rem;
-    line-height: 2.05;
-    letter-spacing: 0.018em;
-  }
-
-  .article-body > * + * {
-    margin-top: 1.4rem;
-  }
-
-  .entry__title {
-    font-size: 1.35rem;
-  }
-
-  .article-header {
-    margin: 0.5rem 0 2.25rem;
+    line-height: 1.95;
   }
 
   .article-body .heading-anchor {
-    /* hide on mobile — no hover, no margin space, no value */
     display: none;
+  }
+
+  .section {
+    margin-top: 3.25rem;
+  }
+
+  .row__link {
+    column-gap: 1rem;
   }
 
   .essay-nav {
     grid-template-columns: 1fr;
-    gap: 1.75rem;
+    gap: 1.5rem;
   }
 
   .essay-nav__item--older {
     text-align: left;
-  }
-
-  .essay-nav__item--older .essay-nav__title {
-    background-position: 0 100%;
   }
 }
 
@@ -1264,8 +1124,7 @@ details[open] > .article-toc__summary::after {
   }
 }
 
-/* ───────── print ─────────
-   Because long essays are sometimes read on paper. */
+/* ───────── print ───────── */
 
 @media print {
   :root {
@@ -1278,21 +1137,38 @@ details[open] > .article-toc__summary::after {
 
   .site-header,
   .site-footer,
-  .article-footer {
+  .reading-progress,
+  .essay-nav,
+  .back-link {
     display: none;
   }
 
-  body {
+  body,
+  .article-body {
     font-size: 12pt;
     line-height: 1.7;
   }
 
-  .article-body {
-    font-size: 12pt;
-  }
-
   a {
-    color: #000;
     text-decoration: none;
   }
+}
+
+/* ───────── utilities ───────── */
+
+/* Pairs with <Phrase>: lines may only break where it put a <wbr>. */
+.keep-words {
+  word-break: keep-all;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

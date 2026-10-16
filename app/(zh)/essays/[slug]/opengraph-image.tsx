@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 import { getPostBySlug, getPosts } from "@/lib/content";
 import { loadGoogleFont } from "@/lib/og-fonts";
-import { formatDate, siteConfig } from "@/lib/site";
+import { formatDate } from "@/lib/site";
 
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
@@ -13,14 +13,17 @@ export async function generateStaticParams() {
 }
 
 type ImageProps = {
-  params: { slug: string };
+  // A Promise since Next 15 — reading .slug synchronously yields undefined,
+  // which silently rendered every share card blank in V1.
+  params: Promise<{ slug: string }>;
 };
 
 export default async function Image({ params }: ImageProps) {
-  const post = getPostBySlug(params.slug);
+  const { slug } = await params;
+  const post = getPostBySlug(slug);
 
   if (!post) {
-    return new ImageResponse(<div style={{ background: "#faf7f0" }} />, size);
+    return new ImageResponse(<div style={{ background: "#faf9f5" }} />, size);
   }
 
   // Build the exact glyph set we need so the subset stays tiny.
@@ -29,8 +32,8 @@ export default async function Image({ params }: ImageProps) {
   const allText =
     titleChars +
     subtitleChars +
-    "FINN finns ink essay " +
-    formatDate(post.published_at);
+    "finns.ink " +
+    formatDate(post.published_at, "zh");
 
   const [serif, serifBold] = await Promise.all([
     loadGoogleFont({ family: "Noto Serif SC", weight: 400, text: allText }),
@@ -45,10 +48,10 @@ export default async function Image({ params }: ImageProps) {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          background: "#faf7f0",
+          background: "#faf9f5",
           padding: "80px 96px",
           fontFamily: "'Noto Serif SC'",
-          color: "#2a2622",
+          color: "#1f1e1d",
           position: "relative",
         }}
       >
@@ -58,25 +61,20 @@ export default async function Image({ params }: ImageProps) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "baseline",
-            fontSize: 22,
-            letterSpacing: 6,
-            color: "#8a8278",
-            textTransform: "uppercase",
+            fontSize: 24,
+            color: "#73726c",
           }}
         >
-          <span>FINN</span>
-          <span style={{ fontStyle: "italic", letterSpacing: 1 }}>
-            finns.ink
-          </span>
+          <span>finn</span>
         </div>
 
         {/* hairline */}
         <div
           style={{
             marginTop: 56,
-            width: 60,
+            width: 56,
             height: 2,
-            background: "#e6dfce",
+            background: "#c96442",
           }}
         />
 
@@ -88,7 +86,7 @@ export default async function Image({ params }: ImageProps) {
             lineHeight: 1.18,
             fontWeight: 600,
             letterSpacing: -1,
-            color: "#2a2622",
+            color: "#1f1e1d",
             display: "flex",
             // satori needs explicit width for text wrap to work nicely
             maxWidth: 1000,
@@ -97,15 +95,14 @@ export default async function Image({ params }: ImageProps) {
           {post.title}
         </div>
 
-        {/* thesis / summary — italic, muted, smaller */}
+        {/* thesis / summary — muted, smaller */}
         {subtitleChars ? (
           <div
             style={{
               marginTop: 32,
               fontSize: 28,
               lineHeight: 1.55,
-              fontStyle: "italic",
-              color: "#4a443c",
+              color: "#3d3d3a",
               maxWidth: 980,
               display: "flex",
             }}
@@ -125,15 +122,12 @@ export default async function Image({ params }: ImageProps) {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "baseline",
-            fontSize: 20,
-            color: "#8a8278",
-            letterSpacing: 1,
+            fontSize: 22,
+            color: "#73726c",
           }}
         >
-          <span style={{ fontStyle: "italic" }}>
-            {formatDate(post.published_at)}
-          </span>
-          <span style={{ fontStyle: "italic" }}>{siteConfig.name}</span>
+          <span>{formatDate(post.published_at, "zh")}</span>
+          <span>finns.ink</span>
         </div>
       </div>
     ),

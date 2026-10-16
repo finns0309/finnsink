@@ -1,8 +1,8 @@
-import { getPosts } from "@/lib/content";
+import { getPosts, getProjects } from "@/lib/content";
 import { renderMarkdown } from "@/lib/content/render";
 import type { Lang } from "@/lib/content/schemas";
 import { LOCALE_TAG, getMessages } from "@/lib/i18n/messages";
-import { siteConfig } from "@/lib/site";
+import { localePath, siteConfig } from "@/lib/site";
 
 function escapeXml(value: string): string {
   return value
@@ -72,6 +72,7 @@ ${entries}
 
 export function buildLlmsTxt(lang: Lang): string {
   const posts = getPosts(lang);
+  const projects = getProjects(lang);
   const siteUrl = siteConfig.url;
 
   const essayLines = posts
@@ -82,10 +83,14 @@ export function buildLlmsTxt(lang: Lang): string {
     })
     .join("\n");
 
+  const projectLines = projects
+    .map((project) => `- [${project.name}](${siteUrl}${localePath(lang, "/projects")}#${project.slug}): ${project.summary}`)
+    .join("\n");
+
   const description =
     lang === "zh"
-      ? `${siteConfig.description} The substantive writing is in Chinese; framing copy is in English.`
-      : "Notes on attention, knowledge, and tools — written slowly.";
+      ? `${siteConfig.description} Most writing is in Chinese; some essays also exist in English.`
+      : "Finn's personal site: long-form essays, small tools, and what's happening now.";
 
   const otherLangs: Lang[] = (["zh", "en"] as Lang[]).filter((l) => l !== lang);
   const alternateFeedLine = otherLangs
@@ -105,22 +110,22 @@ ${alternateFeedLine}
 ## URL conventions
 
 - Essays: \`${siteUrl}${postPath(lang, "<slug>")}\`
-- Topics: \`${siteUrl}/topics/<slug>\`
-- Projects: \`${siteUrl}/projects/<slug>\`
+- Projects: \`${siteUrl}${localePath(lang, "/projects")}#<slug>\`
 
 ## Start here
 
-- [start.json](${siteUrl}/api/start.json?lang=${lang}): profile + now + suggested topics + recommended read order
-- [For Agents](${siteUrl}${sitePath(lang)}/for-agents): human-readable index of every JSON endpoint
+- [start.json](${siteUrl}/api/start.json?lang=${lang}): profile + now + recommended read order
+- [For Agents](${siteUrl}${localePath(lang, "/for-agents")}): human-readable index of every JSON endpoint
 
 ## API
 
 - [essays.json](${siteUrl}/api/essays.json?lang=${lang}): all ${lang.toUpperCase()} essays, metadata only
 - [essays/<slug>.json](${siteUrl}/api/essays/?lang=${lang}): single essay with full markdown body
+- [projects.json](${siteUrl}/api/projects.json?lang=${lang}): things Finn has built
 - [profile.json](${siteUrl}/api/profile.json?lang=${lang}) · [now.json](${siteUrl}/api/now.json?lang=${lang})
 
 ## Essays (${lang.toUpperCase()})
 
 ${essayLines}
-`;
+${projectLines ? `\n## Projects (${lang.toUpperCase()})\n\n${projectLines}\n` : ""}`;
 }

@@ -112,6 +112,28 @@ const breathExtension: TokenizerAndRendererExtension = {
 };
 
 /**
+ * A line holding only a full-width asterisk (or ✻ / ⁂) is the author's
+ * section break, same as `---`. Without this, "＊" renders as a stray
+ * left-aligned paragraph.
+ */
+const sectionBreakExtension: TokenizerAndRendererExtension = {
+  name: "sectionBreak",
+  level: "block",
+  start(src: string) {
+    return src.match(/^ {0,3}[＊✻⁂][ \t]*$/m)?.index;
+  },
+  tokenizer(src: string) {
+    const match = src.match(/^ {0,3}[＊✻⁂][ \t]*(?:\n+|$)/);
+    if (match) {
+      return { type: "sectionBreak", raw: match[0] };
+    }
+  },
+  renderer() {
+    return "<hr>\n";
+  },
+};
+
+/**
  * Block-level figure. Matches a line that contains only a markdown image,
  * optionally with a title — `![alt](src "caption")`. The title becomes the
  * figcaption; without a title we still emit a <figure> for consistent styling.
@@ -163,7 +185,7 @@ function configureMarked() {
   if (configured) return;
   configured = true;
 
-  marked.use({ extensions: [breathExtension, figureExtension] });
+  marked.use({ extensions: [breathExtension, sectionBreakExtension, figureExtension] });
 
   marked.use({
     gfm: true,

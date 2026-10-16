@@ -19,7 +19,7 @@ export default async function AppleIcon() {
         style={{
           width: "100%",
           height: "100%",
-          background: "#faf7f0",
+          background: "#faf9f5",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -27,7 +27,7 @@ export default async function AppleIcon() {
           fontSize: 140,
           fontStyle: "italic",
           fontWeight: 500,
-          color: "#2a2622",
+          color: "#1f1e1d",
           /* italic f sits a touch low — nudge it up so it reads centered */
           paddingBottom: 14,
         }}

@@ -1,17 +1,19 @@
 # FinnsInk
 
-一个基于 Next.js 的个人写作站点。内容源主要放在 `content/` 目录，部署目标是 Vercel。
+Finn 的个人站（V2）：中文长文、做过的项目、近况，以及给 agent 读的 JSON 镜像。基于 Next.js，内容在 `content/` 目录，部署在 Vercel。
+
+V1（纯博客版）保留在 git 标签 `v1`。
 
 ## 内容结构
 
-- `content/posts/*.md`: 文章正文与 frontmatter
-- `content/profile.json`: About 页内容
-- `content/now.json`: Now 页内容
-- `content/edges.json`: 内容关系图，当前可为空数组
+- `content/posts/{zh,en}/*.md`：文章正文与 frontmatter，同一个 slug 出现在两个目录里就是同一篇的两种语言
+- `content/profile.{zh,en}.json`：首页与「关于」页的身份信息（`summary` 是首页大字，`intro` 是首页自我介绍）
+- `content/now.{zh,en}.json`：「近况」页，也是首页的 ✻ 近况
+- `content/projects.{zh,en}.json`：「项目」页
 
 ## 文章格式
 
-每篇文章放在 `content/posts/` 下，文件名可以自定，但 `slug` 决定最终链接。
+每篇文章放在 `content/posts/<lang>/` 下，文件名可以自定，但 `slug` 决定最终链接。
 
 必填 frontmatter 字段：
 
