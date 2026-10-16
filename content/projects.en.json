@@ -3,63 +3,40 @@
     "slug": "muse",
     "name": "muse",
     "summary": "A summon-anywhere command palette for NetEase Cloud Music. ⌥Space, change what's playing, gone again.",
-    "description": "It lives in the menu bar with no dock icon, and the whole interface is one palette: idle, it's a now-playing card washed in the album's colour; start typing and it becomes search.",
+    "description": "It lives in the menu bar with no dock icon, and the whole interface is one palette: idle, it's a now-playing card washed in the album's colour; start typing and it becomes search, type / for commands. Library, listening modes and playback all live in that one surface.",
     "year": 2026,
     "status": "active",
     "kind": "macOS app",
     "links": {
-      "GitHub": "https://github.com/finns0309/muse"
-    }
+      "GitHub": "https://github.com/finns0309/muse",
+      "Download": "https://github.com/finns0309/muse/releases/latest"
+    },
+    "related_essays": ["data-is-the-product"]
   },
   {
     "slug": "echo",
     "name": "echo",
     "summary": "Floating desktop lyrics — the visual half of muse. It reads playback, never controls it.",
-    "description": "Playback stays with muse; echo only handles how music looks on screen: lyrics, cover-art atmosphere, and window frames that change with the theme.",
+    "description": "Playback stays with muse; echo only handles how music looks on screen: sixteen themes, from typewriter and ink wash to bullet comments and wind chimes, each choosing its own window frame and layout and moving with the beat. An optional LLM \"director\" picks the one word in each line worth enlarging.",
     "year": 2026,
-    "status": "active",
+    "status": "stable",
     "kind": "macOS app",
     "links": {
       "GitHub": "https://github.com/finns0309/echo"
-    }
+    },
+    "related_essays": ["data-is-the-product"]
   },
   {
     "slug": "agent-protocol",
     "name": "Agent Protocol",
     "summary": "A local-first runtime for persistent multi-agent worlds, where agents share one world, coordinate in channels, and decide for themselves whether to speak.",
-    "description": "Most agent systems are one agent, one task, one tool loop. This explores a different shape: a world that persists, many agents and outside participants, and outcomes that can unfold differently on every restart.",
+    "description": "Most agent systems are one agent, one task, one tool loop. This bets on a different shape: no central prompt assembler — agents inspect the world and choose what to do; outside agents can join as peers; and the same world can unfold differently on every restart.",
     "year": 2026,
     "status": "prototype",
     "kind": "Runtime",
     "links": {
       "GitHub": "https://github.com/finns0309/agent-protocol"
     }
-  },
-  {
-    "slug": "caller",
-    "name": "Caller",
-    "summary": "Press both ⌥ keys, type a few letters, and paste what you need into the field you were just in.",
-    "description": "Native Swift, menu bar only. It matches pinyin initials and full pinyin, so addresses and commands stop living in scattered docs.",
-    "year": 2026,
-    "status": "stable",
-    "kind": "macOS app"
-  },
-  {
-    "slug": "chase",
-    "name": "Chase",
-    "summary": "A travel wish-list map: mark the places you want to go and the places you've been, on an Apple Maps–style basemap.",
-    "description": "React and MapLibre on free vector tiles — no API key and no backend; your pins stay in the browser.",
-    "year": 2026,
-    "status": "stable",
-    "kind": "Web app"
-  },
-  {
-    "slug": "nightwatch",
-    "name": "Core Nightwatch",
-    "summary": "A four-minute browser roguelike: dash around a greenhouse while your night-watcher fights off swarms, then pick one of three gene mutations.",
-    "year": 2026,
-    "status": "prototype",
-    "kind": "Browser game"
   },
   {
     "slug": "finnsink",
@@ -72,5 +49,14 @@
       "GitHub": "https://github.com/finns0309/finnsink",
       "For agents": "/en/for-agents"
     }
+  },
+  {
+    "slug": "musev2",
+    "name": "MuseV2",
+    "summary": "A fork of muse for trying out a Claude-style interface.",
+    "year": 2026,
+    "status": "active",
+    "visibility": "private",
+    "kind": "macOS app"
   }
 ]

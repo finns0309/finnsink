@@ -65,6 +65,8 @@ export const projectSchema = z.object({
   description: z.string().optional(),
   year: z.number().int(),
   status: projectStatusSchema,
+  // Private repos are listed by purpose only — no description, no links.
+  visibility: z.enum(["public", "private"]).default("public"),
   kind: z.string(),
   links: z.record(z.string(), z.string()).default({}),
   related_essays: z.array(z.string()).default([]),

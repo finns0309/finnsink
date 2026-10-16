@@ -35,6 +35,7 @@ type Messages = {
     title: string;
     lede: string;
     status: Record<ProjectStatus, string>;
+    private: string;
     related: (title: string) => string;
   };
   now: {
@@ -96,6 +97,7 @@ export const messages: Record<Lang, Messages> = {
       title: "项目",
       lede: "写东西之外，我也做一些小工具。大多先是给自己用的，用顺手了才放出来。",
       status: { active: "在做", stable: "可用", prototype: "原型", archived: "归档" },
+      private: "私有仓库",
       related: (title) => `相关文章《${title}》`,
     },
     now: {
@@ -162,6 +164,7 @@ export const messages: Record<Lang, Messages> = {
       title: "Projects",
       lede: "Besides writing, I build small tools — most of them for myself first, released once they feel right.",
       status: { active: "Active", stable: "Stable", prototype: "Prototype", archived: "Archived" },
+      private: "Private repo",
       related: (title) => `Related: ${title}`,
     },
     now: {
@@ -227,6 +230,7 @@ export const messages: Record<Lang, Messages> = {
       title: "プロジェクト",
       lede: "書くこと以外に、小さな道具も作っています。",
       status: { active: "進行中", stable: "安定", prototype: "試作", archived: "アーカイブ" },
+      private: "非公開",
       related: (title) => `関連：${title}`,
     },
     now: {

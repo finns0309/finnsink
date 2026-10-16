@@ -197,7 +197,32 @@ function buildContentStore(): ContentStore {
   };
 }
 
+let cachedStamp = "";
+
+// Content files are read with fs, not imported, so dev's HMR never sees an
+// edit to them. Outside production, fingerprint content/ by mtimes and
+// rebuild when it changes — a reload then shows the edit.
+function contentStamp(directory = CONTENT_ROOT): string {
+  return fs
+    .readdirSync(directory, { withFileTypes: true })
+    .map((entry) => {
+      const entryPath = path.join(directory, entry.name);
+      return entry.isDirectory()
+        ? contentStamp(entryPath)
+        : `${entryPath}:${fs.statSync(entryPath).mtimeMs}`;
+    })
+    .join("|");
+}
+
 export function getContentStore() {
+  if (process.env.NODE_ENV !== "production") {
+    const stamp = contentStamp();
+    if (stamp !== cachedStamp) {
+      cachedStore = null;
+      cachedStamp = stamp;
+    }
+  }
+
   if (!cachedStore) {
     cachedStore = buildContentStore();
   }

@@ -28,6 +28,7 @@ export function ProjectsView({ lang }: { lang: Lang }) {
                 <p className="meta dot-list">
                   <span>{project.kind}</span>
                   <span>{project.year}</span>
+                  {project.visibility === "private" ? <span>{t.projects.private}</span> : null}
                   <span>
                     {project.status === "active" ? (
                       <span className="spark" aria-hidden="true">✻ </span>
